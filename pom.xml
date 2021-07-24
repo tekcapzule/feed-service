@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>in.tekcapsule</groupId>
+    <artifactId>capsule-application</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Capsule Application</name>
+    <description>Capsule Application</description>
+    <modules>
+        <module>application</module>
+        <module>domain</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <distributionManagement>
+        <repository>
+            <id>central</id>
+            <name>a0xwr7iq7kags-artifactory-primary-0-releases</name>
+            <url>https://devstream.jfrog.io/artifactory/maven-virtual-snapshot</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>a0xwr7iq7kags-artifactory-primary-0-snapshots</name>
+            <url>https://devstream.jfrog.io/artifactory/maven-virtual-snapshot</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>

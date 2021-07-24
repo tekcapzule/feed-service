@@ -1,0 +1,79 @@
+service: capsule-service
+package:
+  version: 0.0.1-SNAPSHOT
+  artifact: ./application/target/${self:service}-${self:package.version}-${self:provider}.jar
+provider:
+  name: aws
+  runtime: java11
+  region: us-east-2
+  memorySize: 1024
+  timeout: 30
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:*"
+      Resource: "*"
+  environment:
+    APPLICATION_ENVIRONMENT: Dev
+    CLOUD_REGION: US_East_2
+functions:
+  createMentor:
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    events:
+      - http:
+          path: capsule/create
+          method: post
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: createFunction
+  updateMentor:
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    events:
+      - http:
+          path: capsule/update
+          method: post
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: updateFunction
+  disableMentor:
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    events:
+      - http:
+          path: capsule/disable
+          method: post
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: disableFunction
+  getMentor:
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    events:
+      - http:
+          path: capsule/searchById
+          method: post
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: getFunction
+  searchMentor:
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    events:
+      - http:
+          path: capsule/search
+          method: post
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: searchFunction
+
+resources:
+  Resources:
+    productsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Capsule
+        AttributeDefinitions:
+          - AttributeName: tenantId
+            AttributeType: S
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: tenantId
+            KeyType: HASH
+          - AttributeName: userId
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
