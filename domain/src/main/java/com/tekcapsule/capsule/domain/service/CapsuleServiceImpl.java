@@ -30,14 +30,6 @@ public class CapsuleServiceImpl implements CapsuleService {
 
         log.info(String.format("Entering create mentor service - Tenant Id:{0}, Name:{1}", createCommand.getTenantId(), createCommand.getName().toString()));
 
-        Name name = createCommand.getName();
-        if (name != null) {
-            name.setDisplayName(String.format("{0} {1}", name.getFirstName(), name.getLastName()));
-        }
-        DateOfBirth dateOfBirth = createCommand.getDateOfBirth();
-        if (dateOfBirth != null) {
-            dateOfBirth.setDateOfBirth(String.format("{0}/{1}/{2}", dateOfBirth.getDay(), dateOfBirth.getMonth(), dateOfBirth.getYear()));
-        }
         Capsule capsule = Capsule.builder()
                 .active(true)
                 .activeSince(DateTime.now(DateTimeZone.UTC).toString())
@@ -46,15 +38,6 @@ public class CapsuleServiceImpl implements CapsuleService {
                 .certifications(createCommand.getCertifications())
                 .contact(createCommand.getContact())
                 .dateOfBirth(dateOfBirth)
-                .educationalQualifications(createCommand.getEducationalQualifications())
-                .headLine(createCommand.getHeadLine())
-                .name(name)
-                .professionalExperiences(createCommand.getProfessionalExperiences())
-                .publications(createCommand.getPublications())
-                .social(createCommand.getSocial())
-                .tags(createCommand.getTags())
-                .tenantId(createCommand.getTenantId())
-                .userId(createCommand.getContact().getEmailId())
                 .build();
 
         capsule.setAddedOn(createCommand.getExecOn());
@@ -73,14 +56,6 @@ public class CapsuleServiceImpl implements CapsuleService {
         if (capsule != null) {
             capsule.setAwards(updateCommand.getAwards());
             capsule.setHeadLine(updateCommand.getHeadLine());
-            capsule.setContact(updateCommand.getContact());
-            capsule.setCertifications(updateCommand.getCertifications());
-            capsule.setPhotoUrl(updateCommand.getPhotoUrl());
-            capsule.setTags(updateCommand.getTags());
-            capsule.setSocial(updateCommand.getSocial());
-            capsule.setEducationalQualifications(updateCommand.getEducationalQualifications());
-            capsule.setProfessionalExperiences(updateCommand.getProfessionalExperiences());
-            capsule.setPublications(updateCommand.getPublications());
 
             capsule.setUpdatedOn(updateCommand.getExecOn());
             capsule.setUpdatedBy(updateCommand.getExecBy().getUserId());

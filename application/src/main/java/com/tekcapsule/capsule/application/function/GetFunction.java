@@ -2,6 +2,7 @@ package com.tekcapsule.capsule.application.function;
 
 import com.tekcapsule.capsule.application.config.AppConstants;
 import com.tekcapsule.capsule.application.function.input.GetInput;
+import com.tekcapsule.capsule.domain.model.Capsule;
 import com.tekcapsule.capsule.domain.service.CapsuleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,7 @@ import java.util.function.Function;
 
 @Component
 @Slf4j
-public class GetFunction implements Function<Message<GetInput>, Message<Mentor>> {
+public class GetFunction implements Function<Message<GetInput>, Message<Capsule>> {
 
     private final CapsuleService capsuleService;
 
@@ -24,19 +25,19 @@ public class GetFunction implements Function<Message<GetInput>, Message<Mentor>>
     }
 
     @Override
-    public Message<Mentor> apply(Message<GetInput> getInputMessage) {
+    public Message<Capsule> apply(Message<GetInput> getInputMessage) {
         GetInput getInput = getInputMessage.getPayload();
 
-        log.info(String.format("Entering get mentor Function - Tenant Id:{0}, User Id:{1}", getInput.getTenantId(), getInput.getUserId()));
+        log.info(String.format("Entering get mentor Function - User Id:{1}", getInput.getUserId()));
 
-        Mentor mentor = mentorService.get(getInput.getTenantId(), getInput.getUserId());
+        Capsule capsule = capsuleService.get(getInput.getTenantId(), getInput.getUserId());
         Map<String, Object> responseHeader = new HashMap();
-        if (mentor == null) {
+        if (capsule == null) {
             responseHeader.put(AppConstants.HTTP_STATUS_CODE_HEADER, HttpStatus.NOT_FOUND.value());
-            mentor = Mentor.builder().build();
+            capsule = Capsule.builder().build();
         } else {
             responseHeader.put(AppConstants.HTTP_STATUS_CODE_HEADER, HttpStatus.OK.value());
         }
-        return new GenericMessage(mentor, responseHeader);
+        return new GenericMessage(capsule, responseHeader);
     }
 }
