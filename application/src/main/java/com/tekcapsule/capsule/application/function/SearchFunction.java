@@ -1,9 +1,7 @@
 package com.tekcapsule.capsule.application.function;
 
 import com.tekcapsule.capsule.application.function.input.SearchInput;
-import in.devstream.mentor.domain.query.SearchItem;
-import in.devstream.mentor.domain.query.SearchQuery;
-import in.devstream.mentor.domain.service.MentorService;
+import com.tekcapsule.capsule.domain.service.CapsuleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.Message;
@@ -22,12 +20,11 @@ import static com.tekcapsule.capsule.application.config.AppConstants.HTTP_STATUS
 @Slf4j
 public class SearchFunction implements Function<Message<SearchInput>, Message<List<SearchItem>>> {
 
-    private final MentorService mentorService;
+    private final CapsuleService capsuleService;
 
-    public SearchFunction(final MentorService mentorService) {
-        this.mentorService = mentorService;
+    public SearchFunction(final CapsuleService capsuleService) {
+        this.capsuleService = capsuleService;
     }
-
 
     @Override
     public Message<List<SearchItem>> apply(Message<SearchInput> searchInputMessage) {

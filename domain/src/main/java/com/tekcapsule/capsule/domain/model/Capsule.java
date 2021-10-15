@@ -14,50 +14,50 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @EqualsAndHashCode(callSuper = true)
-@DynamoDBTable(tableName = "Mentor")
+@DynamoDBTable(tableName = "Capsule")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Capsule extends BaseDomainEntity<String> implements AggregateRoot {
 
-    @DynamoDBHashKey(attributeName="tenantId")
-    private String tenantId;
-    @DynamoDBRangeKey(attributeName="userId")
-    private String userId;
-
-    @DynamoDBAttribute(attributeName = "photoUrl")
-    private String photoUrl;
-    @DynamoDBAttribute(attributeName = "name")
-    private Name name;
-    @DynamoDBAttribute(attributeName = "gender")
-    private Gender gender;
-    @DynamoDBAttribute(attributeName = "headLine")
-    private String headLine;
-    @DynamoDBAttribute(attributeName = "contact")
-    private Contact contact;
-    @DynamoDBAttribute(attributeName = "dateOfBirth")
-    private DateOfBirth dateOfBirth;
-    @DynamoDBAttribute(attributeName = "activeSince")
-    private String activeSince;
+    @DynamoDBHashKey(attributeName="topicName")
+    private String topicName;
+    @DynamoDBRangeKey(attributeName="publishedDate")
+    private String publishedDate;
+    @DynamoDBAttribute(attributeName = "title")
+    private String title;
+    @DynamoDBAttribute(attributeName = "imageUrl")
+    private String imageUrl;
+    @DynamoDBAttribute(attributeName = "duration")
+    private Integer duration;
+    @DynamoDBAttribute(attributeName = "author")
+    private String author;
+    @DynamoDBAttribute(attributeName = "description")
+    private String description;
     @DynamoDBAttribute(attributeName="tags")
     private List<String> tags;
-    @DynamoDBAttribute(attributeName="professionalExperiences")
-    List<ProfessionalExperience> professionalExperiences;
-    @DynamoDBAttribute(attributeName="educationalQualifications")
-    List<EducationalQualification> educationalQualifications;
-    @DynamoDBAttribute(attributeName="awards")
-    List<Award> awards;
-    @DynamoDBAttribute(attributeName="certifications")
-    List<Certification> certifications;
-    @DynamoDBAttribute(attributeName="publications")
-    List<Publication> publications;
-    @DynamoDBAttribute(attributeName="social")
-    private Social social;
-    @DynamoDBAttribute(attributeName="rating")
-    private int rating;
-    @DynamoDBAttribute(attributeName="active")
-    private Boolean active;
-    @DynamoDBAttribute(attributeName="blocked")
-    private boolean blocked;
-
+    @DynamoDBAttribute(attributeName = "publisher")
+    private String publisher;
+    @DynamoDBAttribute(attributeName = "resourceUrl")
+    private String resourceUrl;
+    @DynamoDBAttribute(attributeName = "type")
+    private CapsuleType type;
+    @DynamoDBAttribute(attributeName = "audience")
+    private TargetAudience audience;
+    @DynamoDBAttribute(attributeName = "level")
+    private TopicLevel level;
+    @DynamoDBAttribute(attributeName = "expiryDate")
+    private String expiryDate;
+    @DynamoDBAttribute(attributeName = "editorsPick")
+    private boolean editorsPick;
+    @DynamoDBAttribute(attributeName = "views")
+    private Integer views;
+    @DynamoDBAttribute(attributeName = "bookmarks")
+    private Integer bookmarks;
+    @DynamoDBAttribute(attributeName = "recommendations")
+    private Integer recommendations;
+    @DynamoDBAttribute(attributeName = "status")
+    private Status status;
+    @DynamoDBAttribute(attributeName = "active")
+    private boolean active;
 }

@@ -1,12 +1,10 @@
 package com.tekcapsule.capsule.application.function;
 
+import com.tekcapsule.capsule.domain.service.CapsuleService;
 import in.devstream.core.domain.Origin;
 import in.devstream.core.utils.HeaderUtil;
 import com.tekcapsule.capsule.application.function.input.CreateInput;
 import com.tekcapsule.capsule.application.mapper.InputOutputMapper;
-import in.devstream.mentor.domain.command.CreateCommand;
-import in.devstream.mentor.domain.model.Mentor;
-import in.devstream.mentor.domain.service.MentorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.Message;
@@ -23,12 +21,11 @@ import static com.tekcapsule.capsule.application.config.AppConstants.HTTP_STATUS
 @Slf4j
 public class CreateFunction implements Function<Message<CreateInput>, Message<Mentor>> {
 
-    private final MentorService mentorService;
+    private final CapsuleService capsuleService;
 
-    public CreateFunction(final MentorService mentorService) {
-        this.mentorService = mentorService;
+    public CreateFunction(final CapsuleService capsuleService) {
+        this.capsuleService = capsuleService;
     }
-
 
     @Override
     public Message<Mentor> apply(Message<CreateInput> createInputMessage) {

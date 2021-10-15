@@ -1,12 +1,9 @@
 package com.tekcapsule.capsule.application.function;
 
-import in.devstream.core.domain.Origin;
-import in.devstream.core.utils.HeaderUtil;
+import com.tekcapsule.capsule.domain.model.Capsule;
+import com.tekcapsule.capsule.domain.service.CapsuleService;
 import com.tekcapsule.capsule.application.function.input.UpdateInput;
 import com.tekcapsule.capsule.application.mapper.InputOutputMapper;
-import in.devstream.mentor.domain.command.UpdateCommand;
-import in.devstream.mentor.domain.model.Mentor;
-import in.devstream.mentor.domain.service.MentorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.Message;
@@ -21,17 +18,17 @@ import static com.tekcapsule.capsule.application.config.AppConstants.HTTP_STATUS
 
 @Component
 @Slf4j
-public class UpdateFunction implements Function<Message<UpdateInput>, Message<Mentor>> {
+public class UpdateFunction implements Function<Message<UpdateInput>, Message<Capsule>> {
 
-    private final MentorService mentorService;
+    private final CapsuleService capsuleService;
 
-    public UpdateFunction(final MentorService mentorService) {
-        this.mentorService = mentorService;
+    public UpdateFunction(final CapsuleService capsuleService) {
+        this.capsuleService = capsuleService;
     }
 
 
     @Override
-    public Message<Mentor> apply(Message<UpdateInput> updateInputMessage) {
+    public Message<Capsule> apply(Message<UpdateInput> updateInputMessage) {
         UpdateInput updateInput = updateInputMessage.getPayload();
 
         log.info(String.format("Entering update mentor Function - Tenant Id:{0}, User Id:{1}", updateInput.getTenantId(), updateInput.getUserId()));

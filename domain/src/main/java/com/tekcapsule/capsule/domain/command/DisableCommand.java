@@ -9,6 +9,6 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
 public class DisableCommand extends Command {
-    private String tenantId;
-    private String userId;
+    private String topicName;
+    private String publishedDate;
 }

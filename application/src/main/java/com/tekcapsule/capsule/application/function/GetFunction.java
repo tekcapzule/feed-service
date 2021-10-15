@@ -2,8 +2,7 @@ package com.tekcapsule.capsule.application.function;
 
 import com.tekcapsule.capsule.application.config.AppConstants;
 import com.tekcapsule.capsule.application.function.input.GetInput;
-import in.devstream.mentor.domain.model.Mentor;
-import in.devstream.mentor.domain.service.MentorService;
+import com.tekcapsule.capsule.domain.service.CapsuleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.Message;
@@ -18,12 +17,11 @@ import java.util.function.Function;
 @Slf4j
 public class GetFunction implements Function<Message<GetInput>, Message<Mentor>> {
 
-    private final MentorService mentorService;
+    private final CapsuleService capsuleService;
 
-    public GetFunction(final MentorService mentorService) {
-        this.mentorService = mentorService;
+    public GetFunction(final CapsuleService capsuleService) {
+        this.capsuleService = capsuleService;
     }
-
 
     @Override
     public Message<Mentor> apply(Message<GetInput> getInputMessage) {
