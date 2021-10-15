@@ -34,7 +34,7 @@ public class UpdateFunction implements Function<Message<UpdateInput>, Message<Ca
     public Message<Capsule> apply(Message<UpdateInput> updateInputMessage) {
         UpdateInput updateInput = updateInputMessage.getPayload();
 
-        log.info(String.format("Entering update mentor Function -  User Id:{1}",  updateInput.getUserId()));
+        log.info(String.format("Entering update capsule Function -  User Id:{0}",  updateInput.getTitle()));
 
         Origin origin = HeaderUtil.buildOriginFromHeaders(updateInputMessage.getHeaders());
 

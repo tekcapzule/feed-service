@@ -72,7 +72,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>in.tekcapsule</groupId>
+            <groupId>com.tekcapsule</groupId>
             <artifactId>capsule-domain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
