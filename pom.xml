@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>in.tekcapsule</groupId>
+    <groupId>com.tekcapsule</groupId>
     <artifactId>capsule-application</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -25,13 +25,13 @@
     <distributionManagement>
         <repository>
             <id>central</id>
-            <name>a0xwr7iq7kags-artifactory-primary-0-releases</name>
-            <url>https://devstream.jfrog.io/artifactory/maven-virtual-snapshot</url>
+            <name>a0vc0lkn9nvcm-artifactory-primary-0-releases</name>
+            <url>https://tekcapsulerepo.jfrog.io/artifactory/default-maven-local</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
-            <name>a0xwr7iq7kags-artifactory-primary-0-snapshots</name>
-            <url>https://devstream.jfrog.io/artifactory/maven-virtual-snapshot</url>
+            <name>a0vc0lkn9nvcm-artifactory-primary-0-snapshots</name>
+            <url>https://tekcapsulerepo.jfrog.io/artifactory/default-maven-local</url>
         </snapshotRepository>
     </distributionManagement>
 </project>

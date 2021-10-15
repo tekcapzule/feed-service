@@ -5,10 +5,10 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.3</version>
+        <version>2.5.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>in.tekcapsule</groupId>
+    <groupId>com.tekcapsule</groupId>
     <artifactId>capsule-domain</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Capsule Domain</name>
@@ -27,14 +27,14 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>in.devstream</groupId>
-            <artifactId>devstream-core</artifactId>
+            <groupId>com.tekcapsule</groupId>
+            <artifactId>tekcapsule-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.16</version>
+            <version>1.18.20</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -62,13 +62,13 @@
     <distributionManagement>
         <repository>
             <id>central</id>
-            <name>a0xwr7iq7kags-artifactory-primary-0-releases</name>
-            <url>https://devstream.jfrog.io/artifactory/maven-virtual-snapshot</url>
+            <name>a0vc0lkn9nvcm-artifactory-primary-0-releases</name>
+            <url>https://tekcapsulerepo.jfrog.io/artifactory/default-maven-local</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
-            <name>a0xwr7iq7kags-artifactory-primary-0-snapshots</name>
-            <url>https://devstream.jfrog.io/artifactory/maven-virtual-snapshot</url>
+            <name>a0vc0lkn9nvcm-artifactory-primary-0-snapshots</name>
+            <url>https://tekcapsulerepo.jfrog.io/artifactory/default-maven-local</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
