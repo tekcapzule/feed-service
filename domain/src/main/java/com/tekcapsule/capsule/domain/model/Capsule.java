@@ -5,11 +5,12 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import in.devstream.core.domain.AggregateRoot;
-import in.devstream.core.domain.BaseDomainEntity;
+import com.tekcapsule.core.domain.AggregateRoot;
+import com.tekcapsule.core.domain.BaseDomainEntity;
 import lombok.*;
 
 import java.util.List;
+
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

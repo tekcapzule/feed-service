@@ -2,11 +2,12 @@ package com.tekcapsule.capsule.domain.command;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tekcapsule.capsule.domain.model.*;
-import in.devstream.core.domain.Command;
+import com.tekcapsule.core.domain.Command;
 import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
+
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

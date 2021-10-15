@@ -5,24 +5,20 @@ import com.tekcapsule.capsule.domain.model.Capsule;
 import com.tekcapsule.capsule.domain.repository.CapsuleDynamoRepository;
 import com.tekcapsule.capsule.domain.command.CreateCommand;
 import com.tekcapsule.capsule.domain.command.UpdateCommand;
-import com.tekcapsule.capsule.domain.query.SearchItem;
-import com.tekcapsule.capsule.domain.query.SearchQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Slf4j
 @Service
 public class CapsuleServiceImpl implements CapsuleService {
-    private CapsuleDynamoRepository mentorRepository;
+    private CapsuleDynamoRepository capsuleDynamoRepository;
 
     @Autowired
-    public CapsuleServiceImpl(CapsuleDynamoRepository mentorRepository) {
-        this.mentorRepository = mentorRepository;
+    public CapsuleServiceImpl(CapsuleDynamoRepository capsuleDynamoRepository) {
+        this.capsuleDynamoRepository = capsuleDynamoRepository;
     }
 
     @Override
@@ -44,7 +40,7 @@ public class CapsuleServiceImpl implements CapsuleService {
         capsule.setUpdatedOn(createCommand.getExecOn());
         capsule.setAddedBy(createCommand.getExecBy().getUserId());
 
-        return mentorRepository.save(capsule);
+        return capsuleDynamoRepository.save(capsule);
     }
 
     @Override
@@ -52,7 +48,7 @@ public class CapsuleServiceImpl implements CapsuleService {
 
         log.info(String.format("Entering update mentor service - Tenant Id:{0}, User Id:{1}", updateCommand.getTenantId(), updateCommand.getUserId()));
 
-        Capsule capsule = mentorRepository.findBy(updateCommand.getTenantId(), updateCommand.getUserId());
+        Capsule capsule = capsuleDynamoRepository.findBy(updateCommand.getTenantId(), updateCommand.getUserId());
         if (capsule != null) {
             capsule.setAwards(updateCommand.getAwards());
             capsule.setHeadLine(updateCommand.getHeadLine());
@@ -60,7 +56,7 @@ public class CapsuleServiceImpl implements CapsuleService {
             capsule.setUpdatedOn(updateCommand.getExecOn());
             capsule.setUpdatedBy(updateCommand.getExecBy().getUserId());
 
-            mentorRepository.save(capsule);
+            capsuleDynamoRepository.save(capsule);
         }
         return capsule;
     }
@@ -70,22 +66,14 @@ public class CapsuleServiceImpl implements CapsuleService {
 
         log.info(String.format("Entering disable mentor service - Tenant Id:{0}, User Id:{1}", disableCommand.getTenantId(), disableCommand.getUserId()));
 
-        mentorRepository.disableById(disableCommand.getTenantId(), disableCommand.getUserId());
+        capsuleDynamoRepository.disableById(disableCommand.getTenantId(), disableCommand.getUserId());
     }
 
     @Override
-    public List<SearchItem> search(SearchQuery searchQuery) {
+    public Capsule get( String capsuleId) {
 
-        log.info(String.format("Entering search mentor service - Tenant Id:{0}", searchQuery.getTenantId()));
+        log.info(String.format("Entering get capsule service - Capsule Id:{0}", capsuleId));
 
-        return mentorRepository.search(searchQuery.getTenantId());
-    }
-
-    @Override
-    public Capsule get(String tenantId, String userId) {
-
-        log.info(String.format("Entering get mentor service - Tenant Id:{0}, User Id:{1}", tenantId, userId));
-
-        return mentorRepository.findBy(tenantId, userId);
+        return capsuleDynamoRepository.findBy( capsuleId);
     }
 }

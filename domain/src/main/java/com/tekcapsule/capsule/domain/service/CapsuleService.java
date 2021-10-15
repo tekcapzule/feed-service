@@ -4,10 +4,7 @@ import com.tekcapsule.capsule.domain.command.CreateCommand;
 import com.tekcapsule.capsule.domain.command.DisableCommand;
 import com.tekcapsule.capsule.domain.command.UpdateCommand;
 import com.tekcapsule.capsule.domain.model.Capsule;
-import com.tekcapsule.capsule.domain.query.SearchItem;
-import com.tekcapsule.capsule.domain.query.SearchQuery;
 
-import java.util.List;
 
 public interface CapsuleService {
 
@@ -17,7 +14,5 @@ public interface CapsuleService {
 
     void disable(DisableCommand disableCommand);
 
-    List<SearchItem> search(SearchQuery searchQuery);
-
-    Capsule get(String tenantId, String userId);
+    Capsule get( String userId);
 }
