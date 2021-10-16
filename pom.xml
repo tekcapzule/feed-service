@@ -9,6 +9,10 @@
     <packaging>pom</packaging>
     <name>Capsule Application</name>
     <description>Capsule Application</description>
+    <properties>
+        <sonar.organization>tekcapsule</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    </properties>
     <modules>
         <module>application</module>
         <module>domain</module>
