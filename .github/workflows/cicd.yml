@@ -87,7 +87,6 @@ jobs:
       matrix:
         node-version: [ 14.x ]
     steps:
-      - name: Checkout repository
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -95,7 +94,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Build
+      - name: Package
         run: mvn -B -U -s settings.xml package
       - name: serverless deploy
         uses: serverless/github-action@master
