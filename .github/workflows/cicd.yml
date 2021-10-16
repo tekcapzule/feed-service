@@ -83,9 +83,6 @@ jobs:
     needs: publish
     name: Dev Deploy
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 14.x ]
     steps:
       - uses: actions/checkout@v2
         with:
