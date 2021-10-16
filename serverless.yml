@@ -17,7 +17,7 @@ provider:
     APPLICATION_ENVIRONMENT: Dev
     CLOUD_REGION: US_East_2
 functions:
-  createMentor:
+  createCapsule:
     handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
     events:
       - http:
@@ -25,7 +25,7 @@ functions:
           method: post
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: createFunction
-  updateMentor:
+  updateCapsule:
     handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
     events:
       - http:
@@ -33,7 +33,7 @@ functions:
           method: post
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: updateFunction
-  disableMentor:
+  disableCapsule:
     handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
     events:
       - http:
@@ -41,15 +41,15 @@ functions:
           method: post
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: disableFunction
-  getMentor:
+  getCapsule:
     handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
     events:
       - http:
-          path: capsule/searchById
+          path: capsule/findById
           method: post
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: getFunction
-  searchMentor:
+  searchCapsule:
     handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
     events:
       - http:
@@ -65,14 +65,14 @@ resources:
       Properties:
         TableName: Capsule
         AttributeDefinitions:
-          - AttributeName: tenantId
+          - AttributeName: topicName
             AttributeType: S
-          - AttributeName: userId
+          - AttributeName: publishedDate
             AttributeType: S
         KeySchema:
-          - AttributeName: tenantId
+          - AttributeName: topicName
             KeyType: HASH
-          - AttributeName: userId
+          - AttributeName: publishedDate
             KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1

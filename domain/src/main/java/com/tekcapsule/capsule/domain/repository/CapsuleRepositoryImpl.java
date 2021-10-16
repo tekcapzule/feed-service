@@ -28,8 +28,8 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
     }
 
     @Override
-    public Capsule findBy(String userId) {
-        return dynamo.load(Capsule.class, userId);
+    public Capsule findBy(String capsuleId) {
+        return dynamo.load(Capsule.class, capsuleId);
     }
 
     @Override

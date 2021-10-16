@@ -6,5 +6,5 @@ import com.tekcapsule.core.domain.CrudRepository;
 
 public interface CapsuleDynamoRepository extends CrudRepository<Capsule, String> {
 
-    void disable(String id);
+    void disable(String capsuleId);
 }

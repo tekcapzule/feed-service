@@ -38,7 +38,7 @@ public class CapsuleServiceImpl implements CapsuleService {
     @Override
     public Capsule update(UpdateCommand updateCommand) {
 
-        log.info(String.format("Entering update capsule service - Capsule Id:{0}", updateCommand.getTitle()));
+        log.info(String.format("Entering update capsule service - Capsule Name:{0}", updateCommand.getTitle()));
 
         Capsule capsule = capsuleDynamoRepository.findBy(updateCommand.getTitle());
         if (capsule != null) {
@@ -55,7 +55,7 @@ public class CapsuleServiceImpl implements CapsuleService {
     @Override
     public void disable(DisableCommand disableCommand) {
 
-        log.info(String.format("Entering disable capsule service -  Capsule Id:{1}", disableCommand.getTopicName()));
+        log.info(String.format("Entering disable capsule service -  Capsule Name:{0}", disableCommand.getTopicName()));
 
         capsuleDynamoRepository.disable(disableCommand.getTopicName());
     }

@@ -14,5 +14,5 @@ public interface CapsuleService {
 
     void disable(DisableCommand disableCommand);
 
-    Capsule get( String userId);
+    Capsule get( String capsuleId);
 }
