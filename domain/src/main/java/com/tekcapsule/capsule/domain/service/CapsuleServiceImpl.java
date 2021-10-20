@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 public class CapsuleServiceImpl implements CapsuleService {
@@ -57,14 +59,43 @@ public class CapsuleServiceImpl implements CapsuleService {
 
         log.info(String.format("Entering disable capsule service -  Capsule Name:{0}", disableCommand.getTopicName()));
 
-        capsuleDynamoRepository.disable(disableCommand.getTopicName());
+        Capsule capsule = capsuleDynamoRepository.findBy(disableCommand.getTopicName(),disableCommand.getPublishedDate());
+        if (capsule != null) {
+            capsule.setActive(false);
+
+            capsule.setUpdatedOn(disableCommand.getExecOn());
+            capsule.setUpdatedBy(disableCommand.getExecBy().getUserId());
+
+            capsuleDynamoRepository.save(capsule);
+        }
     }
 
     @Override
-    public Capsule get( String capsuleId) {
+    public List<Capsule> getMyFeed(List<String> subscribedTopics) {
+        return null;
+    }
 
-        log.info(String.format("Entering get capsule service - Capsule Id:{0}", capsuleId));
+    @Override
+    public List<Capsule> getTrending() {
+        return null;
+    }
 
-        return capsuleDynamoRepository.findBy( capsuleId);
+    @Override
+    public List<Capsule> getEditorsPick() {
+        return null;
+    }
+
+    @Override
+    public Void approve(String topicName, String publishedDate) {
+        return null;
+    }
+
+
+    @Override
+    public Capsule findBy( String topicName, String publishedDate) {
+
+        log.info(String.format("Entering find by capsule service - Topic Name:{0}", topicName, publishedDate));
+
+        return capsuleDynamoRepository.findBy( topicName,publishedDate);
     }
 }

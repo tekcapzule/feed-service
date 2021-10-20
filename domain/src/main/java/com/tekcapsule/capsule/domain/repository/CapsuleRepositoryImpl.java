@@ -38,14 +38,8 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
         return capsule;
     }
 
-
     @Override
-    public void disable( String id) {
-        Capsule capsule = findBy( id);
-        if (capsule != null) {
-            capsule.setActive(false);
-            dynamo.save(capsule);
-        }
+    public Capsule findBy(String hashKey, String rangeKey) {
+        return dynamo.load(Capsule.class, hashKey, rangeKey);
     }
-
 }

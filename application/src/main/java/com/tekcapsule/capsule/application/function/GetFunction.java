@@ -28,9 +28,9 @@ public class GetFunction implements Function<Message<GetInput>, Message<Capsule>
     public Message<Capsule> apply(Message<GetInput> getInputMessage) {
         GetInput getInput = getInputMessage.getPayload();
 
-        log.info(String.format("Entering get capsule Function - Capsule Id:{0}", getInput.getUserId()));
+        log.info(String.format("Entering get capsule Function - Topic Name:{0}, Published Date: {1}", getInput.getUserId()));
 
-        Capsule capsule = capsuleService.get(getInput.getTenantId());
+        Capsule capsule = capsuleService.findBy(getInput.getTenantId());
         Map<String, Object> responseHeader = new HashMap();
         if (capsule == null) {
             responseHeader.put(AppConstants.HTTP_STATUS_CODE_HEADER, HttpStatus.NOT_FOUND.value());

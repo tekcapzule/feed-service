@@ -5,6 +5,8 @@ import com.tekcapsule.capsule.domain.command.DisableCommand;
 import com.tekcapsule.capsule.domain.command.UpdateCommand;
 import com.tekcapsule.capsule.domain.model.Capsule;
 
+import java.util.List;
+
 
 public interface CapsuleService {
 
@@ -14,5 +16,12 @@ public interface CapsuleService {
 
     void disable(DisableCommand disableCommand);
 
-    Capsule get( String capsuleId);
+    List<Capsule> getMyFeed(List<String> subscribedTopics);
+
+    List<Capsule> getTrending();
+
+    List<Capsule> getEditorsPick();
+
+    Void approve( String topicName, String publishedDate);
+    Capsule findBy( String topicName, String publishedDate);
 }
