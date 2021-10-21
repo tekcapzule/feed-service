@@ -1,12 +1,8 @@
 package com.tekcapsule.capsule.application.function;
 
 import com.tekcapsule.capsule.application.function.input.ApproveCapsuleInput;
-import com.tekcapsule.capsule.application.function.input.UpdateInput;
 import com.tekcapsule.capsule.application.mapper.InputOutputMapper;
-import com.tekcapsule.capsule.domain.command.AddBookmarkCommand;
 import com.tekcapsule.capsule.domain.command.ApproveCommand;
-import com.tekcapsule.capsule.domain.command.UpdateCommand;
-import com.tekcapsule.capsule.domain.model.Capsule;
 import com.tekcapsule.capsule.domain.service.CapsuleService;
 import com.tekcapsule.core.domain.Origin;
 import com.tekcapsule.core.utils.HeaderUtil;

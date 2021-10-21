@@ -1,12 +1,7 @@
 package com.tekcapsule.capsule.application.function;
 
-import com.tekcapsule.capsule.application.function.input.UpdateInput;
-import com.tekcapsule.capsule.application.mapper.InputOutputMapper;
-import com.tekcapsule.capsule.domain.command.UpdateCommand;
 import com.tekcapsule.capsule.domain.model.Capsule;
 import com.tekcapsule.capsule.domain.service.CapsuleService;
-import com.tekcapsule.core.domain.Origin;
-import com.tekcapsule.core.utils.HeaderUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.Message;

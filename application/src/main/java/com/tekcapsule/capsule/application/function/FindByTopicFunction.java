@@ -2,7 +2,6 @@ package com.tekcapsule.capsule.application.function;
 
 import com.tekcapsule.capsule.application.config.AppConstants;
 import com.tekcapsule.capsule.application.function.input.FindByTopicInput;
-import com.tekcapsule.capsule.application.function.input.GetInput;
 import com.tekcapsule.capsule.domain.model.Capsule;
 import com.tekcapsule.capsule.domain.service.CapsuleService;
 import lombok.extern.slf4j.Slf4j;

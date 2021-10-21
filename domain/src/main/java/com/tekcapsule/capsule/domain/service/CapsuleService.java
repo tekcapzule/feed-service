@@ -19,6 +19,7 @@ public interface CapsuleService {
     List<Capsule> getTrending();
 
     List<Capsule> getEditorsPick();
+
     void approve(ApproveCommand approveCommand);
 
     void addBookMark(AddBookmarkCommand addBookmarkCommand);
