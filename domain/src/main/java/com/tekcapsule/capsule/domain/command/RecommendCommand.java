@@ -10,6 +10,5 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
 public class RecommendCommand extends Command {
-    private String topicName;
-    private String publishedDate;
+    private String capsuleId;
 }

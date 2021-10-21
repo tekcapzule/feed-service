@@ -13,6 +13,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 public class UpdateInput {
+    private String capsuleId;
     private String topicName;
     private String publishedDate;
     private String title;

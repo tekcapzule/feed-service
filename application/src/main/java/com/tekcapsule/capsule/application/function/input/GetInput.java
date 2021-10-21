@@ -8,6 +8,5 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 public class GetInput {
-    private String tenantId;
-    private String userId;
+    private String capsuleId;
 }

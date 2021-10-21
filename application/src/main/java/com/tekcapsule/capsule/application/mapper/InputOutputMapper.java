@@ -1,11 +1,7 @@
 package com.tekcapsule.capsule.application.mapper;
 
-import com.tekcapsule.capsule.application.function.input.CreateInput;
-import com.tekcapsule.capsule.application.function.input.DisableInput;
-import com.tekcapsule.capsule.application.function.input.UpdateInput;
-import com.tekcapsule.capsule.domain.command.CreateCommand;
-import com.tekcapsule.capsule.domain.command.DisableCommand;
-import com.tekcapsule.capsule.domain.command.UpdateCommand;
+import com.tekcapsule.capsule.application.function.input.*;
+import com.tekcapsule.capsule.domain.command.*;
 import com.tekcapsule.core.domain.Command;
 import com.tekcapsule.core.domain.ExecBy;
 import com.tekcapsule.core.domain.Origin;
@@ -51,4 +47,25 @@ public final class InputOutputMapper {
         return disableCommand;
     };
 
+
+    public static final BiFunction<RecommendInput, Origin, RecommendCommand> buildRecommendCommandFromRecommendInput = (recommendInput, origin) -> {
+        RecommendCommand recommendCommand =  RecommendCommand.builder().build();
+        BeanUtils.copyProperties(recommendInput, recommendCommand);
+        addOrigin.apply(recommendCommand, origin);
+        return recommendCommand;
+    };
+
+    public static final BiFunction<ApproveCapsuleInput, Origin, ApproveCommand> buildApproveCapsuleCommandFromApproveCapsuleInput = (approveCapsuleInput, origin) -> {
+        ApproveCommand approveCommand =  ApproveCommand.builder().build();
+        BeanUtils.copyProperties(approveCapsuleInput, approveCommand);
+        addOrigin.apply(approveCommand, origin);
+        return approveCommand;
+    };
+
+    public static final BiFunction<AddBookmarkInput, Origin, AddBookmarkCommand> buildAddBookmarkCommandFromAddBookmarkInput = (addBookmarkInput, origin) -> {
+        AddBookmarkCommand addBookmarkCommand =  AddBookmarkCommand.builder().build();
+        BeanUtils.copyProperties(addBookmarkInput, addBookmarkCommand);
+        addOrigin.apply(addBookmarkCommand, origin);
+        return addBookmarkCommand;
+    };
 }

@@ -13,6 +13,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
 public class UpdateCommand extends Command {
+    private String capsuleId;
     private String topicName;
     private String publishedDate;
     private String title;

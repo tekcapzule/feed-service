@@ -65,12 +65,12 @@ resources:
       Properties:
         TableName: Capsule
         AttributeDefinitions:
-          - AttributeName: topicName
+          - AttributeName: capsuleId
             AttributeType: S
           - AttributeName: publishedDate
             AttributeType: S
         KeySchema:
-          - AttributeName: topicName
+          - AttributeName: capsuleId
             KeyType: HASH
           - AttributeName: publishedDate
             KeyType: RANGE

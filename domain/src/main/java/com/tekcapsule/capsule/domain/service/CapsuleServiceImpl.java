@@ -1,10 +1,8 @@
 package com.tekcapsule.capsule.domain.service;
 
-import com.tekcapsule.capsule.domain.command.DisableCommand;
+import com.tekcapsule.capsule.domain.command.*;
 import com.tekcapsule.capsule.domain.model.*;
 import com.tekcapsule.capsule.domain.repository.CapsuleDynamoRepository;
-import com.tekcapsule.capsule.domain.command.CreateCommand;
-import com.tekcapsule.capsule.domain.command.UpdateCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +44,6 @@ public class CapsuleServiceImpl implements CapsuleService {
                 .views(0)
                 .recommendations(0)
                 .bookmarks(0)
-                .active(true)
                 .build();
 
         capsule.setAddedOn(createCommand.getExecOn());
@@ -59,11 +56,10 @@ public class CapsuleServiceImpl implements CapsuleService {
     @Override
     public Capsule update(UpdateCommand updateCommand) {
 
-        log.info(String.format("Entering update capsule service - Capsule Title:{0}", updateCommand.getTitle()));
+        log.info(String.format("Entering update capsule service - Capsule Id:{0}", updateCommand.getCapsuleId()));
 
-        Capsule capsule = capsuleDynamoRepository.findBy(updateCommand.getTitle());
+        Capsule capsule = capsuleDynamoRepository.findBy(updateCommand.getCapsuleId());
         if (capsule != null) {
-            capsule.setActive(true);
 
             capsule.setAudience(updateCommand.getAudience());
             capsule.setAuthor(updateCommand.getAuthor());
@@ -94,11 +90,11 @@ public class CapsuleServiceImpl implements CapsuleService {
     @Override
     public void disable(DisableCommand disableCommand) {
 
-        log.info(String.format("Entering disable capsule service -  Capsule Title:{0}", disableCommand.getTopicName()));
+        log.info(String.format("Entering disable capsule service -  Capsule Id:{0}", disableCommand.getCapsuleId()));
 
-        Capsule capsule = capsuleDynamoRepository.findBy(disableCommand.getTopicName(),disableCommand.getPublishedDate());
+        Capsule capsule = capsuleDynamoRepository.findBy(disableCommand.getCapsuleId());
         if (capsule != null) {
-            capsule.setActive(false);
+            capsule.setStatus(Status.INACTIVE);
 
             capsule.setUpdatedOn(disableCommand.getExecOn());
             capsule.setUpdatedBy(disableCommand.getExecBy().getUserId());
@@ -123,16 +119,61 @@ public class CapsuleServiceImpl implements CapsuleService {
     }
 
     @Override
-    public Void approve(String topicName, String publishedDate) {
-        return null;
+    public void approve(ApproveCommand approveCommand) {
+        log.info(String.format("Entering approve capsule service -  Capsule Id:{0}", approveCommand.getCapsuleId()));
+
+        Capsule capsule = capsuleDynamoRepository.findBy(approveCommand.getCapsuleId());
+        if (capsule != null) {
+            capsule.setStatus(Status.ACTIVE);
+
+            capsule.setUpdatedOn(approveCommand.getExecOn());
+            capsule.setUpdatedBy(approveCommand.getExecBy().getUserId());
+
+            capsuleDynamoRepository.save(capsule);
+        }
+    }
+
+    @Override
+    public void addBookMark(AddBookmarkCommand addBookmarkCommand) {
+        log.info(String.format("Entering addBookmark capsule service -  Capsule Id:{0}", addBookmarkCommand.getCapsuleId()));
+
+        Capsule capsule = capsuleDynamoRepository.findBy(addBookmarkCommand.getCapsuleId());
+
+        if (capsule != null) {
+            Integer bookmarkCount = capsule.getBookmarks();
+            bookmarkCount+=1;
+            capsule.setBookmarks(bookmarkCount);
+
+            capsule.setUpdatedOn(addBookmarkCommand.getExecOn());
+            capsule.setUpdatedBy(addBookmarkCommand.getExecBy().getUserId());
+
+            capsuleDynamoRepository.save(capsule);
+        }
+    }
+
+    @Override
+    public void recommend(RecommendCommand recommendCommand) {
+        log.info(String.format("Entering recommend capsule service -  Capsule Id:{0}", recommendCommand.getCapsuleId()));
+
+        Capsule capsule = capsuleDynamoRepository.findBy(recommendCommand.getCapsuleId());
+        if (capsule != null) {
+            Integer recommendationsCount = capsule.getRecommendations();
+            recommendationsCount+=1;
+            capsule.setBookmarks(recommendationsCount);
+
+            capsule.setUpdatedOn(recommendCommand.getExecOn());
+            capsule.setUpdatedBy(recommendCommand.getExecBy().getUserId());
+
+            capsuleDynamoRepository.save(capsule);
+        }
     }
 
 
     @Override
-    public Capsule findBy( String topicName, String publishedDate) {
+    public Capsule findBy( String capsuleId) {
 
-        log.info(String.format("Entering find by capsule service - Topic Name:{0}", topicName, publishedDate));
+        log.info(String.format("Entering find by capsule service - Capsule Id:{0}", capsuleId));
 
-        return capsuleDynamoRepository.findBy( topicName,publishedDate);
+        return capsuleDynamoRepository.findBy( capsuleId);
     }
 }
