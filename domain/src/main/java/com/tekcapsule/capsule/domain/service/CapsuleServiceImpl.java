@@ -178,7 +178,7 @@ public class CapsuleServiceImpl implements CapsuleService {
     }
 
     @Override
-    public List<Capsule> findByTopic(List<String> subscribedTopics) {
+    public List<Capsule> findByTopic(String topicName) {
         return null;
     }
 }

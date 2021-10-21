@@ -49,15 +49,62 @@ functions:
           method: post
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: getFunction
-  searchCapsule:
+  bookmarkCapsule:
     handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
     events:
       - http:
-          path: capsule/search
+          path: capsule/bookmark
           method: post
     environment:
-      SPRING_CLOUD_FUNCTION_DEFINITION: searchFunction
-
+      SPRING_CLOUD_FUNCTION_DEFINITION: addBookmarkFunction
+  approveCapsule:
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    events:
+      - http:
+          path: capsule/approve
+          method: post
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: approveFunction
+  getEditorsPickCapsules:
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    events:
+      - http:
+          path: capsule/getEditorsPick
+          method: post
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: getEditorsPickFunction
+  getMyFeedCapsules:
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    events:
+      - http:
+          path: capsule/getMyFeed
+          method: post
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: getMyFeedFunction
+  getTrendingCapsules:
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    events:
+      - http:
+          path: capsule/getTrending
+          method: post
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: getTrendingFunction
+  recommendCapsule:
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    events:
+      - http:
+          path: capsule/recommend
+          method: post
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: recommendFunction
+  searchCapsuleByTopic:
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    events:
+      - http:
+          path: capsule/searchByTopic
+          method: post
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: searchByTopicFunction
 resources:
   Resources:
     productsTable:

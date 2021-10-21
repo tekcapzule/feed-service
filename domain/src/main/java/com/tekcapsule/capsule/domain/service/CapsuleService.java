@@ -28,5 +28,5 @@ public interface CapsuleService {
 
     Capsule findBy( String capsuleId);
 
-    List<Capsule> findByTopic( List<String> subscribedTopics);
+    List<Capsule> findByTopic( String topicName);
 }
