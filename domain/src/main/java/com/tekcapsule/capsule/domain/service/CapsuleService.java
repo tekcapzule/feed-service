@@ -24,5 +24,8 @@ public interface CapsuleService {
     void addBookMark(AddBookmarkCommand addBookmarkCommand);
 
     void recommend(RecommendCommand recommendCommand);
+
     Capsule findBy( String capsuleId);
+
+    List<Capsule> findByTopic( List<String> subscribedTopics);
 }

@@ -1,5 +1,6 @@
 package com.tekcapsule.capsule.application.function;
 
+import com.tekcapsule.capsule.application.function.input.GetMyFeedInput;
 import com.tekcapsule.capsule.domain.model.Capsule;
 import com.tekcapsule.capsule.domain.service.CapsuleService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +18,7 @@ import static com.tekcapsule.capsule.application.config.AppConstants.HTTP_STATUS
 
 @Component
 @Slf4j
-public class GetMyFeedFunction implements Function<Message<Void>, Message<List<Capsule>>> {
-
+public class GetMyFeedFunction implements Function<Message<GetMyFeedInput>, Message<List<Capsule>>> {
 
     private final CapsuleService capsuleService;
 
@@ -26,13 +26,12 @@ public class GetMyFeedFunction implements Function<Message<Void>, Message<List<C
         this.capsuleService = capsuleService;
     }
 
-
     @Override
-    public Message<List<Capsule>> apply(Message<Void> getMyFeedInputMessage) {
+    public Message<List<Capsule>> apply(Message<GetMyFeedInput> getMyFeedInputMessage) {
 
         log.info(String.format("Entering get myFeed Function"));
 
-        List<Capsule> capsules = capsuleService.getMyFeed();
+        List<Capsule> capsules = capsuleService.getMyFeed(getMyFeedInputMessage.getPayload().getSubscribedTopics());
         Map<String, Object> responseHeader = new HashMap();
         responseHeader.put(HTTP_STATUS_CODE_HEADER, HttpStatus.OK.value());
 

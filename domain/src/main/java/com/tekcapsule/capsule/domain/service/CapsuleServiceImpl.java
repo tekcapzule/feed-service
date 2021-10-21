@@ -176,4 +176,9 @@ public class CapsuleServiceImpl implements CapsuleService {
 
         return capsuleDynamoRepository.findBy( capsuleId);
     }
+
+    @Override
+    public List<Capsule> findByTopic(List<String> subscribedTopics) {
+        return null;
+    }
 }
