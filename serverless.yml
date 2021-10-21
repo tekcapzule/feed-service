@@ -67,13 +67,9 @@ resources:
         AttributeDefinitions:
           - AttributeName: capsuleId
             AttributeType: S
-          - AttributeName: publishedDate
-            AttributeType: S
         KeySchema:
           - AttributeName: capsuleId
             KeyType: HASH
-          - AttributeName: publishedDate
-            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
