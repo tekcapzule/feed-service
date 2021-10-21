@@ -13,7 +13,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 public class CreateInput {
-    private String topicName;
+    private String topicCode;
     private String publishedDate;
     private String title;
     private String imageUrl;

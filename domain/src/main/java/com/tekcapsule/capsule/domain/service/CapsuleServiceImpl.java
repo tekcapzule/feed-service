@@ -28,7 +28,7 @@ public class CapsuleServiceImpl implements CapsuleService {
                 .audience(createCommand.getAudience())
                 .author(createCommand.getAuthor())
                 .description(createCommand.getDescription())
-                .topicName(createCommand.getTopicName())
+                .topicCode(createCommand.getTopicCode())
                 .editorsPick(createCommand.isEditorsPick())
                 .imageUrl(createCommand.getImageUrl())
                 .duration(createCommand.getDuration())
@@ -64,7 +64,7 @@ public class CapsuleServiceImpl implements CapsuleService {
             capsule.setAudience(updateCommand.getAudience());
             capsule.setAuthor(updateCommand.getAuthor());
             capsule.setDescription(updateCommand.getDescription());
-            capsule.setTopicName(updateCommand.getTopicName());
+            capsule.setTopicCode(updateCommand.getTopicCode());
             capsule.setPublishedDate(updateCommand.getPublishedDate());
             capsule.setTitle(updateCommand.getTitle());
             capsule.setImageUrl(updateCommand.getImageUrl());
@@ -110,12 +110,16 @@ public class CapsuleServiceImpl implements CapsuleService {
 
     @Override
     public List<Capsule> getTrending() {
-        return null;
+        log.info(String.format("Entering getTrending service"));
+
+        return capsuleDynamoRepository.findBy();
     }
 
     @Override
     public List<Capsule> getEditorsPick() {
-        return null;
+        log.info(String.format("Entering getEditorsPick service"));
+
+        return capsuleDynamoRepository.findBy();
     }
 
     @Override
@@ -178,7 +182,9 @@ public class CapsuleServiceImpl implements CapsuleService {
     }
 
     @Override
-    public List<Capsule> findByTopic(String topicName) {
-        return null;
+    public List<Capsule> findByTopic(String topicCode) {
+        log.info(String.format("Entering findBy topic service"));
+
+        return capsuleDynamoRepository.findBy( );
     }
 }

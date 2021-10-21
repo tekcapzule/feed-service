@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 public class UpdateCommand extends Command {
     private String capsuleId;
-    private String topicName;
+    private String topicCode;
     private String publishedDate;
     private String title;
     private String imageUrl;

@@ -107,7 +107,7 @@ functions:
       SPRING_CLOUD_FUNCTION_DEFINITION: searchByTopicFunction
 resources:
   Resources:
-    productsTable:
+    capsuleTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: Capsule
@@ -120,3 +120,48 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+        GlobalSecondaryIndexes:
+          - IndexName: myFeedGSI
+            KeySchema:
+              - AttributeName: status
+                KeyType: HASH
+              - AttributeName: topicName
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+          - IndexName: editorsPickGSI
+            KeySchema:
+              - AttributeName: editorsPick
+                KeyType: HASH
+              - AttributeName: status
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+          - IndexName: trendingGSI
+              KeySchema:
+              - AttributeName: recommendations
+                KeyType: HASH
+              - AttributeName: status
+                KeyType: RANGE
+              Projection:
+                ProjectionType: ALL
+              ProvisionedThroughput:
+                ReadCapacityUnits: 1
+                WriteCapacityUnits: 1
+          - IndexName: topicsSearch
+              KeySchema:
+              - AttributeName: topicName
+                KeyType: HASH
+              - AttributeName: status
+                KeyType: RANGE
+              Projection:
+                ProjectionType: ALL
+              ProvisionedThroughput:
+                ReadCapacityUnits: 1
+                WriteCapacityUnits: 1

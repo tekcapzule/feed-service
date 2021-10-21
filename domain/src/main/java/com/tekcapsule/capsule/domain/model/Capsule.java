@@ -25,8 +25,8 @@ public class Capsule extends BaseDomainEntity<String> implements AggregateRoot {
     private String capsuleId;
     @DynamoDBAttribute(attributeName = "title")
     private String title;
-    @DynamoDBAttribute(attributeName="topicName")
-    private String topicName;
+    @DynamoDBAttribute(attributeName="topicCode")
+    private String topicCode;
     @DynamoDBAttribute(attributeName = "author")
     private String author;
     @DynamoDBAttribute(attributeName = "description")

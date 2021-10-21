@@ -12,7 +12,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
 public class CreateCommand extends Command {
-    private String topicName;
+    private String topicCode;
     private String publishedDate;
     private String title;
     private String imageUrl;
