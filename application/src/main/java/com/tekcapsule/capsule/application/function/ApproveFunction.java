@@ -39,7 +39,7 @@ public class ApproveFunction implements Function<Message<ApproveCapsuleInput>, M
 
         ApproveCommand approveCommand =InputOutputMapper.buildApproveCapsuleCommandFromApproveCapsuleInput.apply(approveCapsuleInput, origin);
         capsuleService.approve(approveCommand);
-        Map<String, Object> responseHeader = new HashMap();
+        Map<String, Object> responseHeader = new HashMap<>();
         responseHeader.put(HTTP_STATUS_CODE_HEADER, HttpStatus.OK.value());
 
         return new GenericMessage(responseHeader);

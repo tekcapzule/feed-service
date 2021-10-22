@@ -31,13 +31,13 @@ public class GetFunction implements Function<Message<GetInput>, Message<Capsule>
         log.info(String.format("Entering get capsule Function - Capsule Id:%S", getInput.getCapsuleId()));
 
         Capsule capsule = capsuleService.findBy(getInput.getCapsuleId());
-        Map<String, Object> responseHeader = new HashMap();
+        Map<String, Object> responseHeader = new HashMap<>();
         if (capsule == null) {
             responseHeader.put(AppConstants.HTTP_STATUS_CODE_HEADER, HttpStatus.NOT_FOUND.value());
             capsule = Capsule.builder().build();
         } else {
             responseHeader.put(AppConstants.HTTP_STATUS_CODE_HEADER, HttpStatus.OK.value());
         }
-        return new GenericMessage(capsule, responseHeader);
+        return new GenericMessage<>(capsule, responseHeader);
     }
 }

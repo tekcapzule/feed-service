@@ -32,10 +32,10 @@ public class GetEditorsPickFunction implements Function<Message<Void>, Message<L
         log.info("Entering get editors pick capsule Function");
 
         List<Capsule> capsules = capsuleService.getEditorsPick();
-        Map<String, Object> responseHeader = new HashMap();
+        Map<String, Object> responseHeader = new HashMap<>();
         responseHeader.put(HTTP_STATUS_CODE_HEADER, HttpStatus.OK.value());
 
-        return new GenericMessage(capsules, responseHeader);
+        return new GenericMessage<>(capsules, responseHeader);
 
     }
 }

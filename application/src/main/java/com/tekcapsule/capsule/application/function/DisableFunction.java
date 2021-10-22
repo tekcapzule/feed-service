@@ -38,7 +38,7 @@ public class DisableFunction implements Function<Message<DisableInput>, Message<
 
         DisableCommand disableCommand = InputOutputMapper.buildDisableCommandFromDisableInput.apply(disableInput, origin);
         capsuleService.disable(disableCommand);
-        Map<String, Object> responseHeader = new HashMap();
+        Map<String, Object> responseHeader = new HashMap<>();
         responseHeader.put(AppConstants.HTTP_STATUS_CODE_HEADER, HttpStatus.OK.value());
 
         return new GenericMessage( responseHeader);

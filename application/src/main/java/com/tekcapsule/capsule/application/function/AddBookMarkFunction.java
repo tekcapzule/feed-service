@@ -39,7 +39,7 @@ public class AddBookMarkFunction implements Function<Message<AddBookmarkInput>, 
 
         AddBookmarkCommand addBookmarkCommand = InputOutputMapper.buildAddBookmarkCommandFromAddBookmarkInput.apply(addBookmarkInput, origin);
         capsuleService.addBookMark(addBookmarkCommand);
-        Map<String, Object> responseHeader = new HashMap();
+        Map<String, Object> responseHeader = new HashMap<>();
         responseHeader.put(HTTP_STATUS_CODE_HEADER, HttpStatus.OK.value());
 
         return new GenericMessage(responseHeader);

@@ -40,9 +40,9 @@ public class CreateFunction implements Function<Message<CreateInput>, Message<Ca
 
         CreateCommand createCommand = InputOutputMapper.buildCreateCommandFromCreateInput.apply(createInput, origin);
         Capsule capsule = capsuleService.create(createCommand);
-        Map<String, Object> responseHeader = new HashMap();
+        Map<String, Object> responseHeader = new HashMap<>();
         responseHeader.put(HTTP_STATUS_CODE_HEADER, HttpStatus.OK.value());
 
-        return new GenericMessage(capsule, responseHeader);
+        return new GenericMessage<>(capsule, responseHeader);
     }
 }

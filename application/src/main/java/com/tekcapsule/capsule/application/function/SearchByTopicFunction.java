@@ -32,8 +32,8 @@ public class SearchByTopicFunction implements Function<Message<SearchByTopicInpu
         log.info(String.format("Entering search by topic Function topics %s", searchByTopicInput.getSubscribedTopic()));
 
         List<Capsule> capsules = capsuleService.findByTopic(searchByTopicInput.getSubscribedTopic());
-        Map<String, Object> responseHeader = new HashMap();
+        Map<String, Object> responseHeader = new HashMap<>();
         responseHeader.put(AppConstants.HTTP_STATUS_CODE_HEADER, HttpStatus.OK.value());
-        return new GenericMessage(capsules, responseHeader);
+        return new GenericMessage<>(capsules, responseHeader);
     }
 }

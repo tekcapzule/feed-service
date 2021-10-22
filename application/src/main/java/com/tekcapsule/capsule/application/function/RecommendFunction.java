@@ -39,7 +39,7 @@ public class RecommendFunction implements Function<Message<RecommendInput>, Mess
 
         RecommendCommand recommendCommand = InputOutputMapper.buildRecommendCommandFromRecommendInput.apply(recommendInput, origin);
         capsuleService.recommend(recommendCommand);
-        Map<String, Object> responseHeader = new HashMap();
+        Map<String, Object> responseHeader = new HashMap<>();
         responseHeader.put(HTTP_STATUS_CODE_HEADER, HttpStatus.OK.value());
 
         return new GenericMessage(responseHeader);

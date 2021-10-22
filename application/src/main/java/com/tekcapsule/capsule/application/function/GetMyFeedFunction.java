@@ -32,10 +32,10 @@ public class GetMyFeedFunction implements Function<Message<GetMyFeedInput>, Mess
         log.info("Entering get myFeed Function");
 
         List<Capsule> capsules = capsuleService.getMyFeed(getMyFeedInputMessage.getPayload().getSubscribedTopics());
-        Map<String, Object> responseHeader = new HashMap();
+        Map<String, Object> responseHeader = new HashMap<>();
         responseHeader.put(HTTP_STATUS_CODE_HEADER, HttpStatus.OK.value());
 
-        return new GenericMessage(capsules, responseHeader);
+        return new GenericMessage<>(capsules, responseHeader);
 
     }
 }
