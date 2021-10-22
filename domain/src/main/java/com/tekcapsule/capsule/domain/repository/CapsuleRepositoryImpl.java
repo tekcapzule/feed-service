@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.tekcapsule.capsule.domain.model.Capsule;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +21,9 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
     private DynamoDBMapper dynamo;
 
-    public final String ACTIVE_STATUS = "ACTIVE";
+    public static final String ACTIVE_STATUS = "ACTIVE";
+    public static final String STATUS_KEY = "status";
+
 
     @Autowired
     public CapsuleRepositoryImpl(DynamoDBMapper dynamo) {
@@ -53,22 +56,27 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
     @Override
     public List<Capsule> findAllFeeds(List<String> subscribedTopics) {
 
-        List<Capsule> capsules=new ArrayList<>();
+        List<Capsule> capsules = new ArrayList<>();
 
-        return queryCapsules( QueryCriteria.builder()
-                .indexName("topicGSI")
-                .hashKeyName("status")
-                .hashKeyValue(ACTIVE_STATUS)
-                .rangeKeyName("topicCode")
-                .rangeKeyValue("")
-                .build());
+        subscribedTopics.forEach(topic -> {
+            var myCapsules = queryCapsules(QueryCriteria.builder()
+                    .indexName("topicGSI")
+                    .hashKeyName(STATUS_KEY)
+                    .hashKeyValue(ACTIVE_STATUS)
+                    .rangeKeyName("topicCode")
+                    .rangeKeyValue(topic)
+                    .build());
+            if (myCapsules != null && myCapsules.size() > 0)
+            { capsules.addAll(myCapsules);}
+        });
+     return capsules;
     }
 
     @Override
     public List<Capsule> findAllEditorsPick() {
         return queryCapsules( QueryCriteria.builder()
                 .indexName("editorsPickGSI")
-                .hashKeyName("status")
+                .hashKeyName(STATUS_KEY)
                 .hashKeyValue(ACTIVE_STATUS)
                 .rangeKeyName("editorsPick")
                 .rangeKeyValue("true")
@@ -79,7 +87,7 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
     public List<Capsule> findAllTrending() {
         return queryCapsules( QueryCriteria.builder()
                 .indexName("trendingGSI")
-                .hashKeyName("status")
+                .hashKeyName(STATUS_KEY)
                 .hashKeyValue(ACTIVE_STATUS)
                 .rangeKeyName("recommendations")
                 .rangeKeyValue("1")
@@ -90,7 +98,7 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
     public List<Capsule> findAllByTopicCode(String topicCode) {
         return queryCapsules( QueryCriteria.builder()
                 .indexName("topicGSI")
-                .hashKeyName("status")
+                .hashKeyName(STATUS_KEY)
                 .hashKeyValue(ACTIVE_STATUS)
                 .rangeKeyName("topicCode")
                 .rangeKeyValue(topicCode)

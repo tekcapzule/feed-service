@@ -34,7 +34,7 @@ public class CreateFunction implements Function<Message<CreateInput>, Message<Ca
 
         CreateInput createInput = createInputMessage.getPayload();
 
-        log.info(String.format("Entering create capsule Function -  Capsule Name:{0}",  createInput.getTitle()));
+        log.info(String.format("Entering create capsule Function -  Capsule Name:%S",  createInput.getTitle()));
 
         Origin origin = HeaderUtil.buildOriginFromHeaders(createInputMessage.getHeaders());
 

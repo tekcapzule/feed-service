@@ -29,7 +29,7 @@ public class SearchByTopicFunction implements Function<Message<SearchByTopicInpu
     public Message<List<Capsule>> apply(Message<SearchByTopicInput> findByTopicInputMessage) {
         SearchByTopicInput searchByTopicInput = findByTopicInputMessage.getPayload();
 
-        log.info(String.format("Entering search by topic Function", searchByTopicInput.getSubscribedTopic()));
+        log.info(String.format("Entering search by topic Function topics %s", searchByTopicInput.getSubscribedTopic()));
 
         List<Capsule> capsules = capsuleService.findByTopic(searchByTopicInput.getSubscribedTopic());
         Map<String, Object> responseHeader = new HashMap();

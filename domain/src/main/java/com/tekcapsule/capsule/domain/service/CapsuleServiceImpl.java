@@ -22,7 +22,7 @@ public class CapsuleServiceImpl implements CapsuleService {
     @Override
     public Capsule create(CreateCommand createCommand) {
 
-        log.info(String.format("Entering create capsule service - Capsule Title:{0}", createCommand.getTitle()));
+        log.info(String.format("Entering create capsule service - Capsule Title:%S", createCommand.getTitle()));
 
         Capsule capsule = Capsule.builder()
                 .audience(createCommand.getAudience())
@@ -56,7 +56,7 @@ public class CapsuleServiceImpl implements CapsuleService {
     @Override
     public Capsule update(UpdateCommand updateCommand) {
 
-        log.info(String.format("Entering update capsule service - Capsule Id:{0}", updateCommand.getCapsuleId()));
+        log.info(String.format("Entering update capsule service - Capsule Id:%S", updateCommand.getCapsuleId()));
 
         Capsule capsule = capsuleDynamoRepository.findBy(updateCommand.getCapsuleId());
         if (capsule != null) {
@@ -90,7 +90,7 @@ public class CapsuleServiceImpl implements CapsuleService {
     @Override
     public void disable(DisableCommand disableCommand) {
 
-        log.info(String.format("Entering disable capsule service -  Capsule Id:{0}", disableCommand.getCapsuleId()));
+        log.info(String.format("Entering disable capsule service -  Capsule Id:%S", disableCommand.getCapsuleId()));
 
         Capsule capsule = capsuleDynamoRepository.findBy(disableCommand.getCapsuleId());
         if (capsule != null) {
@@ -105,28 +105,28 @@ public class CapsuleServiceImpl implements CapsuleService {
 
     @Override
     public List<Capsule> getMyFeed(List<String> subscribedTopics) {
-        log.info(String.format("Entering getMyFeed service"));
+        log.info("Entering getMyFeed service");
 
         return capsuleDynamoRepository.findAllFeeds(subscribedTopics);
     }
 
     @Override
     public List<Capsule> getTrending() {
-        log.info(String.format("Entering getTrending service"));
+        log.info("Entering getTrending service");
 
         return capsuleDynamoRepository.findAllTrending();
     }
 
     @Override
     public List<Capsule> getEditorsPick() {
-        log.info(String.format("Entering getEditorsPick service"));
+        log.info("Entering getEditorsPick service");
 
         return capsuleDynamoRepository.findAllEditorsPick();
     }
 
     @Override
     public void approve(ApproveCommand approveCommand) {
-        log.info(String.format("Entering approve capsule service -  Capsule Id:{0}", approveCommand.getCapsuleId()));
+        log.info(String.format("Entering approve capsule service -  Capsule Id:%S", approveCommand.getCapsuleId()));
 
         Capsule capsule = capsuleDynamoRepository.findBy(approveCommand.getCapsuleId());
         if (capsule != null) {
@@ -141,7 +141,7 @@ public class CapsuleServiceImpl implements CapsuleService {
 
     @Override
     public void addBookMark(AddBookmarkCommand addBookmarkCommand) {
-        log.info(String.format("Entering addBookmark capsule service -  Capsule Id:{0}", addBookmarkCommand.getCapsuleId()));
+        log.info(String.format("Entering addBookmark capsule service -  Capsule Id:%S", addBookmarkCommand.getCapsuleId()));
 
         Capsule capsule = capsuleDynamoRepository.findBy(addBookmarkCommand.getCapsuleId());
 
@@ -159,7 +159,7 @@ public class CapsuleServiceImpl implements CapsuleService {
 
     @Override
     public void recommend(RecommendCommand recommendCommand) {
-        log.info(String.format("Entering recommend capsule service -  Capsule Id:{0}", recommendCommand.getCapsuleId()));
+        log.info(String.format("Entering recommend capsule service -  Capsule Id:%S", recommendCommand.getCapsuleId()));
 
         Capsule capsule = capsuleDynamoRepository.findBy(recommendCommand.getCapsuleId());
         if (capsule != null) {
@@ -178,14 +178,14 @@ public class CapsuleServiceImpl implements CapsuleService {
     @Override
     public Capsule findBy( String capsuleId) {
 
-        log.info(String.format("Entering find by capsule service - Capsule Id:{0}", capsuleId));
+        log.info(String.format("Entering find by capsule service - Capsule Id:%S", capsuleId));
 
         return capsuleDynamoRepository.findBy( capsuleId);
     }
 
     @Override
     public List<Capsule> findByTopic(String topicCode) {
-        log.info(String.format("Entering findBy topic service"));
+        log.info("Entering findBy topic service");
 
         return capsuleDynamoRepository.findAllByTopicCode( topicCode);
     }

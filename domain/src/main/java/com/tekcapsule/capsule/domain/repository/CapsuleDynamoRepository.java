@@ -7,6 +7,7 @@ import java.util.List;
 
 
 public interface CapsuleDynamoRepository extends CrudRepository<Capsule, String> {
+    
     Capsule findBy(String hashKey, String rangeKey);
 
     List<Capsule> findAllFeeds (List<String> subscribedTopics);

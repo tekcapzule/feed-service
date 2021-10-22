@@ -29,7 +29,7 @@ public class GetEditorsPickFunction implements Function<Message<Void>, Message<L
     @Override
     public Message<List<Capsule>> apply(Message<Void> getEditorsPickInputMessage) {
 
-        log.info(String.format("Entering get editors pick capsule Function"));
+        log.info("Entering get editors pick capsule Function");
 
         List<Capsule> capsules = capsuleService.getEditorsPick();
         Map<String, Object> responseHeader = new HashMap();

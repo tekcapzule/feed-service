@@ -34,7 +34,7 @@ public class GetTrendingFunction implements Function<Message<UpdateInput>, Messa
     public Message<Capsule> apply(Message<UpdateInput> updateInputMessage) {
         UpdateInput updateInput = updateInputMessage.getPayload();
 
-        log.info(String.format("Entering update capsule Function -  Capsule Id:{0}",  updateInput.getTitle()));
+        log.info(String.format("Entering update capsule Function -  Capsule Id:%S",  updateInput.getTitle()));
 
         Origin origin = HeaderUtil.buildOriginFromHeaders(updateInputMessage.getHeaders());
 

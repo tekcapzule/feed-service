@@ -29,7 +29,7 @@ public class GetMyFeedFunction implements Function<Message<GetMyFeedInput>, Mess
     @Override
     public Message<List<Capsule>> apply(Message<GetMyFeedInput> getMyFeedInputMessage) {
 
-        log.info(String.format("Entering get myFeed Function"));
+        log.info("Entering get myFeed Function");
 
         List<Capsule> capsules = capsuleService.getMyFeed(getMyFeedInputMessage.getPayload().getSubscribedTopics());
         Map<String, Object> responseHeader = new HashMap();
