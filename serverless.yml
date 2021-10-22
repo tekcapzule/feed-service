@@ -121,11 +121,11 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         GlobalSecondaryIndexes:
-          - IndexName: myFeedGSI
+          - IndexName: topicGSI
             KeySchema:
               - AttributeName: status
                 KeyType: HASH
-              - AttributeName: topicName
+              - AttributeName: topicCode
                 KeyType: RANGE
             Projection:
               ProjectionType: ALL
@@ -134,9 +134,9 @@ resources:
               WriteCapacityUnits: 1
           - IndexName: editorsPickGSI
             KeySchema:
-              - AttributeName: editorsPick
-                KeyType: HASH
               - AttributeName: status
+                KeyType: HASH
+              - AttributeName: editorsPick
                 KeyType: RANGE
             Projection:
               ProjectionType: ALL
@@ -145,20 +145,9 @@ resources:
               WriteCapacityUnits: 1
           - IndexName: trendingGSI
               KeySchema:
+              - AttributeName: status
+                KeyType: HASH
               - AttributeName: recommendations
-                KeyType: HASH
-              - AttributeName: status
-                KeyType: RANGE
-              Projection:
-                ProjectionType: ALL
-              ProvisionedThroughput:
-                ReadCapacityUnits: 1
-                WriteCapacityUnits: 1
-          - IndexName: topicsSearch
-              KeySchema:
-              - AttributeName: topicName
-                KeyType: HASH
-              - AttributeName: status
                 KeyType: RANGE
               Projection:
                 ProjectionType: ALL

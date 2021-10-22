@@ -1,19 +1,26 @@
 package com.tekcapsule.capsule.domain.repository;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.tekcapsule.capsule.domain.model.Capsule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Repository
 public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
     private DynamoDBMapper dynamo;
+
+    public final String ACTIVE_STATUS = "ACTIVE";
 
     @Autowired
     public CapsuleRepositoryImpl(DynamoDBMapper dynamo) {
@@ -42,4 +49,78 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
     public Capsule findBy(String hashKey, String rangeKey) {
         return dynamo.load(Capsule.class, hashKey, rangeKey);
     }
+
+    @Override
+    public List<Capsule> findAllFeeds(List<String> subscribedTopics) {
+
+        List<Capsule> capsules=new ArrayList<>();
+
+        return queryCapsules( QueryCriteria.builder()
+                .indexName("topicGSI")
+                .hashKeyName("status")
+                .hashKeyValue(ACTIVE_STATUS)
+                .rangeKeyName("topicCode")
+                .rangeKeyValue("")
+                .build());
+    }
+
+    @Override
+    public List<Capsule> findAllEditorsPick() {
+        return queryCapsules( QueryCriteria.builder()
+                .indexName("editorsPickGSI")
+                .hashKeyName("status")
+                .hashKeyValue(ACTIVE_STATUS)
+                .rangeKeyName("editorsPick")
+                .rangeKeyValue("true")
+                .build());
+    }
+
+    @Override
+    public List<Capsule> findAllTrending() {
+        return queryCapsules( QueryCriteria.builder()
+                .indexName("trendingGSI")
+                .hashKeyName("status")
+                .hashKeyValue(ACTIVE_STATUS)
+                .rangeKeyName("recommendations")
+                .rangeKeyValue("1")
+                .build());
+    }
+
+    @Override
+    public List<Capsule> findAllByTopicCode(String topicCode) {
+        return queryCapsules( QueryCriteria.builder()
+                .indexName("topicGSI")
+                .hashKeyName("status")
+                .hashKeyValue(ACTIVE_STATUS)
+                .rangeKeyName("topicCode")
+                .rangeKeyValue(topicCode)
+                .build());
+    }
+
+    private List<Capsule> queryCapsules (QueryCriteria queryCriteria){
+
+        Map<String,String> expressionAttributesNames = new HashMap<>();
+        String hashKeyName="#".concat(queryCriteria.getHashKeyName());
+        String rangeKeyName="#".concat(queryCriteria.getRangeKeyName());
+        String hashKeyValue=":".concat(queryCriteria.getHashKeyName());
+        String rangeKeyValue=":".concat(queryCriteria.getRangeKeyName());
+        String queryExpression= hashKeyName.concat(" = ").concat(hashKeyValue).concat(" and ").concat(rangeKeyName).concat(" = ").concat(rangeKeyValue);
+
+        expressionAttributesNames.put(hashKeyName,queryCriteria.getHashKeyName());
+        expressionAttributesNames.put(rangeKeyName,queryCriteria.getRangeKeyValue());
+
+        Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
+        expressionAttributeValues.put(hashKeyValue,new AttributeValue().withS(queryCriteria.getHashKeyValue()));
+        expressionAttributeValues.put(rangeKeyValue,new AttributeValue().withS(queryCriteria.getRangeKeyValue()));
+
+        DynamoDBQueryExpression<Capsule> dynamoDBQueryExpression = new DynamoDBQueryExpression<Capsule>()
+                .withIndexName(queryCriteria.getIndexName())
+                .withKeyConditionExpression(queryExpression)
+                .withExpressionAttributeNames(expressionAttributesNames)
+                .withExpressionAttributeValues(expressionAttributeValues)
+                .withConsistentRead(false);
+
+        return dynamo.query(Capsule.class,dynamoDBQueryExpression);
+    }
+
 }

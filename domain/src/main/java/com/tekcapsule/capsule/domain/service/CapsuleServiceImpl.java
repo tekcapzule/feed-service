@@ -105,21 +105,23 @@ public class CapsuleServiceImpl implements CapsuleService {
 
     @Override
     public List<Capsule> getMyFeed(List<String> subscribedTopics) {
-        return null;
+        log.info(String.format("Entering getMyFeed service"));
+
+        return capsuleDynamoRepository.findAllFeeds(subscribedTopics);
     }
 
     @Override
     public List<Capsule> getTrending() {
         log.info(String.format("Entering getTrending service"));
 
-        return capsuleDynamoRepository.findBy();
+        return capsuleDynamoRepository.findAllTrending();
     }
 
     @Override
     public List<Capsule> getEditorsPick() {
         log.info(String.format("Entering getEditorsPick service"));
 
-        return capsuleDynamoRepository.findBy();
+        return capsuleDynamoRepository.findAllEditorsPick();
     }
 
     @Override
@@ -185,6 +187,6 @@ public class CapsuleServiceImpl implements CapsuleService {
     public List<Capsule> findByTopic(String topicCode) {
         log.info(String.format("Entering findBy topic service"));
 
-        return capsuleDynamoRepository.findBy( );
+        return capsuleDynamoRepository.findAllByTopicCode( topicCode);
     }
 }
