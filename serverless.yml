@@ -2,6 +2,7 @@ service: capsule-service
 package:
   version: 0.0.1-SNAPSHOT
   artifact: ./application/target/${self:service}-${self:package.version}-${self:provider}.jar
+  excludeDevDependencies: true
 provider:
   name: aws
   runtime: java11
@@ -14,95 +15,172 @@ provider:
         - "dynamodb:*"
       Resource: "*"
   environment:
-    APPLICATION_ENVIRONMENT: Dev
+    APPLICATION_ENVIRONMENT: ${opt:stage}
     CLOUD_REGION: US_East_2
 functions:
   createCapsule:
-    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:
       - http:
           path: capsule/create
           method: post
+          cors: true
+          request:
+            schemas:
+              application/json:
+                schema: ${file(api-gateway/create.json)}
+                name: CreateCapsuleModel
+                description: 'create capsule model'
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: createFunction
   updateCapsule:
-    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:
       - http:
           path: capsule/update
           method: post
+          cors: true
+          request:
+            schemas:
+              application/json:
+                schema: ${file(api-gateway/update.json)}
+                name: UpdateCapsuleModel
+                description: 'update capsule model'
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: updateFunction
   disableCapsule:
-    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:
       - http:
           path: capsule/disable
           method: post
+          cors: true
+          request:
+            schemas:
+              application/json:
+                schema: ${file(api-gateway/disable.json)}
+                name: DisableCapsuleModel
+                description: 'disable capsule model'
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: disableFunction
   getCapsule:
-    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:
       - http:
           path: capsule/findById
           method: post
+          cors: true
+          request:
+            schemas:
+              application/json:
+                schema: ${file(api-gateway/get.json)}
+                name: GetCapsuleModel
+                description: 'get capsule model'
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: getFunction
   bookmarkCapsule:
-    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:
       - http:
           path: capsule/bookmark
           method: post
+          cors: true
+          request:
+            schemas:
+              application/json:
+                schema: ${file(api-gateway/bookmark.json)}
+                name: BookmarkCapsuleModel
+                description: 'Bookmark capsule model'
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: addBookmarkFunction
   approveCapsule:
-    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:
       - http:
           path: capsule/approve
           method: post
+          cors: true
+          request:
+            schemas:
+              application/json:
+                schema: ${file(api-gateway/approve.json)}
+                name: ApproveCapsuleModel
+                description: 'approve capsule model'
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: approveFunction
   getEditorsPickCapsules:
-    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:
       - http:
           path: capsule/getEditorsPick
           method: post
+          cors: true
+          request:
+            schemas:
+              application/json:
+                schema: ${file(api-gateway/getEditorsPick.json)}
+                name: GetEditorsPickModel
+                description: 'get editors pick model'
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: getEditorsPickFunction
   getMyFeedCapsules:
-    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:
       - http:
           path: capsule/getMyFeed
           method: post
+          cors: true
+          request:
+            schemas:
+              application/json:
+                schema: ${file(api-gateway/getMyFeed.json)}
+                name: GetMyFeedModel
+                description: 'get myFeed model'
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: getMyFeedFunction
   getTrendingCapsules:
-    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:
       - http:
           path: capsule/getTrending
           method: post
+          cors: true
+          request:
+            schemas:
+              application/json:
+                schema: ${file(api-gateway/getTrending.json)}
+                name: GetTrendingModel
+                description: 'get trending model'
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: getTrendingFunction
   recommendCapsule:
-    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:
       - http:
           path: capsule/recommend
           method: post
+          cors: true
+          request:
+            schemas:
+              application/json:
+                schema: ${file(api-gateway/recommend.json)}
+                name: RecommendCapsuleModel
+                description: 'recommend capsule model'
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: recommendFunction
   searchCapsuleByTopic:
-    handler: org.springframework.cloud.function.adapter.aws.SpringBootStreamHandler
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:
       - http:
           path: capsule/searchByTopic
           method: post
+          cors: true
+          request:
+            schemas:
+              application/json:
+                schema: ${file(api-gateway/searchByTopic.json)}
+                name: SearchByTopicModel
+                description: 'search by topic model'
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: searchByTopicFunction
 resources:
@@ -119,7 +197,7 @@ resources:
           - AttributeName: topicCode
             AttributeType: S
           - AttributeName: editorsPick
-            AttributeType: B
+            AttributeType: BOOL
           - AttributeName: recommendations
             AttributeType: N
         KeySchema:

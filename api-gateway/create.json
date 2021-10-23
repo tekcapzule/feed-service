@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "CreateUserModel",
+  "type": "object",
+  "required": [
+    "userId",
+    "firstName",
+    "lastName",
+    "subscribedTopics",
+    "emailId",
+    "contactNumber"
+  ],
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "subscribedTopics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "emailId": {
+      "type": "string"
+    },
+    "contactNumber": {
+      "type": "string"
+    }
+  }
+}
+

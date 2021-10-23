@@ -2,6 +2,7 @@ package com.tekcapsule.capsule.application.function;
 
 import com.tekcapsule.capsule.domain.model.Capsule;
 import com.tekcapsule.capsule.domain.service.CapsuleService;
+import com.tekcapsule.core.domain.EmptyFunctionInput;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.Message;
@@ -17,7 +18,7 @@ import static com.tekcapsule.capsule.application.config.AppConstants.HTTP_STATUS
 
 @Component
 @Slf4j
-public class GetEditorsPickFunction implements Function<Message<Void>, Message<List<Capsule>>> {
+public class GetEditorsPickFunction implements Function<Message<EmptyFunctionInput>, Message<List<Capsule>>> {
 
     private final CapsuleService capsuleService;
 
@@ -27,7 +28,7 @@ public class GetEditorsPickFunction implements Function<Message<Void>, Message<L
 
 
     @Override
-    public Message<List<Capsule>> apply(Message<Void> getEditorsPickInputMessage) {
+    public Message<List<Capsule>> apply(Message<EmptyFunctionInput> getEditorsPickInputMessage) {
 
         log.info("Entering get editors pick capsule Function");
 

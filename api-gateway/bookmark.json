@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "AddBookmarkModel",
+  "type": "object",
+  "required": [
+    "userId",
+    "capsuleId"
+  ],
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "capsuleId": {
+      "type": "string"
+    }
+  }
+}

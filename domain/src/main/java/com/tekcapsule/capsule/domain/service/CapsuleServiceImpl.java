@@ -20,7 +20,7 @@ public class CapsuleServiceImpl implements CapsuleService {
     }
 
     @Override
-    public Capsule create(CreateCommand createCommand) {
+    public void create(CreateCommand createCommand) {
 
         log.info(String.format("Entering create capsule service - Capsule Title:%S", createCommand.getTitle()));
 
@@ -50,11 +50,11 @@ public class CapsuleServiceImpl implements CapsuleService {
         capsule.setUpdatedOn(createCommand.getExecOn());
         capsule.setAddedBy(createCommand.getExecBy().getUserId());
 
-        return capsuleDynamoRepository.save(capsule);
+        capsuleDynamoRepository.save(capsule);
     }
 
     @Override
-    public Capsule update(UpdateCommand updateCommand) {
+    public void update(UpdateCommand updateCommand) {
 
         log.info(String.format("Entering update capsule service - Capsule Id:%S", updateCommand.getCapsuleId()));
 
@@ -83,8 +83,6 @@ public class CapsuleServiceImpl implements CapsuleService {
 
             capsuleDynamoRepository.save(capsule);
         }
-        return capsule;
-
     }
 
     @Override

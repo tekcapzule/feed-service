@@ -21,7 +21,7 @@ import static com.tekcapsule.capsule.application.config.AppConstants.HTTP_STATUS
 
 @Component
 @Slf4j
-public class CreateFunction implements Function<Message<CreateInput>, Message<Capsule>> {
+public class CreateFunction implements Function<Message<CreateInput>, Message<Void>> {
 
     private final CapsuleService capsuleService;
 
@@ -30,7 +30,7 @@ public class CreateFunction implements Function<Message<CreateInput>, Message<Ca
     }
 
     @Override
-    public Message<Capsule> apply(Message<CreateInput> createInputMessage) {
+    public Message<Void> apply(Message<CreateInput> createInputMessage) {
 
         CreateInput createInput = createInputMessage.getPayload();
 
@@ -39,10 +39,10 @@ public class CreateFunction implements Function<Message<CreateInput>, Message<Ca
         Origin origin = HeaderUtil.buildOriginFromHeaders(createInputMessage.getHeaders());
 
         CreateCommand createCommand = InputOutputMapper.buildCreateCommandFromCreateInput.apply(createInput, origin);
-        Capsule capsule = capsuleService.create(createCommand);
+        capsuleService.create(createCommand);
         Map<String, Object> responseHeader = new HashMap<>();
         responseHeader.put(HTTP_STATUS_CODE_HEADER, HttpStatus.OK.value());
 
-        return new GenericMessage<>(capsule, responseHeader);
+        return new GenericMessage(responseHeader);
     }
 }

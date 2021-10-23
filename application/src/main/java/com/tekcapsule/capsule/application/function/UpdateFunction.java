@@ -21,7 +21,7 @@ import static com.tekcapsule.capsule.application.config.AppConstants.HTTP_STATUS
 
 @Component
 @Slf4j
-public class UpdateFunction implements Function<Message<UpdateInput>, Message<Capsule>> {
+public class UpdateFunction implements Function<Message<UpdateInput>, Message<Void>> {
 
     private final CapsuleService capsuleService;
 
@@ -31,7 +31,7 @@ public class UpdateFunction implements Function<Message<UpdateInput>, Message<Ca
 
 
     @Override
-    public Message<Capsule> apply(Message<UpdateInput> updateInputMessage) {
+    public Message<Void> apply(Message<UpdateInput> updateInputMessage) {
         UpdateInput updateInput = updateInputMessage.getPayload();
 
         log.info(String.format("Entering update capsule Function -  Capsule Id:%S",  updateInput.getTitle()));
@@ -39,11 +39,11 @@ public class UpdateFunction implements Function<Message<UpdateInput>, Message<Ca
         Origin origin = HeaderUtil.buildOriginFromHeaders(updateInputMessage.getHeaders());
 
         UpdateCommand updateCommand = InputOutputMapper.buildUpdateCommandFromUpdateInput.apply(updateInput, origin);
-        Capsule capsule = capsuleService.update(updateCommand);
+        capsuleService.update(updateCommand);
         Map<String, Object> responseHeader = new HashMap<>();
         responseHeader.put(HTTP_STATUS_CODE_HEADER, HttpStatus.OK.value());
 
-        return new GenericMessage<>(capsule, responseHeader);
+        return new GenericMessage(responseHeader);
 
     }
 }

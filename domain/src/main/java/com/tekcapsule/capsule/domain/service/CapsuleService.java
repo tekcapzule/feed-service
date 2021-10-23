@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface CapsuleService {
 
-    Capsule create(CreateCommand createCommand);
+    void create(CreateCommand createCommand);
 
-    Capsule update(UpdateCommand updateCommand);
+    void update(UpdateCommand updateCommand);
 
     void disable(DisableCommand disableCommand);
 
