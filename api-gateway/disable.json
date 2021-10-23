@@ -1,12 +1,12 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "DisableUserModel",
+  "title": "DisableCapsuleModel",
   "type": "object",
   "required": [
-    "userId"
+    "capsuleId"
   ],
   "properties": {
-    "userId": {
+    "capsuleId": {
       "type": "string"
     }
   }

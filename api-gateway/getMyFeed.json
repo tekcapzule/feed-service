@@ -1,13 +1,17 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "DisableUserModel",
+  "title": "GetMyFeedModel",
   "type": "object",
   "required": [
-    "userId"
+    "subscribedTopics"
   ],
   "properties": {
-    "userId": {
-      "type": "string"
+    "subscribedTopics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     }
   }
 }
+

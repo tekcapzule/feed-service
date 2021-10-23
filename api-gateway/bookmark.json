@@ -3,13 +3,9 @@
   "title": "AddBookmarkModel",
   "type": "object",
   "required": [
-    "userId",
     "capsuleId"
   ],
   "properties": {
-    "userId": {
-      "type": "string"
-    },
     "capsuleId": {
       "type": "string"
     }

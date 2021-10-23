@@ -1,13 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "DisableUserModel",
+  "title": "GetTrendingModel",
   "type": "object",
-  "required": [
-    "userId"
-  ],
   "properties": {
-    "userId": {
-      "type": "string"
-    }
   }
 }

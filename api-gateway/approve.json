@@ -3,10 +3,10 @@
   "title": "ApproveCapsuleModel",
   "type": "object",
   "required": [
-    "userId"
+    "capsuleId"
   ],
   "properties": {
-    "userId": {
+    "capsuleId": {
       "type": "string"
     }
   }

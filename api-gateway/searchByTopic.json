@@ -1,12 +1,12 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "DisableUserModel",
+  "title": "SearchByTopicModel",
   "type": "object",
   "required": [
-    "userId"
+    "subscribedTopic"
   ],
   "properties": {
-    "userId": {
+    "subscribedTopic": {
       "type": "string"
     }
   }
