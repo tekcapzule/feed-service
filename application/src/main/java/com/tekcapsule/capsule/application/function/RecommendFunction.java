@@ -33,7 +33,7 @@ public class RecommendFunction implements Function<Message<RecommendInput>, Mess
     public Message<Void> apply(Message<RecommendInput> recommendInputMessage) {
         RecommendInput recommendInput = recommendInputMessage.getPayload();
 
-        log.info(String.format("Entering recommend capsule Function -  Capsule Id:%S",  recommendInput.getCapsuleId()));
+        log.info(String.format("Entering recommend capsule Function -  Capsule Id:%s",  recommendInput.getCapsuleId()));
 
         Origin origin = HeaderUtil.buildOriginFromHeaders(recommendInputMessage.getHeaders());
 

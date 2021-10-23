@@ -33,7 +33,7 @@ public class ApproveFunction implements Function<Message<ApproveCapsuleInput>, M
     public Message<Void> apply(Message<ApproveCapsuleInput> approveCapsuleInputMessage) {
         ApproveCapsuleInput approveCapsuleInput = approveCapsuleInputMessage.getPayload();
 
-        log.info(String.format("Entering approve capsule Function -  Capsule Id:%S",  approveCapsuleInput.getCapsuleId()));
+        log.info(String.format("Entering approve capsule Function -  Capsule Id:%s",  approveCapsuleInput.getCapsuleId()));
 
         Origin origin = HeaderUtil.buildOriginFromHeaders(approveCapsuleInputMessage.getHeaders());
 

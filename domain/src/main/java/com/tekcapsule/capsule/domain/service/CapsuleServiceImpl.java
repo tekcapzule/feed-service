@@ -22,7 +22,7 @@ public class CapsuleServiceImpl implements CapsuleService {
     @Override
     public void create(CreateCommand createCommand) {
 
-        log.info(String.format("Entering create capsule service - Capsule Title:%S", createCommand.getTitle()));
+        log.info(String.format("Entering create capsule service - Capsule Title:%s", createCommand.getTitle()));
 
         Capsule capsule = Capsule.builder()
                 .audience(createCommand.getAudience())
@@ -56,7 +56,7 @@ public class CapsuleServiceImpl implements CapsuleService {
     @Override
     public void update(UpdateCommand updateCommand) {
 
-        log.info(String.format("Entering update capsule service - Capsule Id:%S", updateCommand.getCapsuleId()));
+        log.info(String.format("Entering update capsule service - Capsule Id:%s", updateCommand.getCapsuleId()));
 
         Capsule capsule = capsuleDynamoRepository.findBy(updateCommand.getCapsuleId());
         if (capsule != null) {
@@ -88,7 +88,7 @@ public class CapsuleServiceImpl implements CapsuleService {
     @Override
     public void disable(DisableCommand disableCommand) {
 
-        log.info(String.format("Entering disable capsule service -  Capsule Id:%S", disableCommand.getCapsuleId()));
+        log.info(String.format("Entering disable capsule service -  Capsule Id:%s", disableCommand.getCapsuleId()));
 
         Capsule capsule = capsuleDynamoRepository.findBy(disableCommand.getCapsuleId());
         if (capsule != null) {
@@ -124,7 +124,7 @@ public class CapsuleServiceImpl implements CapsuleService {
 
     @Override
     public void approve(ApproveCommand approveCommand) {
-        log.info(String.format("Entering approve capsule service -  Capsule Id:%S", approveCommand.getCapsuleId()));
+        log.info(String.format("Entering approve capsule service -  Capsule Id:%s", approveCommand.getCapsuleId()));
 
         Capsule capsule = capsuleDynamoRepository.findBy(approveCommand.getCapsuleId());
         if (capsule != null) {
@@ -139,7 +139,7 @@ public class CapsuleServiceImpl implements CapsuleService {
 
     @Override
     public void addBookMark(AddBookmarkCommand addBookmarkCommand) {
-        log.info(String.format("Entering addBookmark capsule service -  Capsule Id:%S", addBookmarkCommand.getCapsuleId()));
+        log.info(String.format("Entering addBookmark capsule service -  Capsule Id:%s", addBookmarkCommand.getCapsuleId()));
 
         Capsule capsule = capsuleDynamoRepository.findBy(addBookmarkCommand.getCapsuleId());
 
@@ -157,7 +157,7 @@ public class CapsuleServiceImpl implements CapsuleService {
 
     @Override
     public void recommend(RecommendCommand recommendCommand) {
-        log.info(String.format("Entering recommend capsule service -  Capsule Id:%S", recommendCommand.getCapsuleId()));
+        log.info(String.format("Entering recommend capsule service -  Capsule Id:%s", recommendCommand.getCapsuleId()));
 
         Capsule capsule = capsuleDynamoRepository.findBy(recommendCommand.getCapsuleId());
         if (capsule != null) {
@@ -176,7 +176,7 @@ public class CapsuleServiceImpl implements CapsuleService {
     @Override
     public Capsule findBy( String capsuleId) {
 
-        log.info(String.format("Entering find by capsule service - Capsule Id:%S", capsuleId));
+        log.info(String.format("Entering find by capsule service - Capsule Id:%s", capsuleId));
 
         return capsuleDynamoRepository.findBy( capsuleId);
     }

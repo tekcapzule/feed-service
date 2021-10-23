@@ -33,7 +33,7 @@ public class AddBookMarkFunction implements Function<Message<AddBookmarkInput>, 
     public Message<Void> apply(Message<AddBookmarkInput> addBookmarkInputMessage) {
         AddBookmarkInput addBookmarkInput = addBookmarkInputMessage.getPayload();
 
-        log.info(String.format("Entering add bookmark Function -  Capsule Id:%S",  addBookmarkInput.getCapsuleId()));
+        log.info(String.format("Entering add bookmark Function -  Capsule Id:%s",  addBookmarkInput.getCapsuleId()));
 
         Origin origin = HeaderUtil.buildOriginFromHeaders(addBookmarkInputMessage.getHeaders());
 

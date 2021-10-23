@@ -28,7 +28,7 @@ public class GetFunction implements Function<Message<GetInput>, Message<Capsule>
     public Message<Capsule> apply(Message<GetInput> getInputMessage) {
         GetInput getInput = getInputMessage.getPayload();
 
-        log.info(String.format("Entering get capsule Function - Capsule Id:%S", getInput.getCapsuleId()));
+        log.info(String.format("Entering get capsule Function - Capsule Id:%s", getInput.getCapsuleId()));
 
         Capsule capsule = capsuleService.findBy(getInput.getCapsuleId());
         Map<String, Object> responseHeader = new HashMap<>();
