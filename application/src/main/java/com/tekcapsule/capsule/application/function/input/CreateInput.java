@@ -27,5 +27,5 @@ public class CreateInput {
     private TargetAudience audience;
     private TopicLevel level;
     private String expiryDate;
-    private boolean editorsPick;
+    private Integer editorsPick;
 }

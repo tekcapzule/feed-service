@@ -29,7 +29,7 @@ public class CapsuleServiceImpl implements CapsuleService {
                 .author(createCommand.getAuthor())
                 .description(createCommand.getDescription())
                 .topicCode(createCommand.getTopicCode())
-                .editorsPick(createCommand.isEditorsPick())
+                .editorsPick(createCommand.getEditorsPick())
                 .imageUrl(createCommand.getImageUrl())
                 .duration(createCommand.getDuration())
                 .publishedDate(createCommand.getPublishedDate())

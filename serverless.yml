@@ -197,7 +197,7 @@ resources:
           - AttributeName: topicCode
             AttributeType: S
           - AttributeName: editorsPick
-            AttributeType: BOOL
+            AttributeType: N
           - AttributeName: recommendations
             AttributeType: N
         KeySchema:
