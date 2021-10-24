@@ -79,7 +79,7 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
                 .hashKeyName(STATUS_KEY)
                 .hashKeyValue(ACTIVE_STATUS)
                 .rangeKeyName("editorsPick")
-                .rangeKeyValue("true")
+                .rangeKeyValue("1")
                 .build());
     }
 
@@ -127,6 +127,8 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
                 .withExpressionAttributeNames(expressionAttributesNames)
                 .withExpressionAttributeValues(expressionAttributeValues)
                 .withConsistentRead(false);
+
+        log.info(String.format("query expression: %s",dynamoDBQueryExpression.toString()));
 
         return dynamo.query(Capsule.class,dynamoDBQueryExpression);
     }

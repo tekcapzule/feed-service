@@ -67,7 +67,7 @@ functions:
     handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:
       - http:
-          path: capsule/findById
+          path: capsule/get
           method: post
           cors: true
           request:
