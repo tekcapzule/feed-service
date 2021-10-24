@@ -61,7 +61,7 @@
       "type": "string"
     },
     "editorsPick": {
-      "type": "string"
+      "type": "number"
     },
     "tags": {
       "type": "array",
