@@ -188,7 +188,7 @@ resources:
     capsuleTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: Capsule
+        TableName: ${opt:stage}Capsule
         AttributeDefinitions:
           - AttributeName: capsuleId
             AttributeType: S

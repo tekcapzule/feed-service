@@ -3,7 +3,7 @@ package com.tekcapsule.capsule.application;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = {"com.tekcapsule.capsule","com.tekcapsule.core"})
+@SpringBootApplication(scanBasePackages = {"com.tekcapsule.capsule","com.tekcapsule.core.config"})
 public class CapsuleApplication {
 
     public static void main(String[] args) {
