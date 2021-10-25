@@ -11,6 +11,8 @@ env:
 jobs:
   buildAndInspect:
     name: Build and Inspect
+    environment:
+      name: DEV
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
