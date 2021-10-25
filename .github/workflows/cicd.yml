@@ -20,18 +20,13 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+          cache: 'maven'
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-      - name: Cache Maven packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -51,12 +46,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Cache Maven packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
@@ -77,12 +66,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Cache Maven packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+          cache: 'maven'
       - name: Build and analyze
         run: mvn -B -U -s settings.xml clean package deploy
   devDeploy:
@@ -97,12 +81,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Cache Maven packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+          cache: 'maven'
       - name: Package
         run: mvn -B -U -s settings.xml package
       - name: serverless deploy
