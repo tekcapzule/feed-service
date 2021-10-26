@@ -42,6 +42,8 @@ jobs:
         with:
           name: buildOutput
           path: ${{ github.workspace }}
+      - name: file structure
+        run: ls -R
   scan:
     needs: buildAndInspect
     name: Scan Code
@@ -63,6 +65,8 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: file structure
+        run: ls -R
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
