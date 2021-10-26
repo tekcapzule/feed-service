@@ -52,10 +52,11 @@ jobs:
       security-events: write
     strategy:
       fail-fast: false
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        id: download
+        with:
+          name: 'buildOutput'
       - name: Cache Maven packages
         uses: actions/cache@v1
         with:
@@ -66,8 +67,6 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: java
-      - name: Compile
-        run: mvn -B -U -s settings.xml compile
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
   publish:
