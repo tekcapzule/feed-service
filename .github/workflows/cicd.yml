@@ -9,8 +9,8 @@ env:
   SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
   SERVER_USERNAME: ${{ secrets.SERVER_USERNAME }}
 jobs:
-  buildAndInspect:
-    name: Build and Inspect
+  buildAndAnalyze:
+    name: Build and Analyze
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
