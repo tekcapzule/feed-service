@@ -123,38 +123,8 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-  testDeploy:
-    needs: devDeploy
-    name: TEST Deploy
-    environment:
-      name: TEST
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
-      - name: Cache Maven packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Package
-        run: mvn -B -U -s settings.xml package
-      - name: serverless deploy
-        uses: serverless/github-action@master
-        with:
-          args: deploy --stage test
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
   prodDeploy:
-    needs: testDeploy
+    needs: devDeploy
     name: PROD Deploy
     environment:
       name: PROD
