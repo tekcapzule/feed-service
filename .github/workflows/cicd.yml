@@ -37,13 +37,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B -U -s settings.xml verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=tekcapsule_capsule-service
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: buildOutput
-          path: ${{ github.workspace }}
-      - name: file structure
-        run: ls -R
+
   scan:
     needs: buildAndInspect
     name: Scan Code
@@ -68,12 +62,12 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: file structure
-        run: ls -R
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
           languages: java
+      - name: Compile
+        run: mvn -B -U -s settings.xml compile
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
   publish:
