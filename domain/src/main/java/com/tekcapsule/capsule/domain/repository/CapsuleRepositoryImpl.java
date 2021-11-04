@@ -109,11 +109,11 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
     }
 
-    private List<Capsule> queryCapsules (QueryCriteria queryCriteria){""
+    private List<Capsule> queryCapsules (QueryCriteria queryCriteria){
 
         Map<String,String> expressionAttributesNames = new HashMap<>();
         String hashKeyName="#".concat(queryCriteria.getHashKeyName());
-        String rangeKeyName="#".concat(queryCriteria.getRangeKeyName());""
+        String rangeKeyName="#".concat(queryCriteria.getRangeKeyName());
         String hashKeyValue=":".concat(queryCriteria.getHashKeyName());
         String rangeKeyValue=":".concat(queryCriteria.getRangeKeyName());
         String queryExpression= hashKeyName.concat(" = ").concat(hashKeyValue).concat(" and ").concat(rangeKeyName).concat(" = ").concat(rangeKeyValue);
