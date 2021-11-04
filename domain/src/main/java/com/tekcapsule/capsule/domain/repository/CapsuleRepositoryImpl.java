@@ -96,14 +96,20 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
     @Override
     public List<Capsule> findAllByTopicCode(String topicCode) {
+""
+        HashMap<String, AttributeValue> expAttributes = new HashMap<String, AttributeValue>();
+        expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
+        expAttributes.put(":topicCode", new AttributeValue().withS(topicCode));
 
-        HashMap<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
-        eav.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
-        eav.put(":topicCode", new AttributeValue().withS(topicCode));
+        HashMap<String, String> expNames = new HashMap<String, String>();
+        expNames.put(":#status", "status");
+        expNames.put(":#topicCode", "topicCode");
+
         DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
                 .withIndexName("topicGSI").withConsistentRead(false)
-                .withKeyConditionExpression(String.format("%s = :status and %s = :topicCode",STATUS_KEY,"topicCode"))
-                .withExpressionAttributeValues(eav);
+                .withKeyConditionExpression("#status = :status and #topicCode = :topicCode")
+                .withExpressionAttributeValues(expAttributes)
+                .withExpressionAttributeNames(expNames);
 
         return dynamo.query(Capsule.class, queryExpression);
 
