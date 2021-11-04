@@ -20,11 +20,11 @@ import static com.tekcapsule.capsule.application.config.AppConstants.HTTP_STATUS
 
 @Component
 @Slf4j
-public class AddBookMarkFunction implements Function<Message<AddBookmarkInput>, Message<Void>> {
+public class BookmarkFunction implements Function<Message<AddBookmarkInput>, Message<Void>> {
 
     private final CapsuleService capsuleService;
 
-    public AddBookMarkFunction(final CapsuleService capsuleService) {
+    public BookmarkFunction(final CapsuleService capsuleService) {
         this.capsuleService = capsuleService;
     }
 
@@ -33,7 +33,7 @@ public class AddBookMarkFunction implements Function<Message<AddBookmarkInput>, 
     public Message<Void> apply(Message<AddBookmarkInput> addBookmarkInputMessage) {
         AddBookmarkInput addBookmarkInput = addBookmarkInputMessage.getPayload();
 
-        log.info(String.format("Entering add bookmark Function -  Capsule Id:%s",  addBookmarkInput.getCapsuleId()));
+        log.info(String.format("Entering bookmark Function -  Capsule Id:%s",  addBookmarkInput.getCapsuleId()));
 
         Origin origin = HeaderUtil.buildOriginFromHeaders(addBookmarkInputMessage.getHeaders());
 

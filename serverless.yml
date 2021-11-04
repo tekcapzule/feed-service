@@ -92,7 +92,7 @@ functions:
                 name: BookmarkCapsuleModel
                 description: 'Bookmark capsule model'
     environment:
-      SPRING_CLOUD_FUNCTION_DEFINITION: addBookmarkFunction
+      SPRING_CLOUD_FUNCTION_DEFINITION: bookmarkFunction
   approveCapsule:
     handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:

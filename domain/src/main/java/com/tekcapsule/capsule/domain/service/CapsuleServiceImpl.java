@@ -163,7 +163,7 @@ public class CapsuleServiceImpl implements CapsuleService {
         if (capsule != null) {
             Integer recommendationsCount = capsule.getRecommendations();
             recommendationsCount+=1;
-            capsule.setBookmarks(recommendationsCount);
+            capsule.setRecommendations(recommendationsCount);
 
             capsule.setUpdatedOn(recommendCommand.getExecOn());
             capsule.setUpdatedBy(recommendCommand.getExecBy().getUserId());
