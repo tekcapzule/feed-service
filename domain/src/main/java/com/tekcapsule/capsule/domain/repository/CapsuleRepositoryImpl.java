@@ -33,7 +33,7 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
     @Override
     public List<Capsule> findAll() {
 
-        return dynamo.scan(Capsule.class,new DynamoDBScanExpression());
+        return dynamo.scan(Capsule.class, new DynamoDBScanExpression());
 
     }
 
@@ -59,49 +59,78 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
         List<Capsule> capsules = new ArrayList<>();
 
         subscribedTopics.forEach(topic -> {
-            var myCapsules = queryCapsules(QueryCriteria.builder()
-                    .indexName("topicGSI")
-                    .hashKeyName(STATUS_KEY)
-                    .hashKeyValue(ACTIVE_STATUS)
-                    .rangeKeyName("topicCode")
-                    .rangeKeyValue(topic)
-                    .build());
-            if (myCapsules != null && myCapsules.size() > 0)
-            { capsules.addAll(myCapsules);}
+
+            HashMap<String, AttributeValue> expAttributes = new HashMap<>();
+            expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
+            expAttributes.put(":topicCode", new AttributeValue().withS(topic));
+
+            HashMap<String, String> expNames = new HashMap<>();
+            expNames.put("#status", "status");
+            expNames.put("#topicCode", "topicCode");
+
+            DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
+                    .withIndexName("topicGSI").withConsistentRead(false)
+                    .withKeyConditionExpression("#status = :status and #topicCode = :topicCode")
+                    .withExpressionAttributeValues(expAttributes)
+                    .withExpressionAttributeNames(expNames);
+            var myCapsules = dynamo.query(Capsule.class, queryExpression);
+
+            if (myCapsules != null && myCapsules.size() > 0) {
+                capsules.addAll(myCapsules);
+            }
         });
-     return capsules;
+        return capsules;
     }
 
     @Override
     public List<Capsule> findAllEditorsPick() {
-        return queryCapsules( QueryCriteria.builder()
-                .indexName("editorsPickGSI")
-                .hashKeyName(STATUS_KEY)
-                .hashKeyValue(ACTIVE_STATUS)
-                .rangeKeyName("editorsPick")
-                .rangeKeyValue("1")
-                .build());
+
+        HashMap<String, AttributeValue> expAttributes = new HashMap<>();
+        expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
+        expAttributes.put(":editorsPick", new AttributeValue().withS("1"));
+
+        HashMap<String, String> expNames = new HashMap<>();
+        expNames.put("#status", "status");
+        expNames.put("#editorsPick", "editorsPick");
+
+        DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
+                .withIndexName("editorsPickGSI").withConsistentRead(false)
+                .withKeyConditionExpression("#status = :status and #editorsPick = :editorsPick")
+                .withExpressionAttributeValues(expAttributes)
+                .withExpressionAttributeNames(expNames);
+        return dynamo.query(Capsule.class, queryExpression);
+
     }
 
     @Override
     public List<Capsule> findAllTrending() {
-        return queryCapsules( QueryCriteria.builder()
-                .indexName("trendingGSI")
-                .hashKeyName(STATUS_KEY)
-                .hashKeyValue(ACTIVE_STATUS)
-                .rangeKeyName("recommendations")
-                .rangeKeyValue("1")
-                .build());
+
+        HashMap<String, AttributeValue> expAttributes = new HashMap<>();
+        expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
+        expAttributes.put(":recommendations", new AttributeValue().withS("25"));
+
+        HashMap<String, String> expNames = new HashMap<>();
+        expNames.put("#status", "status");
+        expNames.put("#recommendations", "recommendations");
+
+        DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
+                .withIndexName("trendingGSI").withConsistentRead(false)
+                .withKeyConditionExpression("#status = :status and #recommendations > :recommendations")
+                .withExpressionAttributeValues(expAttributes)
+                .withExpressionAttributeNames(expNames);
+
+        return dynamo.query(Capsule.class, queryExpression);
+
     }
 
     @Override
     public List<Capsule> findAllByTopicCode(String topicCode) {
 
-        HashMap<String, AttributeValue> expAttributes = new HashMap<String, AttributeValue>();
+        HashMap<String, AttributeValue> expAttributes = new HashMap<>();
         expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
         expAttributes.put(":topicCode", new AttributeValue().withS(topicCode));
 
-        HashMap<String, String> expNames = new HashMap<String, String>();
+        HashMap<String, String> expNames = new HashMap<>();
         expNames.put("#status", "status");
         expNames.put("#topicCode", "topicCode");
 
@@ -115,21 +144,21 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
     }
 
-    private List<Capsule> queryCapsules (QueryCriteria queryCriteria){
+    private List<Capsule> queryCapsules(QueryCriteria queryCriteria) {
 
-        Map<String,String> expressionAttributesNames = new HashMap<>();
-        String hashKeyName="#".concat(queryCriteria.getHashKeyName());
-        String rangeKeyName="#".concat(queryCriteria.getRangeKeyName());
-        String hashKeyValue=":".concat(queryCriteria.getHashKeyName());
-        String rangeKeyValue=":".concat(queryCriteria.getRangeKeyName());
-        String queryExpression= hashKeyName.concat(" = ").concat(hashKeyValue).concat(" and ").concat(rangeKeyName).concat(" = ").concat(rangeKeyValue);
+        Map<String, String> expressionAttributesNames = new HashMap<>();
+        String hashKeyName = "#" .concat(queryCriteria.getHashKeyName());
+        String rangeKeyName = "#" .concat(queryCriteria.getRangeKeyName());
+        String hashKeyValue = ":" .concat(queryCriteria.getHashKeyName());
+        String rangeKeyValue = ":" .concat(queryCriteria.getRangeKeyName());
+        String queryExpression = hashKeyName.concat(" = ").concat(hashKeyValue).concat(" and ").concat(rangeKeyName).concat(" = ").concat(rangeKeyValue);
 
-        expressionAttributesNames.put(hashKeyName,queryCriteria.getHashKeyName());
-        expressionAttributesNames.put(rangeKeyName,queryCriteria.getRangeKeyValue());
+        expressionAttributesNames.put(hashKeyName, queryCriteria.getHashKeyName());
+        expressionAttributesNames.put(rangeKeyName, queryCriteria.getRangeKeyValue());
 
         Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
-        expressionAttributeValues.put(hashKeyValue,new AttributeValue().withS(queryCriteria.getHashKeyValue()));
-        expressionAttributeValues.put(rangeKeyValue,new AttributeValue().withS(queryCriteria.getRangeKeyValue()));
+        expressionAttributeValues.put(hashKeyValue, new AttributeValue().withS(queryCriteria.getHashKeyValue()));
+        expressionAttributeValues.put(rangeKeyValue, new AttributeValue().withS(queryCriteria.getRangeKeyValue()));
 
         DynamoDBQueryExpression<Capsule> dynamoDBQueryExpression = new DynamoDBQueryExpression<Capsule>()
                 .withIndexName(queryCriteria.getIndexName())
@@ -138,9 +167,9 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
                 .withExpressionAttributeValues(expressionAttributeValues)
                 .withConsistentRead(false);
 
-        log.info(String.format("query expression: %s",dynamoDBQueryExpression.toString()));
+        log.info(String.format("query expression: %s", dynamoDBQueryExpression.toString()));
 
-        return dynamo.query(Capsule.class,dynamoDBQueryExpression);
+        return dynamo.query(Capsule.class, dynamoDBQueryExpression);
     }
 
 }
