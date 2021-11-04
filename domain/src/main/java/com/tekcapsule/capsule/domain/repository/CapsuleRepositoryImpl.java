@@ -96,7 +96,7 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
     @Override
     public List<Capsule> findAllByTopicCode(String topicCode) {
-""
+
         HashMap<String, AttributeValue> expAttributes = new HashMap<String, AttributeValue>();
         expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
         expAttributes.put(":topicCode", new AttributeValue().withS(topicCode));
