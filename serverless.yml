@@ -25,6 +25,7 @@ functions:
           path: capsule/create
           method: post
           cors: true
+          async: true
           request:
             schemas:
               application/json:
@@ -40,6 +41,7 @@ functions:
           path: capsule/update
           method: post
           cors: true
+          async: true
           request:
             schemas:
               application/json:
@@ -55,6 +57,7 @@ functions:
           path: capsule/disable
           method: post
           cors: true
+          async: true
           request:
             schemas:
               application/json:
@@ -85,6 +88,7 @@ functions:
           path: capsule/bookmark
           method: post
           cors: true
+          async: true
           request:
             schemas:
               application/json:
@@ -100,6 +104,7 @@ functions:
           path: capsule/approve
           method: post
           cors: true
+          async: true
           request:
             schemas:
               application/json:
@@ -160,6 +165,7 @@ functions:
           path: capsule/recommend
           method: post
           cors: true
+          async: true
           request:
             schemas:
               application/json:
