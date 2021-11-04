@@ -87,7 +87,7 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
         HashMap<String, AttributeValue> expAttributes = new HashMap<>();
         expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
-        expAttributes.put(":editorsPick", new AttributeValue().withS("1"));
+        expAttributes.put(":editorsPick", new AttributeValue().withN("1"));
 
         HashMap<String, String> expNames = new HashMap<>();
         expNames.put("#status", "status");
@@ -107,7 +107,7 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
         HashMap<String, AttributeValue> expAttributes = new HashMap<>();
         expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
-        expAttributes.put(":recommendations", new AttributeValue().withS("25"));
+        expAttributes.put(":recommendations", new AttributeValue().withN("25"));
 
         HashMap<String, String> expNames = new HashMap<>();
         expNames.put("#status", "status");
