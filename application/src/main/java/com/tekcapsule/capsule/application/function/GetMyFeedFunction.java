@@ -1,20 +1,22 @@
 package com.tekcapsule.capsule.application.function;
 
+import com.tekcapsule.capsule.application.config.AppConfig;
 import com.tekcapsule.capsule.application.function.input.GetMyFeedInput;
 import com.tekcapsule.capsule.domain.model.Capsule;
 import com.tekcapsule.capsule.domain.service.CapsuleService;
+import com.tekcapsule.core.utils.HeaderUtil;
+import com.tekcapsule.core.utils.Outcome;
+import com.tekcapsule.core.utils.Stage;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-
-import static com.tekcapsule.capsule.application.config.AppConstants.HTTP_STATUS_CODE_HEADER;
 
 @Component
 @Slf4j
@@ -22,20 +24,27 @@ public class GetMyFeedFunction implements Function<Message<GetMyFeedInput>, Mess
 
     private final CapsuleService capsuleService;
 
-    public GetMyFeedFunction(final CapsuleService capsuleService) {
+    private final AppConfig appConfig;
+
+    public GetMyFeedFunction(final CapsuleService capsuleService, final AppConfig appConfig) {
         this.capsuleService = capsuleService;
+        this.appConfig = appConfig;
     }
 
     @Override
     public Message<List<Capsule>> apply(Message<GetMyFeedInput> getMyFeedInputMessage) {
-
-        log.info("Entering get myFeed Function");
-
-        List<Capsule> capsules = capsuleService.getMyFeed(getMyFeedInputMessage.getPayload().getSubscribedTopics());
-        Map<String, Object> responseHeader = new HashMap<>();
-        responseHeader.put(HTTP_STATUS_CODE_HEADER, HttpStatus.OK.value());
-
-        return new GenericMessage<>(capsules, responseHeader);
+        Map<String, Object> responseHeaders = new HashMap<>();
+        List<Capsule> capsules = new ArrayList<>();
+        String stage = appConfig.getStage().toUpperCase();
+        try {
+            log.info("Entering get myFeed Function");
+            capsules = capsuleService.getMyFeed(getMyFeedInputMessage.getPayload().getSubscribedTopics());
+            responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.SUCCESS);
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.ERROR);
+        }
+        return new GenericMessage(capsules, responseHeaders);
 
     }
 }
