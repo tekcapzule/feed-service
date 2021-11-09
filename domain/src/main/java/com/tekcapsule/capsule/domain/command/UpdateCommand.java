@@ -29,4 +29,5 @@ public class UpdateCommand extends Command {
     private TopicLevel level;
     private String expiryDate;
     private Integer editorsPick;
+    private List<Quiz> quizzes;
 }

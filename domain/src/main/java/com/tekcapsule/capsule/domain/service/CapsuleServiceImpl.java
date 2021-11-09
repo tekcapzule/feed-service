@@ -44,6 +44,7 @@ public class CapsuleServiceImpl implements CapsuleService {
                 .views(0)
                 .recommendations(0)
                 .bookmarks(0)
+                .quizzes(createCommand.getQuizzes())
                 .build();
 
         capsule.setAddedOn(createCommand.getExecOn());
@@ -77,6 +78,7 @@ public class CapsuleServiceImpl implements CapsuleService {
             capsule.setAudience(updateCommand.getAudience());
             capsule.setExpiryDate(updateCommand.getExpiryDate());
             capsule.setLevel(updateCommand.getLevel());
+            capsule.setQuizzes(updateCommand.getQuizzes());
 
             capsule.setUpdatedOn(updateCommand.getExecOn());
             capsule.setUpdatedBy(updateCommand.getExecBy().getUserId());

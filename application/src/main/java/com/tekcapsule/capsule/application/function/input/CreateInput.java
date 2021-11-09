@@ -2,6 +2,7 @@ package com.tekcapsule.capsule.application.function.input;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tekcapsule.capsule.domain.model.CapsuleType;
+import com.tekcapsule.capsule.domain.model.Quiz;
 import com.tekcapsule.capsule.domain.model.TargetAudience;
 import com.tekcapsule.capsule.domain.model.TopicLevel;
 import lombok.Data;
@@ -28,4 +29,5 @@ public class CreateInput {
     private TopicLevel level;
     private String expiryDate;
     private Integer editorsPick;
+    private List<Quiz> quizzes;
 }
