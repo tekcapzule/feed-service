@@ -7,12 +7,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Service
 public class CapsuleServiceImpl implements CapsuleService {
     private CapsuleDynamoRepository capsuleDynamoRepository;
+
+    private final Integer BRONZE_BADGE_VIEWS = 25;
+    private final Integer SILVER_BADGE_VIEWS = 100;
+    private final Integer GOLD_BADGE_VIEWS = 250;
 
     @Autowired
     public CapsuleServiceImpl(CapsuleDynamoRepository capsuleDynamoRepository) {
@@ -153,9 +158,20 @@ public class CapsuleServiceImpl implements CapsuleService {
         Capsule capsule = capsuleDynamoRepository.findBy(viewCommand.getCapsuleId());
         if (capsule != null) {
             Integer views = capsule.getViews();
-            views+=1;
+            views += 1;
             capsule.setViews(views);
 
+            List<Badge> badges = new ArrayList<>();
+            if (views >= BRONZE_BADGE_VIEWS) {
+                badges.add(Badge.BRONZE);
+            } else if (views >= SILVER_BADGE_VIEWS) {
+                badges.add(Badge.SILVER);
+            } else if (views >= GOLD_BADGE_VIEWS) {
+                badges.add(Badge.GOLD);
+            }
+            if (badges.size() > 0) {
+                capsule.setBadges(badges);
+            }
             capsule.setUpdatedOn(viewCommand.getExecOn());
             capsule.setUpdatedBy(viewCommand.getExecBy().getUserId());
 
@@ -171,7 +187,7 @@ public class CapsuleServiceImpl implements CapsuleService {
 
         if (capsule != null) {
             Integer bookmarkCount = capsule.getBookmarks();
-            bookmarkCount+=1;
+            bookmarkCount += 1;
             capsule.setBookmarks(bookmarkCount);
 
             capsule.setUpdatedOn(addBookmarkCommand.getExecOn());
@@ -188,7 +204,7 @@ public class CapsuleServiceImpl implements CapsuleService {
         Capsule capsule = capsuleDynamoRepository.findBy(recommendCommand.getCapsuleId());
         if (capsule != null) {
             Integer recommendationsCount = capsule.getRecommendations();
-            recommendationsCount+=1;
+            recommendationsCount += 1;
             capsule.setRecommendations(recommendationsCount);
 
             capsule.setUpdatedOn(recommendCommand.getExecOn());
@@ -200,17 +216,17 @@ public class CapsuleServiceImpl implements CapsuleService {
 
 
     @Override
-    public Capsule findBy( String capsuleId) {
+    public Capsule findBy(String capsuleId) {
 
         log.info(String.format("Entering find by capsule service - Capsule Id:%s", capsuleId));
 
-        return capsuleDynamoRepository.findBy( capsuleId);
+        return capsuleDynamoRepository.findBy(capsuleId);
     }
 
     @Override
     public List<Capsule> findByTopic(String topicCode) {
         log.info("Entering findBy topic service");
 
-        return capsuleDynamoRepository.findAllByTopicCode( topicCode);
+        return capsuleDynamoRepository.findAllByTopicCode(topicCode);
     }
 }
