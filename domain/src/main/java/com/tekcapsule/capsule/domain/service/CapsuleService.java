@@ -22,6 +22,8 @@ public interface CapsuleService {
 
     void approve(ApproveCommand approveCommand);
 
+    void view(ViewCommand viewCommand);
+
     void addBookMark(AddBookmarkCommand addBookmarkCommand);
 
     void recommend(RecommendCommand recommendCommand);

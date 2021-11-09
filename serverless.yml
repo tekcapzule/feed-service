@@ -108,6 +108,21 @@ functions:
                 description: 'approve capsule model'
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: approveFunction
+  viewCapsule:
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
+    events:
+      - http:
+          path: capsule/view
+          method: post
+          cors: true
+          request:
+            schemas:
+              application/json:
+                schema: ${file(api-gateway/view.json)}
+                name: ViewCapsuleModel
+                description: 'view capsule model'
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: viewFunction
   getEditorsPickCapsules:
     handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:

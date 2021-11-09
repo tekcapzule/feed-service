@@ -138,6 +138,23 @@ public class CapsuleServiceImpl implements CapsuleService {
     }
 
     @Override
+    public void view(ViewCommand viewCommand) {
+        log.info(String.format("Entering view capsule service -  Capsule Id:%s", viewCommand.getCapsuleId()));
+
+        Capsule capsule = capsuleDynamoRepository.findBy(viewCommand.getCapsuleId());
+        if (capsule != null) {
+            Integer views = capsule.getViews();
+            views+=1;
+            capsule.setViews(views);
+
+            capsule.setUpdatedOn(viewCommand.getExecOn());
+            capsule.setUpdatedBy(viewCommand.getExecBy().getUserId());
+
+            capsuleDynamoRepository.save(capsule);
+        }
+    }
+
+    @Override
     public void addBookMark(AddBookmarkCommand addBookmarkCommand) {
         log.info(String.format("Entering addBookmark capsule service -  Capsule Id:%s", addBookmarkCommand.getCapsuleId()));
 

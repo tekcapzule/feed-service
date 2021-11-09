@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "ViewCapsuleModel",
+  "type": "object",
+  "required": [
+    "capsuleId"
+  ],
+  "properties": {
+    "capsuleId": {
+      "type": "string"
+    }
+  }
+}
