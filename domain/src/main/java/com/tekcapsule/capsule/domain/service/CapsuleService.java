@@ -18,6 +18,8 @@ public interface CapsuleService {
 
     List<Capsule> getTrending();
 
+    List<Capsule> getPendingApproval();
+
     List<Capsule> getEditorsPick();
 
     void approve(ApproveCommand approveCommand);

@@ -118,6 +118,13 @@ public class CapsuleServiceImpl implements CapsuleService {
     }
 
     @Override
+    public List<Capsule> getPendingApproval() {
+        log.info("Entering getPendingApproval service");
+
+        return capsuleDynamoRepository.findAllPendingApproval();
+    }
+
+    @Override
     public List<Capsule> getEditorsPick() {
         log.info("Entering getEditorsPick service");
 

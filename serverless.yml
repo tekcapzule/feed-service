@@ -168,6 +168,21 @@ functions:
                 description: 'get trending model'
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: getTrendingFunction
+  getCapsulesPendingApprovals:
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
+    events:
+      - http:
+          path: capsule/getPendingApproval
+          method: post
+          cors: true
+          request:
+            schemas:
+              application/json:
+                schema: ${file(api-gateway/getPendingApproval.json)}
+                name: GetPendingApprovalModel
+                description: 'get pending approval model'
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: getPendingApprovalFunction
   recommendCapsule:
     handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
     events:

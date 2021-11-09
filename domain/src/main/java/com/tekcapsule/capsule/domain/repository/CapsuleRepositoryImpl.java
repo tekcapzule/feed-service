@@ -22,6 +22,7 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
     private DynamoDBMapper dynamo;
 
     public static final String ACTIVE_STATUS = "ACTIVE";
+    public static final String SUBMITTED_STATUS = "SUBMITTED";
     public static final String STATUS_KEY = "status";
 
 
@@ -137,6 +138,27 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
         DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
                 .withIndexName("topicGSI").withConsistentRead(false)
                 .withKeyConditionExpression("#status = :status and #topicCode = :topicCode")
+                .withExpressionAttributeValues(expAttributes)
+                .withExpressionAttributeNames(expNames);
+
+        return dynamo.query(Capsule.class, queryExpression);
+
+    }
+
+    @Override
+    public List<Capsule> findAllPendingApproval() {
+
+        HashMap<String, AttributeValue> expAttributes = new HashMap<>();
+        expAttributes.put(":status", new AttributeValue().withS(SUBMITTED_STATUS));
+        expAttributes.put(":recommendations", new AttributeValue().withN("0"));
+
+        HashMap<String, String> expNames = new HashMap<>();
+        expNames.put("#status", "status");
+        expNames.put("#recommendations", "recommendations");
+
+        DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
+                .withIndexName("trendingGSI").withConsistentRead(false)
+                .withKeyConditionExpression("#status = :status and #recommendations >= :recommendations")
                 .withExpressionAttributeValues(expAttributes)
                 .withExpressionAttributeNames(expNames);
 
