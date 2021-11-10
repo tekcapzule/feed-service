@@ -50,6 +50,7 @@ public class CapsuleServiceImpl implements CapsuleService {
                 .recommendations(0)
                 .bookmarks(0)
                 .quizzes(createCommand.getQuizzes())
+                .badge(Badge.NONE)
                 .build();
 
         capsule.setAddedOn(createCommand.getExecOn());
@@ -161,11 +162,13 @@ public class CapsuleServiceImpl implements CapsuleService {
             views += 1;
             capsule.setViews(views);
 
-            if (views >= GOLD_BADGE_VIEWS) {
+            Badge badge = capsule.getBadge();
+
+            if (views >= GOLD_BADGE_VIEWS && badge!=Badge.GOLD) {
                 capsule.setBadge(Badge.GOLD);
-            } else if (views >= SILVER_BADGE_VIEWS) {
+            } else if (views >= SILVER_BADGE_VIEWS && badge!=Badge.SILVER) {
                 capsule.setBadge(Badge.SILVER);
-            } else if (views >= BRONZE_BADGE_VIEWS) {
+            } else if (views >= BRONZE_BADGE_VIEWS && badge!=Badge.BRONZE) {
                 capsule.setBadge(Badge.BRONZE);
             }
 

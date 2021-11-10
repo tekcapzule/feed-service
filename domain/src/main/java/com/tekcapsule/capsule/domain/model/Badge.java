@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum Badge {
+    NONE("None"),
     BRONZE("Bronze"),
     SILVER("Silver"),
     GOLD("Gold");
