@@ -63,7 +63,7 @@ public class Capsule extends BaseDomainEntity implements AggregateRoot {
     private List<Quiz> quizzes;
     @DynamoDBAttribute(attributeName = "badges")
     @DynamoDBTypeConvertedEnum
-    private List<Badge> badges;
+    private Badge badge;
     @DynamoDBAttribute(attributeName = "status")
     @DynamoDBTypeConvertedEnum
     private Status status;

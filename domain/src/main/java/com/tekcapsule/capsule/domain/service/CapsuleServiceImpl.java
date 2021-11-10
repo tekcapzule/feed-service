@@ -161,17 +161,14 @@ public class CapsuleServiceImpl implements CapsuleService {
             views += 1;
             capsule.setViews(views);
 
-            List<Badge> badges = new ArrayList<>();
-            if (views >= BRONZE_BADGE_VIEWS) {
-                badges.add(Badge.BRONZE);
+            if (views >= GOLD_BADGE_VIEWS) {
+                capsule.setBadge(Badge.GOLD);
             } else if (views >= SILVER_BADGE_VIEWS) {
-                badges.add(Badge.SILVER);
-            } else if (views >= GOLD_BADGE_VIEWS) {
-                badges.add(Badge.GOLD);
+                capsule.setBadge(Badge.SILVER);
+            } else if (views >= BRONZE_BADGE_VIEWS) {
+                capsule.setBadge(Badge.BRONZE);
             }
-            if (badges.size() > 0) {
-                capsule.setBadges(badges);
-            }
+
             capsule.setUpdatedOn(viewCommand.getExecOn());
             capsule.setUpdatedBy(viewCommand.getExecBy().getUserId());
 
