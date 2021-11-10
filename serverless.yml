@@ -24,7 +24,14 @@ functions:
       - http:
           path: capsule/create
           method: post
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-User-Login
+              - X-Channel-Code
+            allowCredentials: true
           request:
             schemas:
               application/json:
@@ -39,7 +46,14 @@ functions:
       - http:
           path: capsule/update
           method: post
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-User-Login
+              - X-Channel-Code
+            allowCredentials: true
           request:
             schemas:
               application/json:
@@ -54,7 +68,14 @@ functions:
       - http:
           path: capsule/disable
           method: post
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-User-Login
+              - X-Channel-Code
+            allowCredentials: true
           request:
             schemas:
               application/json:
@@ -69,7 +90,14 @@ functions:
       - http:
           path: capsule/get
           method: post
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-User-Login
+              - X-Channel-Code
+            allowCredentials: true
           request:
             schemas:
               application/json:
@@ -84,7 +112,14 @@ functions:
       - http:
           path: capsule/bookmark
           method: post
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-User-Login
+              - X-Channel-Code
+            allowCredentials: true
           request:
             schemas:
               application/json:
@@ -99,7 +134,14 @@ functions:
       - http:
           path: capsule/approve
           method: post
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-User-Login
+              - X-Channel-Code
+            allowCredentials: true
           request:
             schemas:
               application/json:
@@ -114,7 +156,14 @@ functions:
       - http:
           path: capsule/view
           method: post
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-User-Login
+              - X-Channel-Code
+            allowCredentials: true
           request:
             schemas:
               application/json:
@@ -129,7 +178,14 @@ functions:
       - http:
           path: capsule/getEditorsPick
           method: post
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-User-Login
+              - X-Channel-Code
+            allowCredentials: true
           request:
             schemas:
               application/json:
@@ -144,7 +200,14 @@ functions:
       - http:
           path: capsule/getMyFeed
           method: post
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-User-Login
+              - X-Channel-Code
+            allowCredentials: true
           request:
             schemas:
               application/json:
@@ -159,7 +222,14 @@ functions:
       - http:
           path: capsule/getTrending
           method: post
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-User-Login
+              - X-Channel-Code
+            allowCredentials: true
           request:
             schemas:
               application/json:
@@ -174,7 +244,14 @@ functions:
       - http:
           path: capsule/getPendingApproval
           method: post
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-User-Login
+              - X-Channel-Code
+            allowCredentials: true
           request:
             schemas:
               application/json:
@@ -189,7 +266,14 @@ functions:
       - http:
           path: capsule/recommend
           method: post
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-User-Login
+              - X-Channel-Code
+            allowCredentials: true
           request:
             schemas:
               application/json:
@@ -204,7 +288,14 @@ functions:
       - http:
           path: capsule/searchByTopic
           method: post
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-User-Login
+              - X-Channel-Code
+            allowCredentials: true
           request:
             schemas:
               application/json:
