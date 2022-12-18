@@ -21,14 +21,14 @@
                         <enabled>false</enabled>
                     </snapshots>
                     <id>central</id>
-                    <name>tekcapsule-libs-release</name>
-                    <url>https://tekcapsulerepo.jfrog.io/artifactory/tekcapsule-libs-release</url>
+                    <name>libs-release</name>
+                    <url>http://repo1.maven.org/maven2/</url>
                 </repository>
                 <repository>
                     <snapshots />
                     <id>snapshots</id>
-                    <name>tekcapsule-libs-snapshot</name>
-                    <url>https://tekcapsulerepo.jfrog.io/artifactory/tekcapsule-libs-snapshot</url>
+                    <name>libs-snapshot</name>
+                    <url>http://repo1.maven.org/maven2/</url>
                 </repository>
             </repositories>
             <pluginRepositories>
@@ -37,14 +37,14 @@
                         <enabled>false</enabled>
                     </snapshots>
                     <id>central</id>
-                    <name>tekcapsule-libs-release</name>
-                    <url>https://tekcapsulerepo.jfrog.io/artifactory/tekcapsule-libs-release</url>
+                    <name>libs-release</name>
+                    <url>http://repo1.maven.org/maven2/</url>
                 </pluginRepository>
                 <pluginRepository>
                     <snapshots />
                     <id>snapshots</id>
-                    <name>tekcapsule-libs-snapshot</name>
-                    <url>https://tekcapsulerepo.jfrog.io/artifactory/tekcapsule-libs-snapshot</url>
+                    <name>libs-snapshot</name>
+                    <url>http://repo1.maven.org/maven2/</url>
                 </pluginRepository>
             </pluginRepositories>
             <id>artifactory</id>
