@@ -3,10 +3,10 @@ package com.tekcapsule.capsule.domain.repository;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.tekcapsule.capsule.domain.model.Capsule;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -74,7 +74,7 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
                     .withKeyConditionExpression("#status = :status and #topicCode = :topicCode")
                     .withExpressionAttributeValues(expAttributes)
                     .withExpressionAttributeNames(expNames);
-            var myCapsules = dynamo.query(Capsule.class, queryExpression);
+            PaginatedQueryList<Capsule> myCapsules = dynamo.query(Capsule.class, queryExpression);
 
             if (myCapsules != null && myCapsules.size() > 0) {
                 capsules.addAll(myCapsules);
