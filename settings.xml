@@ -5,7 +5,7 @@
         <server>
             <username>${env.SERVER_USERNAME}</username>
             <password>${env.SERVER_PASSWORD}</password>
-            <id>central</id>
+            <id>github</id>
         </server>
         <server>
             <username>${env.SERVER_USERNAME}</username>
