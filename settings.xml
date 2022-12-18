@@ -22,13 +22,13 @@
                     </snapshots>
                     <id>central</id>
                     <name>libs-release</name>
-                    <url>http://repo1.maven.org/maven2/</url>
+                    <url>https://repo1.maven.org/maven2/</url>
                 </repository>
                 <repository>
                     <snapshots />
                     <id>snapshots</id>
                     <name>libs-snapshot</name>
-                    <url>http://repo1.maven.org/maven2/</url>
+                    <url>https://repo1.maven.org/maven2/</url>
                 </repository>
             </repositories>
             <pluginRepositories>
@@ -38,13 +38,13 @@
                     </snapshots>
                     <id>central</id>
                     <name>libs-release</name>
-                    <url>http://repo1.maven.org/maven2/</url>
+                    <url>https://repo1.maven.org/maven2/</url>
                 </pluginRepository>
                 <pluginRepository>
                     <snapshots />
                     <id>snapshots</id>
                     <name>libs-snapshot</name>
-                    <url>http://repo1.maven.org/maven2/</url>
+                    <url>https://repo1.maven.org/maven2/</url>
                 </pluginRepository>
             </pluginRepositories>
             <id>artifactory</id>
