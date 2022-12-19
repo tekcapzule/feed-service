@@ -306,6 +306,59 @@ functions:
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: searchByTopicFunction
 resources:
+  extensions:
+    CreateCapsuleLambdaFunction:
+      Properties:
+        SnapStart:
+          ApplyOn: PublishedVersions
+    UpdateCapsuleLambdaFunction:
+      Properties:
+        SnapStart:
+          ApplyOn: PublishedVersions
+    DisableCapsuleLambdaFunction:
+      Properties:
+        SnapStart:
+          ApplyOn: PublishedVersions
+    GetCapsuleLambdaFunction:
+      Properties:
+        SnapStart:
+          ApplyOn: PublishedVersions
+    BookmarkCapsuleLambdaFunction:
+      Properties:
+        SnapStart:
+          ApplyOn: PublishedVersions
+    ApproveCapsuleLambdaFunction:
+      Properties:
+        SnapStart:
+          ApplyOn: PublishedVersions
+    ViewCapsuleLambdaFunction:
+      Properties:
+        SnapStart:
+          ApplyOn: PublishedVersions
+    GetEditorsPickCapsulesLambdaFunction:
+      Properties:
+        SnapStart:
+          ApplyOn: PublishedVersions
+    GetMyFeedCapsulesLambdaFunction:
+      Properties:
+        SnapStart:
+          ApplyOn: PublishedVersions
+    GetTrendingCapsulesLambdaFunction:
+      Properties:
+        SnapStart:
+          ApplyOn: PublishedVersions
+    GetCapsulesPendingApprovalsLambdaFunction:
+      Properties:
+        SnapStart:
+          ApplyOn: PublishedVersions
+    RecommendCapsuleLambdaFunction:
+      Properties:
+        SnapStart:
+          ApplyOn: PublishedVersions
+    SearchCapsuleByTopicLambdaFunction:
+      Properties:
+        SnapStart:
+          ApplyOn: PublishedVersions
   Resources:
     capsuleTable:
       Type: AWS::DynamoDB::Table
