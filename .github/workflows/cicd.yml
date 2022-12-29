@@ -2,7 +2,7 @@ name: CICD Pipeline
 on:
   push:
     branches:
-      - develop
+      - main
   pull_request:
     types: [opened, synchronize, reopened]
 env:
