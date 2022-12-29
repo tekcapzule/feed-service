@@ -105,6 +105,7 @@ Note: SERVER_USERNAME and SERVER_PASSWORD details will be be provided by the mai
 5. Copy the settings.xml to ~/.m2
 6. Run the command
    ```sh
+   mvn build
    sam build
    ```
    
