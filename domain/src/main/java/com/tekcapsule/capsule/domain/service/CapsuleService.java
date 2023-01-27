@@ -32,5 +32,5 @@ public interface CapsuleService {
 
     Capsule findBy( String capsuleId);
 
-    List<Capsule> findByTopic( String topicName);
+    List<Capsule> findByTopic( List<String> topicName);
 }

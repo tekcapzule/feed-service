@@ -224,7 +224,7 @@ public class CapsuleServiceImpl implements CapsuleService {
     }
 
     @Override
-    public List<Capsule> findByTopic(String topicCode) {
+    public List<Capsule> findByTopic(List<String> topicCode) {
         log.info("Entering findBy topic service");
 
         return capsuleDynamoRepository.findAllByTopicCode(topicCode);

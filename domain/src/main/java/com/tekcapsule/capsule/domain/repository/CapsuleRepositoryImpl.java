@@ -1,10 +1,17 @@
 package com.tekcapsule.capsule.domain.repository;
 
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
+import com.amazonaws.services.dynamodbv2.document.BatchGetItemOutcome;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.KeysAndAttributes;
 import com.tekcapsule.capsule.domain.model.Capsule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,11 +132,11 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
     }
 
     @Override
-    public List<Capsule> findAllByTopicCode(String topicCode) {
+    public List<Capsule> findAllByTopicCode(List<String> topicCode) {
 
         HashMap<String, AttributeValue> expAttributes = new HashMap<>();
         expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
-        expAttributes.put(":topicCode", new AttributeValue().withS(topicCode));
+        expAttributes.put(":topicCode", new AttributeValue().withSS(topicCode));
 
         HashMap<String, String> expNames = new HashMap<>();
         expNames.put("#status", "status");
@@ -137,7 +144,7 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
         DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
                 .withIndexName("topicGSI").withConsistentRead(false)
-                .withKeyConditionExpression("#status = :status and #topicCode = :topicCode")
+                .withKeyConditionExpression("#status = :status and #topicCode IN (:topicCode)")
                 .withExpressionAttributeValues(expAttributes)
                 .withExpressionAttributeNames(expNames);
 
