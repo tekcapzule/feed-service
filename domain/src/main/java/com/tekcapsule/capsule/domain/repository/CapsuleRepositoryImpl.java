@@ -11,6 +11,8 @@ import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.amazonaws.services.dynamodbv2.model.KeysAndAttributes;
 import com.tekcapsule.capsule.domain.model.Capsule;
 import lombok.extern.slf4j.Slf4j;
@@ -134,17 +136,39 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
     @Override
     public List<Capsule> findAllByTopicCode(List<String> topicCode) {
 
-        HashMap<String, AttributeValue> expAttributes = new HashMap<>();
+        Map<String, AttributeValue> expAttributes = new HashMap<>();
+
         expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
-        expAttributes.put(":topicCode", new AttributeValue().withSS(topicCode));
 
         HashMap<String, String> expNames = new HashMap<>();
         expNames.put("#status", "status");
         expNames.put("#topicCode", "topicCode");
 
+        //  StringBuilder keyConditionExpression = new StringBuilder("#topicCode IN (");
+        for (int i = 0; i < topicCode.size(); i++) {
+            String placeholder = "#topicCode" + i;
+           /* keyConditionExpression.append(placeholder);
+            if (i < topicCode.size() - 1) {
+                keyConditionExpression.append(", ");
+            }*/
+            expAttributes.put(placeholder, new AttributeValue().withS(topicCode.get(i)));
+        }
+        //   keyConditionExpression.append(")");
+        log.info("attribute values hari"+expAttributes.values());
+
+        Map<String, Condition> keyConditions = new HashMap<>();
+
+        // Define the range key condition
+        Condition rangeKeyCondition = new Condition()
+                .withComparisonOperator(ComparisonOperator.IN)
+                .withAttributeValueList(expAttributes.values()
+                );
+
+        keyConditions.put("#topicCode", rangeKeyCondition);
         DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
                 .withIndexName("topicGSI").withConsistentRead(false)
-                .withKeyConditionExpression("#status = :status and #topicCode IN (:topicCode)")
+                .withKeyConditionExpression("#status = :status")
+                .withRangeKeyCondition("#topicCode",rangeKeyCondition)
                 .withExpressionAttributeValues(expAttributes)
                 .withExpressionAttributeNames(expNames);
 
