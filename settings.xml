@@ -13,9 +13,6 @@
                 <repository>
                     <id>core</id>
                     <url>https://maven.pkg.github.com/tekcapsule/tekcapsule-core</url>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
                 </repository>
                 <repository>
                     <id>central</id>
