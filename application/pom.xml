@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.tekcapsule</groupId>
     <artifactId>capsule-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>Capsule Service</name>
     <description>Capsule Service</description>
     <properties>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>com.tekcapsule</groupId>
             <artifactId>capsule-domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
