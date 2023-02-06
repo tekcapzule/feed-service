@@ -124,6 +124,7 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
     }
 
+    //Find all capsules by topic code.
     @Override
     public List<Capsule> findAllByTopicCode(String topicCode) {
 
