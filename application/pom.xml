@@ -116,7 +116,7 @@
     </build>
     <distributionManagement>
         <repository>
-            <id>capsule</id>
+            <id>capsule-service</id>
             <name>GitHub TekCapsule Apache Maven Packages</name>
             <url>https://maven.pkg.github.com/tekcapsule/capsule-service</url>
         </repository>

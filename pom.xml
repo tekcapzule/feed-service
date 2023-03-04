@@ -29,7 +29,7 @@
     </build>
     <distributionManagement>
         <repository>
-            <id>capsule</id>
+            <id>capsule-application</id>
             <name>GitHub TekCapsule Apache Maven Packages</name>
             <url>https://maven.pkg.github.com/tekcapsule/capsule-application</url>
         </repository>
