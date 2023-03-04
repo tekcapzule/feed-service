@@ -61,9 +61,9 @@
     </dependencyManagement>
     <distributionManagement>
         <repository>
-            <id>capsule-domain</id>
+            <id>capsule</id>
             <name>GitHub TekCapsule Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/tekcapsule/capsule-domain</url>
+            <url>https://maven.pkg.github.com/tekcapsule/tekcapsule-core</url>
         </repository>
     </distributionManagement>
 </project>

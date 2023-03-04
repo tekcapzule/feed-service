@@ -29,9 +29,9 @@
     </build>
     <distributionManagement>
         <repository>
-            <id>capsule-application</id>
+            <id>capsule</id>
             <name>GitHub TekCapsule Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/tekcapsule/capsule-application</url>
+            <url>https://maven.pkg.github.com/tekcapsule/tekcapsule-core</url>
         </repository>
     </distributionManagement>
 </project>
