@@ -286,4 +286,27 @@ functions:
                 description: 'search by topic model'
     environment:
       SPRING_CLOUD_FUNCTION_DEFINITION: searchByTopicFunction
+  getCapsuleMetadata:
+    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
+    events:
+      - http:
+          path: capsule/metadata
+          method: post
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-User-Login
+              - X-Channel-Code
+            allowCredentials: true
+          request:
+            schemas:
+              application/json:
+                schema: ${file(api-gateway/getMetadata.json)}
+                name: GetCapsuleMetadata
+                description: 'get capsule metadata model'
+    environment:
+      SPRING_CLOUD_FUNCTION_DEFINITION: getCapsuleMetadataFunction
+
 

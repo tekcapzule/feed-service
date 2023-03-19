@@ -379,6 +379,28 @@ Resources:
             RestApiId:
               Ref: CapsuleApi
 
+  GetCapsuleMetadataFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: C:\Users\vishw\capsule-service\application
+      FunctionName: !Sub "${Stage}-Capsule-GetCapsuleMetadata"
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CapsuleTable
+      Environment:
+        Variables:
+          SPRING_CLOUD_FUNCTION_DEFINITION: getCapsuleMetadataFunction
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: capsule/metadata
+            Method: post
+            RestApiId:
+              Ref: CapsuleApi
+
   # Set Output Variable
 
 Outputs:
