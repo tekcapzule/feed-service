@@ -20,12 +20,12 @@ public class UpdateInput {
     private String author;
     private String description;
     private List<String> tags;
-    private Publisher publisher;
+    private String publisher;
     private String resourceUrl;
     private CapsuleType type;
     private TargetAudience audience;
     private TopicLevel level;
-    private ExpiryInterval expiryInterval;
+    private String expiryDate;
     private Integer editorsPick;
     private List<Quiz> quizzes;
 }

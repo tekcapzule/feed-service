@@ -41,7 +41,7 @@ public class CapsuleServiceImpl implements CapsuleService {
                 .imageUrl(createCommand.getImageUrl())
                 .duration(createCommand.getDuration())
                 .publishedDate(createCommand.getPublishedDate())
-                .expiryInterval(createCommand.getExpiryInterval())
+                .expiryDate(createCommand.getExpiryDate())
                 .publisher(createCommand.getPublisher())
                 .resourceUrl(createCommand.getResourceUrl())
                 .level(createCommand.getLevel())
@@ -85,7 +85,7 @@ public class CapsuleServiceImpl implements CapsuleService {
             capsule.setResourceUrl(updateCommand.getResourceUrl());
             capsule.setType(updateCommand.getType());
             capsule.setAudience(updateCommand.getAudience());
-            capsule.setExpiryInterval(updateCommand.getExpiryInterval());
+            capsule.setExpiryDate(updateCommand.getExpiryDate());
             capsule.setLevel(updateCommand.getLevel());
             capsule.setQuizzes(updateCommand.getQuizzes());
 
