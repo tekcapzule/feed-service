@@ -382,7 +382,6 @@ Resources:
   GetCapsuleMetadataFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: C:\Users\vishw\capsule-service\application
       FunctionName: !Sub "${Stage}-Capsule-GetCapsuleMetadata"
       SnapStart:
         ApplyOn: PublishedVersions
