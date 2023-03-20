@@ -16,7 +16,7 @@
     "type",
     "audience",
     "level",
-    "expiryDate",
+    "expiryInterval",
     "editorsPick",
     "tags"
   ],
@@ -57,7 +57,7 @@
     "level": {
       "type": "string"
     },
-    "expiryDate": {
+    "expiryInterval": {
       "type": "string"
     },
     "editorsPick": {

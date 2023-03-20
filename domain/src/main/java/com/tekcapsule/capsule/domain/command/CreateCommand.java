@@ -20,12 +20,12 @@ public class CreateCommand extends Command {
     private String author;
     private String description;
     private List<String> tags;
-    private String publisher;
+    private Publisher publisher;
     private String resourceUrl;
     private CapsuleType type;
     private TargetAudience audience;
     private TopicLevel level;
-    private String expiryDate;
+    private ExpiryInterval expiryInterval;
     private Integer editorsPick;
     private List<Quiz> quizzes;
 }
