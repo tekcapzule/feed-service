@@ -379,6 +379,7 @@ Resources:
             RestApiId:
               Ref: CapsuleApi
 
+
   GetCapsuleMetadataFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -387,12 +388,12 @@ Resources:
         ApplyOn: PublishedVersions
       Environment:
         Variables:
-          SPRING_CLOUD_FUNCTION_DEFINITION: getCapsuleMetadataFunction
+          SPRING_CLOUD_FUNCTION_DEFINITION: getMetadataFunction
       Events:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/metadata
+            Path: capsule/getMetadata
             Method: post
             RestApiId:
               Ref: CapsuleApi

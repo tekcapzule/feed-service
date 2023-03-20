@@ -1,8 +1,6 @@
 package com.tekcapsule.capsule.application.function;
 
 import com.tekcapsule.capsule.application.config.AppConfig;
-import com.tekcapsule.capsule.application.function.input.SearchByTopicInput;
-import com.tekcapsule.capsule.domain.model.Capsule;
 import com.tekcapsule.capsule.domain.service.CapsuleService;
 import com.tekcapsule.core.domain.EmptyFunctionInput;
 import com.tekcapsule.core.utils.HeaderUtil;
@@ -13,7 +11,6 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,13 +18,13 @@ import java.util.function.Function;
 
 @Component
 @Slf4j
-public class GetCapsuleMetdataFunction implements Function<Message<EmptyFunctionInput>, Message<Map<String,List<String>>>> {
+public class GetMetadataFunction implements Function<Message<EmptyFunctionInput>, Message<Map<String,List<String>>>> {
 
     private final CapsuleService capsuleService;
 
     private final AppConfig appConfig;
 
-    public GetCapsuleMetdataFunction(final CapsuleService capsuleService, final AppConfig appConfig) {
+    public GetMetadataFunction(final CapsuleService capsuleService, final AppConfig appConfig) {
         this.capsuleService = capsuleService;
         this.appConfig = appConfig;
     }
