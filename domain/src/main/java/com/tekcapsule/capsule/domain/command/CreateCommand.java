@@ -13,6 +13,8 @@ import java.util.List;
 @Builder
 public class CreateCommand extends Command {
     private String topicCode;
+    private String category;
+    private String subCategory;
     private String publishedDate;
     private String title;
     private String imageUrl;

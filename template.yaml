@@ -61,10 +61,12 @@ Resources:
           AttributeType: S
         - AttributeName: topicCode
           AttributeType: S
+        - AttributeName: views
+          AttributeType: N
         - AttributeName: editorsPick
           AttributeType: N
-        - AttributeName: recommendations
-          AttributeType: N
+        - AttributeName: categoryCode
+          AttributeType: S
       KeySchema:
         - AttributeName: capsuleId
           KeyType: HASH
@@ -98,14 +100,24 @@ Resources:
           KeySchema:
             - AttributeName: status
               KeyType: HASH
-            - AttributeName: recommendations
+            - AttributeName: views
               KeyType: RANGE
           Projection:
             ProjectionType: ALL
           ProvisionedThroughput:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
-
+        - IndexName: categoryGSI
+          KeySchema:
+            - AttributeName: topicCode
+              KeyType: HASH
+            - AttributeName: categoryCode
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
   # Setup Lambda Functions
 
   CreateCapsuleFunction:
@@ -397,6 +409,49 @@ Resources:
             Method: post
             RestApiId:
               Ref: CapsuleApi
+
+  SearchCapsuleByCategoryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "${Stage}-Capsule-SearchCapsuleByCategory"
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CapsuleTable
+      Environment:
+        Variables:
+          SPRING_CLOUD_FUNCTION_DEFINITION: searchByCategoryFunction
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: capsule/searchByCategory
+            Method: post
+            RestApiId:
+              Ref: CapsuleApi
+
+  SearchCapsuleBySubCategoryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "${Stage}-Capsule-SearchCapsuleBySubCategory"
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CapsuleTable
+      Environment:
+        Variables:
+          SPRING_CLOUD_FUNCTION_DEFINITION: searchBySubCategoryFunction
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: capsule/searchBySubCategory
+            Method: post
+            RestApiId:
+              Ref: CapsuleApi
+
 
   # Set Output Variable
 

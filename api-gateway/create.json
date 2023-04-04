@@ -4,6 +4,8 @@
   "type": "object",
   "required": [
     "topicCode",
+    "category",
+    "subCategory",
     "publishedDate",
     "title",
     "imageUrl",
@@ -15,12 +17,18 @@
     "type",
     "audience",
     "level",
-    "expiryInterval",
+    "expiryDate",
     "editorsPick",
     "tags"
   ],
   "properties": {
     "topicCode": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "subCategory": {
       "type": "string"
     },
     "publishedDate": {
@@ -53,7 +61,7 @@
     "level": {
       "type": "string"
     },
-    "expiryInterval": {
+    "expiryDate": {
       "type": "string"
     },
     "editorsPick": {

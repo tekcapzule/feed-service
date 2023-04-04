@@ -35,4 +35,6 @@ public interface CapsuleService {
 
     List<Capsule> findByTopic( String topicName);
     Map<String,List<String>> getMetadata();
+    List<Capsule> findByCategory(String topicCode, String category);
+    List<Capsule> findBySubCategory(String topicCode, String category, String subCategory);
 }

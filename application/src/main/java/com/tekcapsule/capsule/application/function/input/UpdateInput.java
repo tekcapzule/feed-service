@@ -1,7 +1,10 @@
 package com.tekcapsule.capsule.application.function.input;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.tekcapsule.capsule.domain.model.*;
+import com.tekcapsule.capsule.domain.model.CapsuleType;
+import com.tekcapsule.capsule.domain.model.Quiz;
+import com.tekcapsule.capsule.domain.model.TargetAudience;
+import com.tekcapsule.capsule.domain.model.TopicLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +16,8 @@ import java.util.List;
 public class UpdateInput {
     private String capsuleId;
     private String topicCode;
+    private String category;
+    private String subCategory;
     private String publishedDate;
     private String title;
     private String imageUrl;
