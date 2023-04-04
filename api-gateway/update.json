@@ -5,6 +5,8 @@
   "required": [
     "capsuleId",
     "topicCode",
+    "category",
+    "subCategory",
     "publishedDate",
     "title",
     "imageUrl",
@@ -25,6 +27,12 @@
       "type": "string"
     },
     "topicCode": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "subCategory": {
       "type": "string"
     },
     "publishedDate": {

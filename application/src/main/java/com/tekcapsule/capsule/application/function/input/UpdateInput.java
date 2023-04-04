@@ -16,6 +16,8 @@ import java.util.List;
 public class UpdateInput {
     private String capsuleId;
     private String topicCode;
+    private String category;
+    private String subCategory;
     private String publishedDate;
     private String title;
     private String imageUrl;

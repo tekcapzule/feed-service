@@ -108,15 +108,15 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
         HashMap<String, AttributeValue> expAttributes = new HashMap<>();
         expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
-        expAttributes.put(":recommendations", new AttributeValue().withN("25"));
+        expAttributes.put(":views", new AttributeValue().withN("25"));
 
         HashMap<String, String> expNames = new HashMap<>();
         expNames.put("#status", "status");
-        expNames.put("#recommendations", "recommendations");
+        expNames.put("#views", "views");
 
         DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
                 .withIndexName("trendingGSI").withConsistentRead(false)
-                .withKeyConditionExpression("#status = :status and #recommendations > :recommendations")
+                .withKeyConditionExpression("#status = :status and #views > :views")
                 .withExpressionAttributeValues(expAttributes)
                 .withExpressionAttributeNames(expNames);
 
@@ -151,18 +151,57 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
         HashMap<String, AttributeValue> expAttributes = new HashMap<>();
         expAttributes.put(":status", new AttributeValue().withS(SUBMITTED_STATUS));
-        expAttributes.put(":recommendations", new AttributeValue().withN("0"));
 
         HashMap<String, String> expNames = new HashMap<>();
         expNames.put("#status", "status");
-        expNames.put("#recommendations", "recommendations");
 
         DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
                 .withIndexName("trendingGSI").withConsistentRead(false)
-                .withKeyConditionExpression("#status = :status and #recommendations >= :recommendations")
+                .withKeyConditionExpression("#status = :status")
                 .withExpressionAttributeValues(expAttributes)
                 .withExpressionAttributeNames(expNames);
 
+        return dynamo.query(Capsule.class, queryExpression);
+
+    }
+
+    @Override
+    public List<Capsule> findAllByCategory(String topicCode, String category) {
+
+        HashMap<String, AttributeValue> expAttributes = new HashMap<>();
+        expAttributes.put(":topicCode", new AttributeValue().withS(topicCode));
+        expAttributes.put(":category", new AttributeValue().withS(category));
+
+        HashMap<String, String> expNames = new HashMap<>();
+        expNames.put("#topicCode", "topicCode");
+        expNames.put("#categoryCode", "categoryCode");
+
+        DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
+                .withIndexName("categoryGSI").withConsistentRead(false)
+                .withKeyConditionExpression("#topicCode = :topicCode and begins_with(#categoryCode, :category)")
+                .withExpressionAttributeValues(expAttributes)
+                .withExpressionAttributeNames(expNames);
+
+        return dynamo.query(Capsule.class, queryExpression);
+    }
+
+    @Override
+    public List<Capsule> findAllBySubCategory(String topicCode, String category, String subCategory) {
+
+        HashMap<String, AttributeValue> expAttributes = new HashMap<>();
+        expAttributes.put(":categoryCode", new AttributeValue().withS(category+"-"+subCategory));
+        expAttributes.put(":topicCode", new AttributeValue().withS(topicCode));
+
+        HashMap<String, String> expNames = new HashMap<>();
+        expNames.put("#topicCode", "topicCode");
+        expNames.put("#categoryCode", "categoryCode");
+
+
+        DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
+                .withIndexName("categoryGSI").withConsistentRead(false)
+                .withKeyConditionExpression("#topicCode = :topicCode and #categoryCode = :categoryCode")
+                .withExpressionAttributeValues(expAttributes)
+                .withExpressionAttributeNames(expNames);
         return dynamo.query(Capsule.class, queryExpression);
 
     }
@@ -194,5 +233,7 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
         return dynamo.query(Capsule.class, dynamoDBQueryExpression);
     }
+
+
 
 }

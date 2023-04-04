@@ -33,4 +33,6 @@ public interface CapsuleService {
     Capsule findBy( String capsuleId);
 
     List<Capsule> findByTopic( String topicName);
+    List<Capsule> findByCategory(String topicCode, String category);
+    List<Capsule> findBySubCategory(String topicCode, String category, String subCategory);
 }
