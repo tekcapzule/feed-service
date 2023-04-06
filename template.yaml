@@ -110,17 +110,6 @@ Resources:
           ProvisionedThroughput:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
-        - IndexName: trendingGSI
-          KeySchema:
-            - AttributeName: status
-              KeyType: HASH
-            - AttributeName: recommendations
-              KeyType: RANGE
-          Projection:
-            ProjectionType: ALL
-          ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
         - IndexName: categoryGSI
           KeySchema:
             - AttributeName: topicCode
