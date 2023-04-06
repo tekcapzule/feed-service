@@ -63,6 +63,8 @@ Resources:
           AttributeType: S
         - AttributeName: views
           AttributeType: N
+        - AttributeName: recommendations
+          AttributeType: N
         - AttributeName: editorsPick
           AttributeType: N
         - AttributeName: categoryCode
@@ -101,6 +103,17 @@ Resources:
             - AttributeName: status
               KeyType: HASH
             - AttributeName: views
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+        - IndexName: trendingGSI
+          KeySchema:
+            - AttributeName: status
+              KeyType: HASH
+            - AttributeName: recommendations
               KeyType: RANGE
           Projection:
             ProjectionType: ALL
