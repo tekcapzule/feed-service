@@ -108,15 +108,15 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
         HashMap<String, AttributeValue> expAttributes = new HashMap<>();
         expAttributes.put(":status", new AttributeValue().withS(ACTIVE_STATUS));
-        expAttributes.put(":views", new AttributeValue().withN("25"));
+        expAttributes.put(":recommendations", new AttributeValue().withN("25"));
 
         HashMap<String, String> expNames = new HashMap<>();
         expNames.put("#status", "status");
-        expNames.put("#views", "views");
+        expNames.put("#recommendations", "recommendations");
 
         DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
-                .withIndexName("trendingsGSI").withConsistentRead(false)
-                .withKeyConditionExpression("#status = :status and #views > :views")
+                .withIndexName("trendingGSI").withConsistentRead(false)
+                .withKeyConditionExpression("#status = :status and #recommendations > :recommendations")
                 .withExpressionAttributeValues(expAttributes)
                 .withExpressionAttributeNames(expNames);
 
@@ -156,7 +156,7 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
         expNames.put("#status", "status");
 
         DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
-                .withIndexName("trendingsGSI").withConsistentRead(false)
+                .withIndexName("trendingGSI").withConsistentRead(false)
                 .withKeyConditionExpression("#status = :status")
                 .withExpressionAttributeValues(expAttributes)
                 .withExpressionAttributeNames(expNames);
