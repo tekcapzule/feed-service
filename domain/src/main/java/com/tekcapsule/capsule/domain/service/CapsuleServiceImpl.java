@@ -37,11 +37,14 @@ public class CapsuleServiceImpl implements CapsuleService {
                 .author(createCommand.getAuthor())
                 .description(createCommand.getDescription())
                 .topicCode(createCommand.getTopicCode())
+                .category(createCommand.getCategory())
+                .subCategory(createCommand.getSubCategory())
+                .categoryCode(createCommand.getCategory()+"-"+createCommand.getSubCategory())
                 .editorsPick(createCommand.getEditorsPick())
                 .imageUrl(createCommand.getImageUrl())
                 .duration(createCommand.getDuration())
                 .publishedDate(createCommand.getPublishedDate())
-                .expiryInterval(createCommand.getExpiryInterval())
+                .expiryDate(createCommand.getExpiryDate())
                 .publisher(createCommand.getPublisher())
                 .resourceUrl(createCommand.getResourceUrl())
                 .level(createCommand.getLevel())
@@ -75,6 +78,9 @@ public class CapsuleServiceImpl implements CapsuleService {
             capsule.setAuthor(updateCommand.getAuthor());
             capsule.setDescription(updateCommand.getDescription());
             capsule.setTopicCode(updateCommand.getTopicCode());
+            capsule.setCategory(updateCommand.getCategory());
+            capsule.setSubCategory(updateCommand.getSubCategory());
+            capsule.setCategoryCode(updateCommand.getCategory()+"-"+updateCommand.getSubCategory());
             capsule.setPublishedDate(updateCommand.getPublishedDate());
             capsule.setTitle(updateCommand.getTitle());
             capsule.setImageUrl(updateCommand.getImageUrl());
@@ -85,7 +91,7 @@ public class CapsuleServiceImpl implements CapsuleService {
             capsule.setResourceUrl(updateCommand.getResourceUrl());
             capsule.setType(updateCommand.getType());
             capsule.setAudience(updateCommand.getAudience());
-            capsule.setExpiryInterval(updateCommand.getExpiryInterval());
+            capsule.setExpiryDate(updateCommand.getExpiryDate());
             capsule.setLevel(updateCommand.getLevel());
             capsule.setQuizzes(updateCommand.getQuizzes());
 
@@ -243,5 +249,16 @@ public class CapsuleServiceImpl implements CapsuleService {
         log.info("Entering findBy topic service");
 
         return capsuleDynamoRepository.findAllByTopicCode(topicCode);
+    }
+
+    public List<Capsule> findByCategory(String topicCode, String category) {
+        log.info("Entering findByCategory service");
+
+        return capsuleDynamoRepository.findAllByCategory(topicCode,category);
+    }
+    public List<Capsule> findBySubCategory(String topicCode, String category, String subCategory) {
+        log.info("Entering findBySubCategory service");
+
+        return capsuleDynamoRepository.findAllBySubCategory(topicCode, category, subCategory);
     }
 }

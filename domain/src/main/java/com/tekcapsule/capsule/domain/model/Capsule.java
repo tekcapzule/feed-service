@@ -24,13 +24,18 @@ public class Capsule extends BaseDomainEntity implements AggregateRoot {
     private String title;
     @DynamoDBAttribute(attributeName="topicCode")
     private String topicCode;
+    @DynamoDBAttribute(attributeName="categoryCode")
+    private String categoryCode;
+    @DynamoDBAttribute(attributeName="category")
+    private String category;
+    @DynamoDBAttribute(attributeName="subCategory")
+    private String subCategory;
     @DynamoDBAttribute(attributeName = "author")
     private String author;
     @DynamoDBAttribute(attributeName = "description")
     private String description;
     @DynamoDBAttribute(attributeName = "publisher")
-    @DynamoDBTypeConvertedEnum
-    private Publisher publisher;
+    private String publisher;
     @DynamoDBAttribute(attributeName="publishedDate")
     private String publishedDate;
     @DynamoDBAttribute(attributeName = "resourceUrl")
@@ -44,9 +49,8 @@ public class Capsule extends BaseDomainEntity implements AggregateRoot {
     @DynamoDBAttribute(attributeName = "level")
     @DynamoDBTypeConvertedEnum
     private TopicLevel level;
-    @DynamoDBAttribute(attributeName = "expiryInterval")
-    @DynamoDBTypeConvertedEnum
-    private ExpiryInterval expiryInterval;
+    @DynamoDBAttribute(attributeName = "expiryDate")
+    private String expiryDate;
     @DynamoDBAttribute(attributeName = "duration")
     private Integer duration;
     @DynamoDBAttribute(attributeName="tags")

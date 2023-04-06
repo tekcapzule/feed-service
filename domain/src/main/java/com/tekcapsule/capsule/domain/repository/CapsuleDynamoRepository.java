@@ -19,4 +19,7 @@ public interface CapsuleDynamoRepository extends CrudRepository<Capsule, String>
     List<Capsule> findAllPendingApproval();
 
     List<Capsule> findAllByTopicCode(String topicCode);
+    List<Capsule> findAllByCategory(String topicCode,String category);
+    List<Capsule> findAllBySubCategory(String topicCode, String category, String subCategory);
+
 }

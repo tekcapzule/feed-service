@@ -12,6 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 public class CreateInput {
     private String topicCode;
+    private String category;
+    private String subCategory;
     private String publishedDate;
     private String title;
     private String imageUrl;
@@ -19,12 +21,12 @@ public class CreateInput {
     private String author;
     private String description;
     private List<String> tags;
-    private Publisher publisher;
+    private String publisher;
     private String resourceUrl;
     private CapsuleType type;
     private TargetAudience audience;
     private TopicLevel level;
-    private ExpiryInterval expiryInterval;
+    private String expiryDate;
     private Integer editorsPick;
     private List<Quiz> quizzes;
 }
