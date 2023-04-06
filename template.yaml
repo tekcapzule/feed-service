@@ -61,7 +61,7 @@ Resources:
           AttributeType: S
         - AttributeName: topicCode
           AttributeType: S
-        - AttributeName: recommendations
+        - AttributeName: views
           AttributeType: N
         - AttributeName: editorsPick
           AttributeType: N
@@ -96,11 +96,11 @@ Resources:
           ProvisionedThroughput:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
-        - IndexName: trendingGSI
+        - IndexName: trendingsGSI
           KeySchema:
             - AttributeName: status
               KeyType: HASH
-            - AttributeName: recommendations
+            - AttributeName: views
               KeyType: RANGE
           Projection:
             ProjectionType: ALL
