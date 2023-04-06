@@ -96,7 +96,7 @@ Resources:
           ProvisionedThroughput:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
-        - IndexName: trendingGSI
+        - IndexName: trendingsGSI
           KeySchema:
             - AttributeName: status
               KeyType: HASH
