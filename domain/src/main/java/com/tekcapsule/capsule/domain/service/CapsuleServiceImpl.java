@@ -1,15 +1,17 @@
 package com.tekcapsule.capsule.domain.service;
 
 import com.tekcapsule.capsule.domain.command.*;
-import com.tekcapsule.capsule.domain.model.Badge;
-import com.tekcapsule.capsule.domain.model.Capsule;
-import com.tekcapsule.capsule.domain.model.Status;
+import com.tekcapsule.capsule.domain.model.*;
 import com.tekcapsule.capsule.domain.repository.CapsuleDynamoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -71,6 +73,7 @@ public class CapsuleServiceImpl implements CapsuleService {
 
         Capsule capsule = capsuleDynamoRepository.findBy(updateCommand.getCapsuleId());
         if (capsule != null) {
+
             capsule.setAudience(updateCommand.getAudience());
             capsule.setAuthor(updateCommand.getAuthor());
             capsule.setDescription(updateCommand.getDescription());
@@ -91,6 +94,7 @@ public class CapsuleServiceImpl implements CapsuleService {
             capsule.setExpiryDate(updateCommand.getExpiryDate());
             capsule.setLevel(updateCommand.getLevel());
             capsule.setQuizzes(updateCommand.getQuizzes());
+
             capsule.setUpdatedOn(updateCommand.getExecOn());
             capsule.setUpdatedBy(updateCommand.getExecBy().getUserId());
 
@@ -140,6 +144,18 @@ public class CapsuleServiceImpl implements CapsuleService {
         log.info("Entering getEditorsPick service");
 
         return capsuleDynamoRepository.findAllEditorsPick();
+    }
+
+    @Override
+    public Map<String, List<String>> getMetadata() {
+        log.info("Entering getMetadata service");
+        Map<String, List<String>> metadata = new HashMap<>();
+        metadata.put("capsuleType", Arrays.stream(CapsuleType.values()).map(f -> f.toString()).collect(Collectors.toList()));
+        metadata.put("publisher", Arrays.stream(Publisher.values()).map(f -> f.toString()).collect(Collectors.toList()));
+        metadata.put("topicLevel", Arrays.stream(TopicLevel.values()).map(f -> f.toString()).collect(Collectors.toList()));
+        metadata.put("targetAudience", Arrays.stream(TargetAudience.values()).map(f -> f.toString()).collect(Collectors.toList()));
+        metadata.put("expiryInterval", Arrays.stream(ExpiryInterval.values()).map(f -> f.toString()).collect(Collectors.toList()));
+        return metadata;
     }
 
     @Override

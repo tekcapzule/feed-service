@@ -88,8 +88,8 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Build and analyze
-        run: mvn -B -U -s settings.xml clean package deploy
+      - name: Build and publish
+        run: mvn -B -U -X -e -s settings.xml clean package deploy
   devDeploy:
     needs: publish
     name: DEV Deploy

@@ -4,6 +4,8 @@
   "type": "object",
   "required": [
     "topicCode",
+    "category",
+    "subCategory",
     "publishedDate",
     "title",
     "imageUrl",
@@ -21,6 +23,12 @@
   ],
   "properties": {
     "topicCode": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "subCategory": {
       "type": "string"
     },
     "publishedDate": {

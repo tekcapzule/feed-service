@@ -4,6 +4,7 @@ import com.tekcapsule.capsule.domain.command.*;
 import com.tekcapsule.capsule.domain.model.Capsule;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface CapsuleService {
@@ -33,6 +34,7 @@ public interface CapsuleService {
     Capsule findBy( String capsuleId);
 
     List<Capsule> findByTopic( String topicName);
+    Map<String,List<String>> getMetadata();
     List<Capsule> findByCategory(String topicCode, String category);
     List<Capsule> findBySubCategory(String topicCode, String category, String subCategory);
 }
