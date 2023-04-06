@@ -63,8 +63,6 @@ Resources:
           AttributeType: S
         - AttributeName: views
           AttributeType: N
-        - AttributeName: recommendations
-          AttributeType: N
         - AttributeName: editorsPick
           AttributeType: N
         - AttributeName: categoryCode
