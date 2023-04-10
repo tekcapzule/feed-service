@@ -55,6 +55,7 @@ public class CapsuleServiceImpl implements CapsuleService {
                 .views(0)
                 .recommendations(0)
                 .bookmarks(0)
+                .keyPoints(createCommand.getKeyPoints())
                 .quizzes(createCommand.getQuizzes())
                 .badge(Badge.NONE)
                 .build();
@@ -94,7 +95,7 @@ public class CapsuleServiceImpl implements CapsuleService {
             capsule.setExpiryDate(updateCommand.getExpiryDate());
             capsule.setLevel(updateCommand.getLevel());
             capsule.setQuizzes(updateCommand.getQuizzes());
-
+            capsule.setKeyPoints(updateCommand.getKeyPoints());
             capsule.setUpdatedOn(updateCommand.getExecOn());
             capsule.setUpdatedBy(updateCommand.getExecBy().getUserId());
 

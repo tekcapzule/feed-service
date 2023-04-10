@@ -67,6 +67,8 @@ public class Capsule extends BaseDomainEntity implements AggregateRoot {
     private Integer recommendations;
     @DynamoDBAttribute(attributeName = "quizzes")
     private List<Quiz> quizzes;
+    @DynamoDBAttribute(attributeName = "keyPoints")
+    private List<String> keyPoints;
     @DynamoDBAttribute(attributeName = "badges")
     @DynamoDBTypeConvertedEnum
     private Badge badge;
