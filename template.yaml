@@ -26,7 +26,7 @@ Globals:
       Variables:
         TABLE: !Ref CapsuleTable
         APPLICATION_ENVIRONMENT: !Ref Stage
-        CLOUD_REGION: US_West_2
+        CLOUD_REGION: US_East_1
         MAIN_CLASS: com.tekcapsule.capsule.application.CapsuleApplication
         JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
 
