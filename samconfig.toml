@@ -5,7 +5,7 @@ version = 0.1
 stack_name = "dev-capsule-service"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1bmpga5thxtj4"
 s3_prefix = "dev-capsule-service"
-region = "us-west-2"
+region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 parameter_overrides = "Stage=\"dev\""
@@ -17,7 +17,7 @@ image_repositories = []
 stack_name = "prod-capsule-service"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1bmpga5thxtj4"
 s3_prefix = "prod-capsule-service"
-region = "us-west-2"
+region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 parameter_overrides = "Stage=\"prod\" Environment=\"prod\""
