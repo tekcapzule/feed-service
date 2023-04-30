@@ -3,7 +3,7 @@ version = 0.1
 [dev.deploy]
 [dev.deploy.parameters]
 stack_name = "dev-capsule-service"
-s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1bmpga5thxtj4"
+s3_bucket = "com.tekcapsule.api.deployment.dev"
 s3_prefix = "dev-capsule-service"
 region = "us-east-1"
 confirm_changeset = true
@@ -15,7 +15,7 @@ image_repositories = []
 [prod.deploy]
 [prod.deploy.parameters]
 stack_name = "prod-capsule-service"
-s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1bmpga5thxtj4"
+s3_bucket = "com.tekcapsule.api.deployment.prod"
 s3_prefix = "prod-capsule-service"
 region = "us-east-1"
 confirm_changeset = true
