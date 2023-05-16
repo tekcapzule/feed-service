@@ -10,9 +10,7 @@ public enum CapsuleType {
     EVENT("Event"),
     BOOK("Book"),
     COURSE("Course"),
-    NEWS("News"),
-    PRODUCT("Product"),
-    AD("Ad");
+    NEWS("News")
 
     @Getter
     private String value;
