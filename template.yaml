@@ -452,6 +452,51 @@ Resources:
             RestApiId:
               Ref: CapsuleApi
 
+  GetAllCapsulesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: ${Stage}-Capsule-GetAllCapsules
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName:
+              Ref: CapsuleTable
+      Environment:
+        Variables:
+          SPRING_CLOUD_FUNCTION_DEFINITION: getAllFunction
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: capsule/getAll
+            Method: post
+            RestApiId:
+              Ref: CapsuleApi
+
+  GetCapsulesCountFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: ${Stage}-Capsule-GetCapsulesCount
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName:
+              Ref: CapsuleTable
+      Environment:
+        Variables:
+          SPRING_CLOUD_FUNCTION_DEFINITION: getCountFunction
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: capsule/getCount
+            Method: post
+            RestApiId:
+              Ref: CapsuleApi
 
   # Set Output Variable
 
