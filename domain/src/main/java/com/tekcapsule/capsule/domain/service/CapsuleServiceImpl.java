@@ -262,4 +262,18 @@ public class CapsuleServiceImpl implements CapsuleService {
 
         return capsuleDynamoRepository.findAllBySubCategory(topicCode, category, subCategory);
     }
+
+    @Override
+    public List<Capsule> findAll() {
+
+        log.info("Entering findAll capsule service");
+
+        return capsuleDynamoRepository.findAll();
+    }
+
+    @Override
+    public int getAllCapsulesCount() {
+        log.info("Entering get all capsules count service");
+        return capsuleDynamoRepository.getAllCapsulesCount();
+    }
 }
