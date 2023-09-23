@@ -26,6 +26,4 @@ public class CreateInput {
     private TopicLevel level;
     private String expiryDate;
     private List<String> keyPoints;
-    private Integer editorsPick;
-    private List<Quiz> quizzes;
 }

@@ -121,7 +121,7 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
         expNames.put("#status", "status");
 
         DynamoDBQueryExpression<Capsule> queryExpression = new DynamoDBQueryExpression<Capsule>()
-                .withIndexName("trendingsGSI").withConsistentRead(false)
+                .withIndexName("topicGSI").withConsistentRead(false)
                 .withKeyConditionExpression("#status = :status")
                 .withExpressionAttributeValues(expAttributes)
                 .withExpressionAttributeNames(expNames);

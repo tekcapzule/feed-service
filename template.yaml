@@ -62,8 +62,6 @@ Resources:
           AttributeType: S
         - AttributeName: topicCode
           AttributeType: S
-        - AttributeName: views
-          AttributeType: N
       KeySchema:
         - AttributeName: capsuleId
           KeyType: HASH
@@ -83,17 +81,6 @@ Resources:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
 
-        - IndexName: trendingsGSI
-          KeySchema:
-            - AttributeName: status
-              KeyType: HASH
-            - AttributeName: views
-              KeyType: RANGE
-          Projection:
-            ProjectionType: ALL
-          ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
   # Setup Lambda Functions
 
   CreateCapsuleFunction:
