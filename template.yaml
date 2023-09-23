@@ -64,10 +64,6 @@ Resources:
           AttributeType: S
         - AttributeName: views
           AttributeType: N
-        - AttributeName: editorsPick
-          AttributeType: N
-        - AttributeName: categoryCode
-          AttributeType: S
       KeySchema:
         - AttributeName: capsuleId
           KeyType: HASH
@@ -86,33 +82,12 @@ Resources:
           ProvisionedThroughput:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
-        - IndexName: editorsPickGSI
-          KeySchema:
-            - AttributeName: status
-              KeyType: HASH
-            - AttributeName: editorsPick
-              KeyType: RANGE
-          Projection:
-            ProjectionType: ALL
-          ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
+
         - IndexName: trendingsGSI
           KeySchema:
             - AttributeName: status
               KeyType: HASH
             - AttributeName: views
-              KeyType: RANGE
-          Projection:
-            ProjectionType: ALL
-          ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
-        - IndexName: categoryGSI
-          KeySchema:
-            - AttributeName: topicCode
-              KeyType: HASH
-            - AttributeName: categoryCode
               KeyType: RANGE
           Projection:
             ProjectionType: ALL
@@ -267,27 +242,6 @@ Resources:
             RestApiId:
               Ref: CapsuleApi
 
-  GetEditorsPickCapsulesFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: !Sub "${Stage}-Capsule-GetEditorsPickCapsules"
-      SnapStart:
-        ApplyOn: PublishedVersions
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
-      Environment:
-        Variables:
-          SPRING_CLOUD_FUNCTION_DEFINITION: getEditorsPickFunction
-      Events:
-        ApiEvent:
-          Type: Api
-          Properties:
-            Path: capsule/getEditorsPick
-            Method: post
-            RestApiId:
-              Ref: CapsuleApi
-
   GetMyFeedCapsulesFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -305,26 +259,6 @@ Resources:
           Type: Api
           Properties:
             Path: capsule/getMyFeed
-            Method: post
-            RestApiId:
-              Ref: CapsuleApi
-  GetTrendingCapsulesFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: !Sub "${Stage}-Capsule-GetTrendingCapsules"
-      SnapStart:
-        ApplyOn: PublishedVersions
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
-      Environment:
-        Variables:
-          SPRING_CLOUD_FUNCTION_DEFINITION: getTrendingFunction
-      Events:
-        ApiEvent:
-          Type: Api
-          Properties:
-            Path: capsule/getTrending
             Method: post
             RestApiId:
               Ref: CapsuleApi
@@ -407,48 +341,6 @@ Resources:
           Type: Api
           Properties:
             Path: capsule/getMetadata
-            Method: post
-            RestApiId:
-              Ref: CapsuleApi
-
-  SearchCapsuleByCategoryFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: !Sub "${Stage}-Capsule-SearchCapsuleByCategory"
-      SnapStart:
-        ApplyOn: PublishedVersions
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
-      Environment:
-        Variables:
-          SPRING_CLOUD_FUNCTION_DEFINITION: searchByCategoryFunction
-      Events:
-        ApiEvent:
-          Type: Api
-          Properties:
-            Path: capsule/searchByCategory
-            Method: post
-            RestApiId:
-              Ref: CapsuleApi
-
-  SearchCapsuleBySubCategoryFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: !Sub "${Stage}-Capsule-SearchCapsuleBySubCategory"
-      SnapStart:
-        ApplyOn: PublishedVersions
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
-      Environment:
-        Variables:
-          SPRING_CLOUD_FUNCTION_DEFINITION: searchBySubCategoryFunction
-      Events:
-        ApiEvent:
-          Type: Api
-          Properties:
-            Path: capsule/searchBySubCategory
             Method: post
             RestApiId:
               Ref: CapsuleApi
