@@ -29,6 +29,7 @@ public class UpdateInput {
     private TargetAudience audience;
     private TopicLevel level;
     private String expiryDate;
+    private List<String> keyPoints;
     private Integer editorsPick;
     private List<Quiz> quizzes;
 }

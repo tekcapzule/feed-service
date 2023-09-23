@@ -5,6 +5,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.Select;
 import com.tekcapsule.capsule.domain.model.Capsule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,15 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
 
     @Override
     public List<Capsule> findAll() {
+        String projectionExpression = "capsuleId,title,topicCode,category,#status";
+        HashMap<String, String> expNames = new HashMap<>();
+        expNames.put("#status", "status");
+        return dynamo.scan(Capsule.class,new DynamoDBScanExpression().withProjectionExpression(projectionExpression).withExpressionAttributeNames(expNames));
+    }
 
-        return dynamo.scan(Capsule.class, new DynamoDBScanExpression());
-
+    @Override
+    public int getAllCapsulesCount() {
+        return dynamo.count(Capsule.class,new DynamoDBScanExpression().withSelect(Select.COUNT));
     }
 
     @Override
@@ -82,7 +89,6 @@ public class CapsuleRepositoryImpl implements CapsuleDynamoRepository {
         });
         return capsules;
     }
-
     //Find all capsules by topic code.
     @Override
     public List<Capsule> findAllByTopicCode(String topicCode) {

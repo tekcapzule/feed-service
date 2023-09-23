@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.tekcapsule</groupId>
     <artifactId>capsule-service</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.8</version>
     <name>Capsule Service</name>
     <description>Capsule Service</description>
     <properties>
@@ -50,12 +50,12 @@
         <dependency>
             <groupId>com.tekcapsule</groupId>
             <artifactId>tekcapsule-core</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.2</version>
         </dependency>
         <dependency>
             <groupId>com.tekcapsule</groupId>
             <artifactId>capsule-domain</artifactId>
-            <version>1.2.1</version>
+            <version>1.2.8</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

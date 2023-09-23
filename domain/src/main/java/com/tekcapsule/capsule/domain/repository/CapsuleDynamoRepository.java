@@ -16,4 +16,7 @@ public interface CapsuleDynamoRepository extends CrudRepository<Capsule, String>
 
     List<Capsule> findAllByTopicCode(String topicCode);
 
+    int getAllCapsulesCount();
+
+
 }

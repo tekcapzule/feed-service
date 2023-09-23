@@ -52,6 +52,7 @@ public class CapsuleServiceImpl implements CapsuleService {
                 .views(0)
                 .recommendations(0)
                 .bookmarks(0)
+                .keyPoints(createCommand.getKeyPoints())
                 .quizzes(createCommand.getQuizzes())
                 .badge(Badge.NONE)
                 .build();
@@ -88,7 +89,7 @@ public class CapsuleServiceImpl implements CapsuleService {
             capsule.setExpiryDate(updateCommand.getExpiryDate());
             capsule.setLevel(updateCommand.getLevel());
             capsule.setQuizzes(updateCommand.getQuizzes());
-
+            capsule.setKeyPoints(updateCommand.getKeyPoints());
             capsule.setUpdatedOn(updateCommand.getExecOn());
             capsule.setUpdatedBy(updateCommand.getExecBy().getUserId());
 
@@ -229,6 +230,21 @@ public class CapsuleServiceImpl implements CapsuleService {
         log.info("Entering findBy topic service");
 
         return capsuleDynamoRepository.findAllByTopicCode(topicCode);
+    }
+
+
+    @Override
+    public List<Capsule> findAll() {
+
+        log.info("Entering findAll capsule service");
+
+        return capsuleDynamoRepository.findAll();
+    }
+
+    @Override
+    public int getAllCapsulesCount() {
+        log.info("Entering get all capsules count service");
+        return capsuleDynamoRepository.getAllCapsulesCount();
     }
 
 }
