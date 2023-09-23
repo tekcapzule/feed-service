@@ -18,9 +18,6 @@ import java.util.stream.Collectors;
 public class CapsuleServiceImpl implements CapsuleService {
     private CapsuleDynamoRepository capsuleDynamoRepository;
 
-    private final Integer BRONZE_BADGE_VIEWS = 25;
-    private final Integer SILVER_BADGE_VIEWS = 100;
-    private final Integer GOLD_BADGE_VIEWS = 250;
 
     @Autowired
     public CapsuleServiceImpl(CapsuleDynamoRepository capsuleDynamoRepository) {
@@ -37,7 +34,6 @@ public class CapsuleServiceImpl implements CapsuleService {
                 .author(createCommand.getAuthor())
                 .description(createCommand.getDescription())
                 .topicCode(createCommand.getTopicCode())
-                .editorsPick(createCommand.getEditorsPick())
                 .imageUrl(createCommand.getImageUrl())
                 .duration(createCommand.getDuration())
                 .publishedDate(createCommand.getPublishedDate())
@@ -53,8 +49,6 @@ public class CapsuleServiceImpl implements CapsuleService {
                 .recommendations(0)
                 .bookmarks(0)
                 .keyPoints(createCommand.getKeyPoints())
-                .quizzes(createCommand.getQuizzes())
-                .badge(Badge.NONE)
                 .build();
 
         capsule.setAddedOn(createCommand.getExecOn());
@@ -88,7 +82,6 @@ public class CapsuleServiceImpl implements CapsuleService {
             capsule.setAudience(updateCommand.getAudience());
             capsule.setExpiryDate(updateCommand.getExpiryDate());
             capsule.setLevel(updateCommand.getLevel());
-            capsule.setQuizzes(updateCommand.getQuizzes());
             capsule.setKeyPoints(updateCommand.getKeyPoints());
             capsule.setUpdatedOn(updateCommand.getExecOn());
             capsule.setUpdatedBy(updateCommand.getExecBy().getUserId());
@@ -163,17 +156,6 @@ public class CapsuleServiceImpl implements CapsuleService {
             Integer views = capsule.getViews();
             views += 1;
             capsule.setViews(views);
-
-            Badge badge = capsule.getBadge();
-
-            if (views >= GOLD_BADGE_VIEWS && badge!=Badge.GOLD) {
-                capsule.setBadge(Badge.GOLD);
-            } else if (views >= SILVER_BADGE_VIEWS && badge!=Badge.SILVER) {
-                capsule.setBadge(Badge.SILVER);
-            } else if (views >= BRONZE_BADGE_VIEWS && badge!=Badge.BRONZE) {
-                capsule.setBadge(Badge.BRONZE);
-            }
-
             capsule.setUpdatedOn(viewCommand.getExecOn());
             capsule.setUpdatedBy(viewCommand.getExecBy().getUserId());
 

@@ -52,21 +52,14 @@ public class Capsule extends BaseDomainEntity implements AggregateRoot {
     private List<String> tags;
     @DynamoDBAttribute(attributeName = "imageUrl")
     private String imageUrl;
-    @DynamoDBAttribute(attributeName = "editorsPick")
-    private Integer editorsPick;
     @DynamoDBAttribute(attributeName = "views")
     private Integer views;
     @DynamoDBAttribute(attributeName = "bookmarks")
     private Integer bookmarks;
     @DynamoDBAttribute(attributeName = "recommendations")
     private Integer recommendations;
-    @DynamoDBAttribute(attributeName = "quizzes")
-    private List<Quiz> quizzes;
     @DynamoDBAttribute(attributeName = "keyPoints")
     private List<String> keyPoints;
-    @DynamoDBAttribute(attributeName = "badges")
-    @DynamoDBTypeConvertedEnum
-    private Badge badge;
     @DynamoDBAttribute(attributeName = "status")
     @DynamoDBTypeConvertedEnum
     private Status status;
