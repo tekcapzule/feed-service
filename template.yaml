@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
-Description: Capsule-Service-Deployment-Descriptor
+Description: Feed-Service-Deployment-Descriptor
 
 
 Parameters:
@@ -21,24 +21,24 @@ Globals:
     CodeUri: ./application
     Tags:
       Stage: !Ref Stage
-      Service: Capsule
+      Service: Feed
       Resource: Lambda
     Environment:
       Variables:
-        TABLE: !Ref CapsuleTable
+        TABLE: !Ref FeedTable
         APPLICATION_ENVIRONMENT: !Ref Stage
         CLOUD_REGION: us-east-1
-        MAIN_CLASS: com.tekcapsule.capsule.application.CapsuleApplication
+        MAIN_CLASS: com.tekcapzule.feed.application.FeedApplication
         JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
 
 Resources:
 
   # Setup API Gateway
 
-  CapsuleApi:
+  FeedApi:
     Type: AWS::Serverless::Api
     Properties:
-      Name: !Sub "capsule-${Stage}"
+      Name: !Sub "feed-${Stage}"
       StageName: !Ref Stage
       Cors:
         AllowMethods: "'POST, GET'"
@@ -51,19 +51,19 @@ Resources:
 
   # Setup DynamoDB Table
 
-  CapsuleTable:
+  FeedTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: !Sub "${Stage}Capsule"
+      TableName: !Sub "${Stage}Feed"
       AttributeDefinitions:
-        - AttributeName: capsuleId
+        - AttributeName: feedId
           AttributeType: S
         - AttributeName: status
           AttributeType: S
         - AttributeName: topicCode
           AttributeType: S
       KeySchema:
-        - AttributeName: capsuleId
+        - AttributeName: feedId
           KeyType: HASH
       ProvisionedThroughput:
         ReadCapacityUnits: 1
@@ -83,15 +83,15 @@ Resources:
 
   # Setup Lambda Functions
 
-  CreateCapsuleFunction:
+  CreateFeedFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Capsule-CreateCapsule"
+      FunctionName: !Sub "${Stage}-Feed-CreateFeed"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
+            TableName: !Ref FeedTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: createFunction
@@ -99,20 +99,20 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/create
+            Path: feed/create
             Method: post
             RestApiId:
-              Ref: CapsuleApi
+              Ref: FeedApi
 
-  UpdateCapsuleFunction:
+  UpdateFeedFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Capsule-UpdateCapsule"
+      FunctionName: !Sub "${Stage}-Feed-UpdateFeed"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
+            TableName: !Ref FeedTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: updateFunction
@@ -120,20 +120,20 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/update
+            Path: feed/update
             Method: post
             RestApiId:
-              Ref: CapsuleApi
+              Ref: FeedApi
 
-  DisableCapsuleFunction:
+  DisableFeedFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Capsule-DisableCapsule"
+      FunctionName: !Sub "${Stage}-Feed-DisableFeed"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
+            TableName: !Ref FeedTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: disableFunction
@@ -141,19 +141,19 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/disable
+            Path: feed/disable
             Method: post
             RestApiId:
-              Ref: CapsuleApi
-  GetCapsuleFunction:
+              Ref: FeedApi
+  GetFeedFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Capsule-GetCapsule"
+      FunctionName: !Sub "${Stage}-Feed-GetFeed"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
+            TableName: !Ref FeedTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: getFunction
@@ -161,20 +161,20 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/get
+            Path: feed/get
             Method: post
             RestApiId:
-              Ref: CapsuleApi
+              Ref: FeedApi
 
-  BookmarkCapsuleFunction:
+  BookmarkFeedFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Capsule-BookmarkCapsule"
+      FunctionName: !Sub "${Stage}-Feed-BookmarkFeed"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
+            TableName: !Ref FeedTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: bookmarkFunction
@@ -182,20 +182,20 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/bookmark
+            Path: feed/bookmark
             Method: post
             RestApiId:
-              Ref: CapsuleApi
+              Ref: FeedApi
 
-  ApproveCapsuleFunction:
+  ApproveFeedFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Capsule-ApproveCapsule"
+      FunctionName: !Sub "${Stage}-Feed-ApproveFeed"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
+            TableName: !Ref FeedTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: approveFunction
@@ -203,20 +203,20 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/approve
+            Path: feed/approve
             Method: post
             RestApiId:
-              Ref: CapsuleApi
+              Ref: FeedApi
 
-  ViewCapsuleFunction:
+  ViewFeedFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Capsule-ViewCapsule"
+      FunctionName: !Sub "${Stage}-Feed-ViewFeed"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
+            TableName: !Ref FeedTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: viewFunction
@@ -224,20 +224,20 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/view
+            Path: feed/view
             Method: post
             RestApiId:
-              Ref: CapsuleApi
+              Ref: FeedApi
 
-  GetMyFeedCapsulesFunction:
+  GetMyFeedFeedsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Capsule-GetMyFeedCapsules"
+      FunctionName: !Sub "${Stage}-Feed-GetMyFeedFeeds"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
+            TableName: !Ref FeedTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: getMyFeedFunction
@@ -245,20 +245,20 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/getMyFeed
+            Path: feed/getMyFeed
             Method: post
             RestApiId:
-              Ref: CapsuleApi
+              Ref: FeedApi
 
-  GetCapsulesPendingApprovalsFunction:
+  GetFeedsPendingApprovalsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Capsule-GetCapsulesPendingApprovals"
+      FunctionName: !Sub "${Stage}-Feed-GetFeedsPendingApprovals"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
+            TableName: !Ref FeedTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: getPendingApprovalFunction
@@ -266,20 +266,20 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/getPendingApproval
+            Path: feed/getPendingApproval
             Method: post
             RestApiId:
-              Ref: CapsuleApi
+              Ref: FeedApi
 
-  RecommendCapsuleFunction:
+  RecommendFeedFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Capsule-RecommendCapsule"
+      FunctionName: !Sub "${Stage}-Feed-RecommendFeed"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
+            TableName: !Ref FeedTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: recommendFunction
@@ -287,20 +287,20 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/recommend
+            Path: feed/recommend
             Method: post
             RestApiId:
-              Ref: CapsuleApi
+              Ref: FeedApi
 
-  SearchCapsuleByTopicFunction:
+  SearchFeedByTopicFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Capsule-SearchCapsuleByTopic"
+      FunctionName: !Sub "${Stage}-Feed-SearchFeedByTopic"
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref CapsuleTable
+            TableName: !Ref FeedTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: searchByTopicFunction
@@ -308,16 +308,16 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/searchByTopic
+            Path: feed/searchByTopic
             Method: post
             RestApiId:
-              Ref: CapsuleApi
+              Ref: FeedApi
 
 
-  GetCapsuleMetadataFunction:
+  GetFeedMetadataFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub "${Stage}-Capsule-GetCapsuleMetadata"
+      FunctionName: !Sub "${Stage}-Feed-GetFeedMetadata"
       SnapStart:
         ApplyOn: PublishedVersions
       Environment:
@@ -327,22 +327,22 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/getMetadata
+            Path: feed/getMetadata
             Method: post
             RestApiId:
-              Ref: CapsuleApi
+              Ref: FeedApi
 
-  GetAllCapsulesFunction:
+  GetAllFeedsFunction:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName:
-        Fn::Sub: ${Stage}-Capsule-GetAllCapsules
+        Fn::Sub: ${Stage}-Feed-GetAllFeeds
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
             TableName:
-              Ref: CapsuleTable
+              Ref: FeedTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: getAllFunction
@@ -350,22 +350,22 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/getAll
+            Path: feed/getAll
             Method: post
             RestApiId:
-              Ref: CapsuleApi
+              Ref: FeedApi
 
-  GetCapsulesCountFunction:
+  GetFeedsCountFunction:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName:
-        Fn::Sub: ${Stage}-Capsule-GetCapsulesCount
+        Fn::Sub: ${Stage}-Feed-GetFeedsCount
       SnapStart:
         ApplyOn: PublishedVersions
       Policies:
         - DynamoDBCrudPolicy:
             TableName:
-              Ref: CapsuleTable
+              Ref: FeedTable
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: getCountFunction
@@ -373,14 +373,14 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
-            Path: capsule/getCount
+            Path: feed/getCount
             Method: post
             RestApiId:
-              Ref: CapsuleApi
+              Ref: FeedApi
 
   # Set Output Variable
 
 Outputs:
   ApiEndpoint:
-    Description: "Capsule API endpoint."
-    Value: !Sub "https://${CapsuleApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/capsule"
+    Description: "Feed API endpoint."
+    Value: !Sub "https://${FeedApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/feed"

@@ -2,9 +2,9 @@ version = 0.1
 [dev]
 [dev.deploy]
 [dev.deploy.parameters]
-stack_name = "dev-capsule-service"
-s3_bucket = "com.tekcapsule.api.deployment.dev"
-s3_prefix = "dev-capsule-service"
+stack_name = "dev-feed-service"
+s3_bucket = "com.tekcapzule.api.deployment.dev"
+s3_prefix = "dev-feed-service"
 region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
@@ -14,9 +14,9 @@ image_repositories = []
 [prod]
 [prod.deploy]
 [prod.deploy.parameters]
-stack_name = "prod-capsule-service"
-s3_bucket = "com.tekcapsule.api.deployment.prod"
-s3_prefix = "prod-capsule-service"
+stack_name = "prod-feed-service"
+s3_bucket = "com.tekcapzule.api.deployment.prod"
+s3_prefix = "prod-feed-service"
 region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"

@@ -1,0 +1,51 @@
+package com.tekcapzule.feed.application.function;
+
+import com.tekcapzule.core.domain.EmptyFunctionInput;
+import com.tekcapzule.core.utils.HeaderUtil;
+import com.tekcapzule.core.utils.Outcome;
+import com.tekcapzule.core.utils.Stage;
+import com.tekcapzule.feed.application.config.AppConfig;
+import com.tekcapzule.feed.domain.model.Feed;
+import com.tekcapzule.feed.domain.service.FeedService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.GenericMessage;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
+@Component
+@Slf4j
+public class GetAllFunction implements Function<Message<EmptyFunctionInput>, Message<List<Feed>>> {
+
+    private final FeedService feedService;
+
+    private final AppConfig appConfig;
+
+    public GetAllFunction(final FeedService feedService, final AppConfig appConfig) {
+        this.feedService = feedService;
+        this.appConfig = appConfig;
+    }
+
+
+    @Override
+    public Message<List<Feed>> apply(Message<EmptyFunctionInput> getAllInputMessage) {
+
+        Map<String, Object> responseHeaders = new HashMap<>();
+        List<Feed> feeds = new ArrayList<>();
+        String stage = appConfig.getStage().toUpperCase();
+        try {
+            log.info("Entering get all caspules Function");
+            feeds = feedService.findAll();
+            responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.SUCCESS);
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.ERROR);
+        }
+        return new GenericMessage<>(feeds, responseHeaders);
+    }
+}

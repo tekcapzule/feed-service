@@ -12,11 +12,11 @@
             <repositories>
                 <repository>
                     <id>core</id>
-                    <url>https://maven.pkg.github.com/tekcapsule/tekcapsule-core</url>
+                    <url>https://maven.pkg.github.com/tekcapzule/tekcapzule-core</url>
                 </repository>
                 <repository>
-                    <id>capsule</id>
-                    <url>https://maven.pkg.github.com/tekcapsule/capsule-service</url>
+                    <id>feed</id>
+                    <url>https://maven.pkg.github.com/tekcapzule/feed-service</url>
                 </repository>
                 <repository>
                     <id>central</id>
@@ -28,7 +28,7 @@
 
     <servers>
         <server>
-            <id>capsule</id>
+            <id>feed</id>
             <username>${env.SERVER_USERNAME}</username>
             <password>${env.SERVER_PASSWORD}</password>
         </server>
