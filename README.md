@@ -58,8 +58,6 @@
 
 This project contains set of functions written in Java 11 to create, update, query and manage TekCapzule feeds. It is a multi-module maven project with two modules named application & domain. Application module is a springboot application that exposes these functions and domain module contains the domain logic.
 
-![feed-service](https://user-images.githubusercontent.com/9839481/209629340-95671e48-48f8-4173-aa88-e6920a9122a0.png)
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
