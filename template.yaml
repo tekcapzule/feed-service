@@ -80,7 +80,13 @@ Resources:
           ProvisionedThroughput:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
-
+  # S3 Bucket to store the downloaded image from external url
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    Properties:
+      AccessControl: Private
+      BucketName: external-feed-images-store
   # Setup Lambda Functions
 
   CreateFeedFunction:
@@ -374,6 +380,28 @@ Resources:
           Type: Api
           Properties:
             Path: feed/getCount
+            Method: post
+            RestApiId:
+              Ref: FeedApi
+  PostFeedFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: ${Stage}-Feed-PostFeed
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName:
+              Ref: FeedTable
+      Environment:
+        Variables:
+          SPRING_CLOUD_FUNCTION_DEFINITION: postFunction
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: feed/postFeed
             Method: post
             RestApiId:
               Ref: FeedApi

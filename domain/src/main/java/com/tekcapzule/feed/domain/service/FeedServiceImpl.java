@@ -1,5 +1,9 @@
 package com.tekcapzule.feed.domain.service;
 
+import com.tekcapzule.feed.domain.client.DownloadImageClient;
+import com.tekcapzule.feed.domain.client.S3Client;
+import com.tekcapzule.feed.domain.client.UrlMetaTag;
+import com.tekcapzule.feed.domain.client.UrlMetaTagExtractorClient;
 import com.tekcapzule.feed.domain.command.*;
 import com.tekcapzule.feed.domain.model.*;
 import com.tekcapzule.feed.domain.repository.FeedDynamoRepository;
@@ -7,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -17,10 +23,20 @@ import java.util.stream.Collectors;
 @Service
 public class FeedServiceImpl implements FeedService {
     private FeedDynamoRepository feedDynamoRepository;
+    private UrlMetaTagExtractorClient urlMetaTagExtractorClient;
+    private DownloadImageClient downloadImageClient;
+    private S3Client s3Client;
 
-
-    @Autowired
+    /*@Autowired
     public FeedServiceImpl(FeedDynamoRepository feedDynamoRepository) {
+        this.feedDynamoRepository = feedDynamoRepository;
+    }*/
+    @Autowired
+    public FeedServiceImpl(UrlMetaTagExtractorClient urlMetaTagExtractorClient, DownloadImageClient downloadImageClient,
+                           S3Client s3Client, FeedDynamoRepository feedDynamoRepository) {
+        this.urlMetaTagExtractorClient = urlMetaTagExtractorClient;
+        this.downloadImageClient = downloadImageClient;
+        this.s3Client = s3Client;
         this.feedDynamoRepository = feedDynamoRepository;
     }
 
@@ -227,6 +243,29 @@ public class FeedServiceImpl implements FeedService {
     public int getAllFeedsCount() {
         log.info("Entering get all feeds count service");
         return feedDynamoRepository.getAllFeedsCount();
+    }
+
+    @Override
+    public void post(PostCommand postCommand) {
+        log.info("Entering post method - Getting Feed from %s", postCommand.getFeedSourceUrl());
+        feedDynamoRepository.save(prepareFeed(postCommand));
+    }
+
+    private Feed prepareFeed(PostCommand postCommand) {
+        log.info("Entering prepareFeed");
+        UrlMetaTag urlMetaTag = urlMetaTagExtractorClient.extractDetails(postCommand.getFeedSourceUrl());
+        log.info(String.format("Image URL : %s", urlMetaTag.getImageUrl()));
+        urlMetaTag.setImageData(downloadImageClient.downloadImage(urlMetaTag.getImageUrl(),urlMetaTag.getImageName()));
+
+        InputStream in = new ByteArrayInputStream(urlMetaTag.getImageData());
+        s3Client.putS3InputStream("external-feed-images-store", urlMetaTag.getImageName(), in, urlMetaTag.getImageData().length);
+        return mapFeed(postCommand, urlMetaTag);
+    }
+
+    private Feed mapFeed(PostCommand postCommand, UrlMetaTag urlMetaTag) {
+        return Feed.builder().title(urlMetaTag.getTitle()).description(urlMetaTag.getDescription())
+                .imageUrl(urlMetaTag.getImageUrl()).publishedDate(postCommand.getExecOn()).build();
+
     }
 
 }

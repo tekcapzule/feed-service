@@ -76,4 +76,11 @@ public final class InputOutputMapper {
         addOrigin.apply(viewCommand, origin);
         return viewCommand;
     };
+
+    public static final BiFunction<PostFeedInput, Origin, PostCommand> buildPostCommandFromPostFeedInput = (postFeedInput, origin) -> {
+        PostCommand postCommand =  PostCommand.builder().build();
+        BeanUtils.copyProperties(postFeedInput, postCommand);
+        addOrigin.apply(postCommand, origin);
+        return postCommand;
+    };
 }
