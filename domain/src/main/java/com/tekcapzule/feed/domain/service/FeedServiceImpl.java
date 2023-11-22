@@ -263,7 +263,7 @@ public class FeedServiceImpl implements FeedService {
 
     private Feed mapFeed(PostCommand postCommand, UrlMetaTag urlMetaTag) {
         return Feed.builder().title(urlMetaTag.getTitle()).description(urlMetaTag.getDescription())
-                .imageUrl(urlMetaTag.getImageUrl()).publishedDate(postCommand.getExecOn()).build();
+                .imageUrl(urlMetaTag.getImageUrl()).publishedDate(postCommand.getExecOn()).status(Status.SUBMITTED).build();
 
     }
 
