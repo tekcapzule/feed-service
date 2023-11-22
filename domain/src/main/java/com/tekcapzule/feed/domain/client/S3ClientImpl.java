@@ -2,10 +2,8 @@ package com.tekcapzule.feed.domain.client;
 
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.AmazonS3Exception;
-import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.*;
 import com.tekcapzule.feed.domain.exception.FeedCreationException;
 import com.tekcapzule.feed.domain.exception.S3ClientException;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +31,13 @@ public class S3ClientImpl implements S3Client {
         }
         return named_bucket;
     }
+
+    @Override
+    public String getResourceUrl(String extImageS3Bucket, String imageName) {
+        AmazonS3Client amazonS3Client = (AmazonS3Client) amazonS3;
+        return amazonS3Client.getResourceUrl(extImageS3Bucket, imageName);
+    }
+
     public void putS3InputStream(String bucketName, String objectKey,
                                  InputStream in, int contentLength) throws FeedCreationException{
         try {

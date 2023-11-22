@@ -258,6 +258,7 @@ public class FeedServiceImpl implements FeedService {
 
         InputStream in = new ByteArrayInputStream(urlMetaTag.getImageData());
         s3Client.putS3InputStream(extImageS3Bucket, urlMetaTag.getImageName(), in, urlMetaTag.getImageData().length);
+        urlMetaTag.setImageUrl(s3Client.getResourceUrl(extImageS3Bucket, urlMetaTag.getImageName()));
         return mapFeed(postCommand, urlMetaTag);
     }
 
