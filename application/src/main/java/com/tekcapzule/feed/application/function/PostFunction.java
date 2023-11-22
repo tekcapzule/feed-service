@@ -40,12 +40,9 @@ public class PostFunction implements Function<Message<PostFeedInput>, Message<Vo
         String stage = appConfig.getStage().toUpperCase();
         try {
             PostFeedInput postFeedInput = postFeedInputMessage.getPayload();
-            log.info(String.format("Entering post feed Function - Feed Id:%s", postFeedInput.getFeedSourceUrl()));
-            log.info(String.format("Headers :: ",postFeedInputMessage.getHeaders().get("x-channel-code")));
+            log.info(String.format("Entering post feed Function - Feed Source URL : %s", postFeedInput.getFeedSourceUrl()));
             Origin origin = HeaderUtil.buildOriginFromHeaders(postFeedInputMessage.getHeaders());
-            log.info(String.format("getting origin", origin.getUserId()));
             PostCommand postCommand = InputOutputMapper.buildPostCommandFromPostFeedInput.apply(postFeedInput, origin);
-            log.info(String.format("Post command - Feed Id:%s", postCommand.getFeedSourceUrl()));
             feedService.post(postCommand);
             responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.SUCCESS);
             payload = PayloadUtil.composePayload(Outcome.SUCCESS);

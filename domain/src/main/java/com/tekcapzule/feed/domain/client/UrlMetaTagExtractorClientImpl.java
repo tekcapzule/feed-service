@@ -19,12 +19,12 @@ public class UrlMetaTagExtractorClientImpl implements UrlMetaTagExtractorClient 
     private static final String CONTENT = "content";
     @Override
     public UrlMetaTag extractDetails(String url) {
-        log.info("Entering extractDetails from feed url :: %s", url);
+        log.info("Entering extractDetails");
         Document doc = null;
         try {
             doc = Jsoup.connect(url).get();
         } catch (IOException e) {
-            log.error("Error connecting feed source url %s", url);
+            log.error(String.format("Error Connecting the url :: %s", url));
             throw new FeedCreationException(e.getMessage(), e);
         }
         Elements links = doc.select("meta");

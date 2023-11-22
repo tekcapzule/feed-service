@@ -394,9 +394,13 @@ Resources:
         - DynamoDBCrudPolicy:
             TableName:
               Ref: FeedTable
+        - S3CrudPolicy:
+            BucketName:
+              Ref: S3Bucket
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: postFunction
+          EXT_IMG_BUCKET: external-feed-images-store
       Events:
         ApiEvent:
           Type: Api

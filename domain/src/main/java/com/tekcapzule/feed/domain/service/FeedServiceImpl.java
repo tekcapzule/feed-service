@@ -9,6 +9,7 @@ import com.tekcapzule.feed.domain.model.*;
 import com.tekcapzule.feed.domain.repository.FeedDynamoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -27,10 +28,9 @@ public class FeedServiceImpl implements FeedService {
     private DownloadImageClient downloadImageClient;
     private S3Client s3Client;
 
-    /*@Autowired
-    public FeedServiceImpl(FeedDynamoRepository feedDynamoRepository) {
-        this.feedDynamoRepository = feedDynamoRepository;
-    }*/
+    @Value("#{environment.EXT_IMG_BUCKET}")
+    private String extImageS3Bucket;
+
     @Autowired
     public FeedServiceImpl(UrlMetaTagExtractorClient urlMetaTagExtractorClient, DownloadImageClient downloadImageClient,
                            S3Client s3Client, FeedDynamoRepository feedDynamoRepository) {
@@ -252,13 +252,12 @@ public class FeedServiceImpl implements FeedService {
     }
 
     private Feed prepareFeed(PostCommand postCommand) {
-        log.info("Entering prepareFeed");
+        log.info(String.format("Entering prepareFeed method %s :: ", postCommand.getFeedSourceUrl()));
         UrlMetaTag urlMetaTag = urlMetaTagExtractorClient.extractDetails(postCommand.getFeedSourceUrl());
-        log.info(String.format("Image URL : %s", urlMetaTag.getImageUrl()));
         urlMetaTag.setImageData(downloadImageClient.downloadImage(urlMetaTag.getImageUrl(),urlMetaTag.getImageName()));
 
         InputStream in = new ByteArrayInputStream(urlMetaTag.getImageData());
-        s3Client.putS3InputStream("external-feed-images-store", urlMetaTag.getImageName(), in, urlMetaTag.getImageData().length);
+        s3Client.putS3InputStream(extImageS3Bucket, urlMetaTag.getImageName(), in, urlMetaTag.getImageData().length);
         return mapFeed(postCommand, urlMetaTag);
     }
 

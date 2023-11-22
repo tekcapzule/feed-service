@@ -18,13 +18,13 @@ public class DownloadImageClientImpl implements DownloadImageClient {
         log.info(String.format("Entering downloadImage url :: %s, imageName :: %s", url, imageName));
         BufferedImage bufferedImage = null;
         try {
-            URL urlA =new URL(url);
-            bufferedImage = ImageIO.read(urlA);
+            URL imageUrl =new URL(url);
+            bufferedImage = ImageIO.read(imageUrl);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(bufferedImage, imageName.substring(imageName.indexOf(".")+1), baos);
             return baos.toByteArray();
         } catch (MalformedURLException e) {
-            log.error("Error downloading image, malformed url");
+            log.error(String.format("Error downloading image, malformed url :: %s ", url));
             throw new FeedCreationException(e.getMessage(), e);
         } catch (IOException e) {
             log.error("Error downloading image, connection failed");
