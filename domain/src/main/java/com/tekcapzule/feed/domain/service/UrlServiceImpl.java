@@ -1,4 +1,4 @@
-package com.tekcapzule.feed.domain.client;
+package com.tekcapzule.feed.domain.service;
 
 import com.tekcapzule.feed.domain.exception.FeedCreationException;
 import lombok.extern.slf4j.Slf4j;
@@ -55,22 +55,22 @@ public class UrlServiceImpl implements UrlService {
     }
 
     private UrlMetaTag mapUrlMetaTag(Elements links) {
-        UrlMetaTag urlMetaTag = new UrlMetaTag();
+        UrlMetaTag.UrlMetaTagBuilder urlMetaTagBuilder = UrlMetaTag.builder();
         Attributes attributes;
         for (Element element : links) {
             attributes = element.attributes();
             if (attributes.get(PROPERTY) != null && attributes.get(PROPERTY).equals("og:image")) {
-                urlMetaTag.setImageUrl(attributes.get(CONTENT));
-                urlMetaTag.setImageName(getImageName(attributes.get(CONTENT)));
+                urlMetaTagBuilder.imageUrl(attributes.get(CONTENT));
+                urlMetaTagBuilder.imageName(getImageName(attributes.get(CONTENT)));
             } else if (attributes.get(PROPERTY) != null && attributes.get(PROPERTY).equals("og:title")) {
                 attributes = element.attributes();
-                urlMetaTag.setTitle(attributes.get(CONTENT));
+                urlMetaTagBuilder.title(attributes.get(CONTENT));
             } else if (attributes.get(PROPERTY) != null && attributes.get(PROPERTY).equals("og:description")) {
                 attributes = element.attributes();
-                urlMetaTag.setDescription(attributes.get(CONTENT));
+                urlMetaTagBuilder.description(attributes.get(CONTENT));
             }
         }
-        return urlMetaTag;
+        return urlMetaTagBuilder.build();
     }
 
     private String getImageName(String imageUrl) {

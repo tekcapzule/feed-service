@@ -1,4 +1,4 @@
-package com.tekcapzule.feed.domain.client;
+package com.tekcapzule.feed.domain.service;
 
 import com.tekcapzule.feed.domain.exception.FeedCreationException;
 

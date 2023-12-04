@@ -7,8 +7,6 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.tekcapzule.feed.domain.client.UrlMetaTag;
-import com.tekcapzule.feed.domain.client.UrlService;
 import com.tekcapzule.feed.domain.command.*;
 import com.tekcapzule.feed.domain.exception.FeedCreationException;
 import com.tekcapzule.feed.domain.exception.S3ClientException;
