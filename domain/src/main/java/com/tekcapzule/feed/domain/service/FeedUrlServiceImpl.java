@@ -18,7 +18,7 @@ import java.net.URL;
 
 @Slf4j
 @Component
-public class UrlServiceImpl implements UrlService {
+public class FeedUrlServiceImpl implements FeedUrlService {
 
     private static final String PROPERTY = "property";
     private static final String CONTENT = "content";
@@ -57,11 +57,15 @@ public class UrlServiceImpl implements UrlService {
     private UrlMetaTag mapUrlMetaTag(Elements links) {
         UrlMetaTag.UrlMetaTagBuilder urlMetaTagBuilder = UrlMetaTag.builder();
         Attributes attributes;
+        String imageUrl = null;
+        String imageName = null;
         for (Element element : links) {
             attributes = element.attributes();
             if (attributes.get(PROPERTY) != null && attributes.get(PROPERTY).equals("og:image")) {
-                urlMetaTagBuilder.imageUrl(attributes.get(CONTENT));
-                urlMetaTagBuilder.imageName(getImageName(attributes.get(CONTENT)));
+                imageUrl = attributes.get(CONTENT);
+                imageName = getImageName(attributes.get(CONTENT));
+                urlMetaTagBuilder.imageUrl(imageUrl);
+                urlMetaTagBuilder.imageName(imageName);
             } else if (attributes.get(PROPERTY) != null && attributes.get(PROPERTY).equals("og:title")) {
                 attributes = element.attributes();
                 urlMetaTagBuilder.title(attributes.get(CONTENT));
@@ -70,6 +74,7 @@ public class UrlServiceImpl implements UrlService {
                 urlMetaTagBuilder.description(attributes.get(CONTENT));
             }
         }
+        urlMetaTagBuilder.imageData(downloadImage(imageUrl, imageName));
         return urlMetaTagBuilder.build();
     }
 

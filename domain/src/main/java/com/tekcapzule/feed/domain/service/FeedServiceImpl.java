@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class FeedServiceImpl implements FeedService {
     private FeedDynamoRepository feedDynamoRepository;
 
-    private UrlService urlService;
+    private FeedUrlService feedUrlService;
 
     @Value("#{environment.CLOUD_REGION}")
     private String region;
@@ -38,8 +38,8 @@ public class FeedServiceImpl implements FeedService {
     private String extImageS3Bucket;
 
     @Autowired
-    public FeedServiceImpl(UrlService urlService, FeedDynamoRepository feedDynamoRepository) {
-        this.urlService = urlService;
+    public FeedServiceImpl(FeedUrlService feedUrlService, FeedDynamoRepository feedDynamoRepository) {
+        this.feedUrlService = feedUrlService;
         this.feedDynamoRepository = feedDynamoRepository;
     }
 
@@ -256,10 +256,7 @@ public class FeedServiceImpl implements FeedService {
 
     private Feed prepareFeed(PostCommand postCommand) {
         log.info(String.format("Entering prepareFeed method %s :: ", postCommand.getFeedSourceUrl()));
-
-        UrlMetaTag urlMetaTag = urlService.extractDetails(postCommand.getFeedSourceUrl());
-        urlMetaTag.setImageData(urlService.downloadImage(urlMetaTag.getImageUrl(),urlMetaTag.getImageName()));
-
+        UrlMetaTag urlMetaTag = feedUrlService.extractDetails(postCommand.getFeedSourceUrl());
         putS3InputStream(urlMetaTag);
         return mapFeed(postCommand, urlMetaTag);
     }
