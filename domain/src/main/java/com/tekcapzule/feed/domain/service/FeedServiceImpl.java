@@ -1,12 +1,24 @@
 package com.tekcapzule.feed.domain.service;
 
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.tekcapzule.feed.domain.command.*;
+import com.tekcapzule.feed.domain.exception.FeedCreationException;
+import com.tekcapzule.feed.domain.exception.S3ClientException;
 import com.tekcapzule.feed.domain.model.*;
 import com.tekcapzule.feed.domain.repository.FeedDynamoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +29,6 @@ import java.util.stream.Collectors;
 @Service
 public class FeedServiceImpl implements FeedService {
     private FeedDynamoRepository feedDynamoRepository;
-
 
     @Autowired
     public FeedServiceImpl(FeedDynamoRepository feedDynamoRepository) {
@@ -228,5 +239,4 @@ public class FeedServiceImpl implements FeedService {
         log.info("Entering get all feeds count service");
         return feedDynamoRepository.getAllFeedsCount();
     }
-
 }
