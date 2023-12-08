@@ -30,16 +30,8 @@ import java.util.stream.Collectors;
 public class FeedServiceImpl implements FeedService {
     private FeedDynamoRepository feedDynamoRepository;
 
-    private FeedUrlService feedUrlService;
-
-    @Value("#{environment.CLOUD_REGION}")
-    private String region;
-    @Value("#{environment.EXT_IMG_BUCKET}")
-    private String extImageS3Bucket;
-
     @Autowired
-    public FeedServiceImpl(FeedUrlService feedUrlService, FeedDynamoRepository feedDynamoRepository) {
-        this.feedUrlService = feedUrlService;
+    public FeedServiceImpl(FeedDynamoRepository feedDynamoRepository) {
         this.feedDynamoRepository = feedDynamoRepository;
     }
 
@@ -247,46 +239,4 @@ public class FeedServiceImpl implements FeedService {
         log.info("Entering get all feeds count service");
         return feedDynamoRepository.getAllFeedsCount();
     }
-
-    @Override
-    public void post(PostCommand postCommand) {
-        log.info("Entering post method - Getting Feed from %s", postCommand.getFeedSourceUrl());
-        feedDynamoRepository.save(prepareFeed(postCommand));
-    }
-
-    private Feed prepareFeed(PostCommand postCommand) {
-        log.info(String.format("Entering prepareFeed method %s :: ", postCommand.getFeedSourceUrl()));
-        UrlMetaTag urlMetaTag = feedUrlService.extractDetails(postCommand.getFeedSourceUrl());
-        putS3InputStream(urlMetaTag);
-        return mapFeed(postCommand, urlMetaTag);
-    }
-
-    private Feed mapFeed(PostCommand postCommand, UrlMetaTag urlMetaTag) {
-        return Feed.builder().title(urlMetaTag.getTitle()).description(urlMetaTag.getDescription())
-                .imageUrl(urlMetaTag.getImageUrl()).publishedDate(postCommand.getExecOn()).status(Status.SUBMITTED).build();
-    }
-
-    private UrlMetaTag putS3InputStream(UrlMetaTag urlMetaTag) throws FeedCreationException {
-        log.info(String.format("Entering puts3InputStream - Uploading object to bucket %s", extImageS3Bucket));
-        AmazonS3 amazonS3 = AmazonS3ClientBuilder
-                .standard()
-                .withRegion(Regions.fromName(region))
-                .build();
-        InputStream in = new ByteArrayInputStream(urlMetaTag.getImageData());
-        String imageName = urlMetaTag.getImageName();
-        try {
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentLength(urlMetaTag.getImageData().length);
-            PutObjectRequest putOb = new PutObjectRequest(extImageS3Bucket, imageName, in, objectMetadata);
-            amazonS3.putObject(putOb);
-            log.info(String.format("Successfully placed %s into bucket %s", imageName, extImageS3Bucket));
-            AmazonS3Client amazonS3Client = (AmazonS3Client) amazonS3;
-            urlMetaTag.setImageUrl(amazonS3Client.getResourceUrl(extImageS3Bucket, imageName));
-        } catch (AmazonS3Exception e) {
-            log.error("Error uploading image, error connecting S3");
-            throw new S3ClientException(e.getMessage(), e);
-        }
-        return urlMetaTag;
-    }
-
 }

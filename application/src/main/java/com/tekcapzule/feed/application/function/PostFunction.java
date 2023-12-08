@@ -9,7 +9,7 @@ import com.tekcapzule.feed.application.config.AppConfig;
 import com.tekcapzule.feed.application.function.input.PostFeedInput;
 import com.tekcapzule.feed.application.mapper.InputOutputMapper;
 import com.tekcapzule.feed.domain.command.PostCommand;
-import com.tekcapzule.feed.domain.service.FeedService;
+import com.tekcapzule.feed.domain.service.ExternalFeedService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
@@ -23,13 +23,13 @@ import java.util.function.Function;
 @Slf4j
 public class PostFunction implements Function<Message<PostFeedInput>, Message<Void>> {
 
-    private final FeedService feedService;
+    private final ExternalFeedService externalFeedService;
 
 
     private final AppConfig appConfig;
 
-    public PostFunction(final FeedService feedService, final AppConfig appConfig) {
-        this.feedService = feedService;
+    public PostFunction(final ExternalFeedService externalFeedService, final AppConfig appConfig) {
+        this.externalFeedService = externalFeedService;
         this.appConfig = appConfig;
     }
 
@@ -43,7 +43,7 @@ public class PostFunction implements Function<Message<PostFeedInput>, Message<Vo
             log.info(String.format("Entering post feed Function - Feed Source URL : %s", postFeedInput.getFeedSourceUrl()));
             Origin origin = HeaderUtil.buildOriginFromHeaders(postFeedInputMessage.getHeaders());
             PostCommand postCommand = InputOutputMapper.buildPostCommandFromPostFeedInput.apply(postFeedInput, origin);
-            feedService.post(postCommand);
+            externalFeedService.post(postCommand);
             responseHeaders = HeaderUtil.populateResponseHeaders(responseHeaders, Stage.valueOf(stage), Outcome.SUCCESS);
             payload = PayloadUtil.composePayload(Outcome.SUCCESS);
         } catch (Exception ex) {

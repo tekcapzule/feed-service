@@ -34,6 +34,4 @@ public interface FeedService {
 
     List<Feed> findAll();
     int getAllFeedsCount();
-    void post(PostCommand postCommand);
-
 }
